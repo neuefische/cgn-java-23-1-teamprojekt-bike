@@ -23,8 +23,8 @@ class BikeControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-
-    BikeRepository nonEmptyBikeRepository = new BikeRepository(Map.of(testBike.id(), testBike));
+    @Autowired
+    BikeRepository bikeRepository;
 
 
     @Test
