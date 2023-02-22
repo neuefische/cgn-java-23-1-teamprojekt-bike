@@ -20,4 +20,8 @@ public class BikeRepository {
         return bikeMap.values().stream().toList();
     }
 
+    public Bike addBike(Bike bikeToAdd) {
+        bikeMap.put(bikeToAdd.id(), bikeToAdd);
+        return bikeToAdd;
+    }
 }

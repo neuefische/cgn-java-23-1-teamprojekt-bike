@@ -42,4 +42,18 @@ class BikeServiceTest {
         verify(bikeRepository).getAllBikes();
         Assertions.assertEquals(expectedBikesEmpty, actual);
     }
+
+
+    @Test
+    void addBike(){
+        //GIVEN
+        when(bikeRepository.addBike(testBike)).thenReturn(testBike);
+        //WHEN
+        Bike actual = bikeService.addBike(testBike);
+        //THEN
+        verify(bikeRepository).addBike(testBike);
+        Assertions.assertEquals(testBike, actual);
+
+
+    }
 }

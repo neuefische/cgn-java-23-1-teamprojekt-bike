@@ -30,7 +30,7 @@ class BikeControllerTest {
     @Test
     void getAllBikes() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
