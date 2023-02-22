@@ -3,13 +3,12 @@ package com.bikes.backend.service;
 
 import com.bikes.backend.model.Bike;
 import com.bikes.backend.repository.BikeRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Service
 public class BikeService {
