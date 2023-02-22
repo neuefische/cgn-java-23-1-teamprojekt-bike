@@ -4,7 +4,9 @@ import com.bikes.backend.model.Bike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,9 +25,9 @@ class BikeRepositoryTest {
     @Test
     void getAllBikesEmptyRepo() {
         //GIVEN
-        Bike[] expectedBikes  = {};
+        List<Bike> expectedBikes  = new ArrayList<>();
         //WHEN
-        Bike[] actualBikes  = testRepoEmpty.getAllBikes();
+        List<Bike> actualBikes  = testRepoEmpty.getAllBikes();
         //THEN
         assertArrayEquals(expectedBikes, actualBikes);
     }
@@ -33,11 +35,11 @@ class BikeRepositoryTest {
     @Test
     void getAllBikesNonEmptyRepo() {
         //GIVEN
-        Bike[] expectedBikes  = {testBike};
+        List<Bike> expectedBikes  = List.of(testBike);
         //WHEN
-        Bike[] actualBikes  = nonEmptyRepo.getAllBikes();
+        List<Bike> actualBikes  = nonEmptyRepo.getAllBikes();
         //THEN
-        assertArrayEquals(expectedBikes, actualBikes);
+        assertEquals(expectedBikes, actualBikes);
     }
 
 }

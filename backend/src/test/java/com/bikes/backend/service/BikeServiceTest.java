@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,15 +19,15 @@ class BikeServiceTest {
     BikeService bikeService = new BikeService(bikeRepository);
 
     Bike testBike = new Bike("testBike", "testId");
-    Bike[] expectedBikes = {testBike};
-    Bike[] expectedBikesEmpty = {};
+    List<Bike> expectedBikes = List.of(testBike);
+    List<Bike> expectedBikesEmpty = new ArrayList<>();
 
     @Test
     void getAllBikesNonEmptyRepo() {
         //GIVEN
         when(bikeRepository.getAllBikes()).thenReturn(expectedBikes);
         //WHEN
-        Bike[] actual = bikeService.getAllBikes();
+        List<Bike> actual = bikeService.getAllBikes();
         //THEN
         verify(bikeRepository).getAllBikes();
         Assertions.assertEquals(expectedBikes, actual);
@@ -37,7 +38,7 @@ class BikeServiceTest {
         //GIVEN
         when(bikeRepository.getAllBikes()).thenReturn(expectedBikesEmpty);
         //WHEN
-        Bike[] actual = bikeService.getAllBikes();
+        List<Bike> actual = bikeService.getAllBikes();
         //THEN
         verify(bikeRepository).getAllBikes();
         Assertions.assertEquals(expectedBikesEmpty, actual);
