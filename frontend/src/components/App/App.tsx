@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.scss'
 
 import BikeGallery from '../BikeGallery/BikeGallery'
@@ -14,6 +14,7 @@ function App() {
          <main className="main">
             <Routes>
                <Route path="/" element={!loading && <BikeGallery bikes={bikes} />} />
+               <Route path="/:id" element={!loading && <BikeGallery bikes={bikes} />} />
             </Routes>
          </main>
          <footer className="footer">Footer - Impressum</footer>

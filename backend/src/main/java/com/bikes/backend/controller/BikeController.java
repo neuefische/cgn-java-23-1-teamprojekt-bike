@@ -14,12 +14,16 @@ import java.util.List;
 @RequestMapping("/api")
 public class BikeController {
 
-    private final BikeService bikeService;
+	private final BikeService bikeService;
 
+	@GetMapping("bikes")
+	public List<Bike> getAllBikes() {
+		return bikeService.getAllBikes();
+	}
 
-    @GetMapping("bikes")
-    public List<Bike> getAllBikes() {
-        return bikeService.getAllBikes();
-    }
+	@GetMapping("bikes/{id}")
+	public Bike getBikeByID(@PathVariable String id) throws Exception {
+		return bikeService.getBikeById(id);
+	}
 
 }
