@@ -11,9 +11,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,18 +34,19 @@ class BikeControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void addBike() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/bikes/")
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(""" 
-                                        { 
+                                        {
                                         "id": "testId",
                                         "title": "testBike"
                                         }
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(content().json(""" 
-                                        { 
+                                        {
                                         "id": "testId",
                                         "title": "testBike"
                                         }
