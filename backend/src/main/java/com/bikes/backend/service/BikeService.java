@@ -20,4 +20,7 @@ public class BikeService {
     }
 
 
+    public Bike addBike(Bike bikeToAdd) {
+        return bikeRepository.addBike(bikeToAdd);
+    }
 }

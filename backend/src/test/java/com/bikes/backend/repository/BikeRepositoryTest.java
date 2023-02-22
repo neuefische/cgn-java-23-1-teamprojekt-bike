@@ -18,7 +18,7 @@ class BikeRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        testBike = new Bike("testBike", "testId");
+        testBike = new Bike("testId", "testBike");
         nonEmptyRepo = new BikeRepository(Map.of(testBike.id(), testBike));
         testRepoEmpty = new BikeRepository(new HashMap<>());
     }
