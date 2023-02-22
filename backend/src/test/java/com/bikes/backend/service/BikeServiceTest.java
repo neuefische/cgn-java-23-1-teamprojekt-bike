@@ -11,7 +11,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-@Service
 class BikeServiceTest {
 
     BikeRepository bikeRepository = mock(BikeRepository.class);
