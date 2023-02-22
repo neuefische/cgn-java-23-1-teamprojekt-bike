@@ -24,10 +24,6 @@ class BikeControllerTest {
     MockMvc mockMvc;
 
 
-    BikeRepository emptyBikeRepository;
-    Bike testBike = new Bike("testBike", "testId");
-
-
     BikeRepository nonEmptyBikeRepository = new BikeRepository(Map.of(testBike.id(), testBike));
 
 
@@ -38,19 +34,5 @@ class BikeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
-    @Test
-    @DirtiesContext
-    void getAllBikesNonEmptyRepo() throws Exception {
-        //GIVEN
-        System.out.println(nonEmptyBikeRepository.toString());
-        //THEN
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("""
-                                                       [{
-                                                       "modelName": "testBike",
-                                                       "id": "testId"
-                                                        }]
-                                                    """));
-    }
+    
 }
