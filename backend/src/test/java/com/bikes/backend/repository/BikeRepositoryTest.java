@@ -29,7 +29,7 @@ class BikeRepositoryTest {
         //WHEN
         List<Bike> actualBikes  = testRepoEmpty.getAllBikes();
         //THEN
-        assertArrayEquals(expectedBikes, actualBikes);
+        assertEquals(expectedBikes, actualBikes);
     }
 
     @Test

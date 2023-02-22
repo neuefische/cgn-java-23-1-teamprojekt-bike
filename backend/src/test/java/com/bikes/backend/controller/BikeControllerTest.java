@@ -34,5 +34,5 @@ class BikeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
-    
+
 }

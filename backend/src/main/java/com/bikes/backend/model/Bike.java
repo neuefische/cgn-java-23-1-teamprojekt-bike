@@ -1,4 +1,4 @@
 package com.bikes.backend.model;
 
-public record Bike(String modelName, String id) {
+public record Bike(String id, String title) {
 }

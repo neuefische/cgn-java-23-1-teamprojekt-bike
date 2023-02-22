@@ -7,18 +7,17 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
 @AllArgsConstructor
-@Getter
-@ToString
 public class BikeRepository {
 
     private final Map<String, Bike> bikeMap;
 
-    public Bike[] getAllBikes () {
-        return bikeMap.values().toArray(new Bike[0]);
+    public List<Bike> getAllBikes () {
+        return bikeMap.values().stream().toList();
     }
 
 }

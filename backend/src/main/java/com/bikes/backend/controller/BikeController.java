@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -16,7 +18,7 @@ public class BikeController {
 
 
     @GetMapping("bikes")
-    public Bike[] getAllBikes() {
+    public List<Bike> getAllBikes() {
         return bikeService.getAllBikes();
     }
 
