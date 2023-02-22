@@ -7,7 +7,9 @@ function App() {
    return (
       <div id="app">
          Frontend will be here
-         <BikeGallery bikes={[]} />
+         <BikeGallery
+            bikes={[{ id: 'some ID', title: 'Trend-a-bikes MARK II' }]}
+         />
       </div>
    )
 }
