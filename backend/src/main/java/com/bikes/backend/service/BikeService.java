@@ -7,9 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-@Service
 @AllArgsConstructor
 @Getter
+@Service
 public class BikeService {
 
     private final BikeRepository bikeRepository;
