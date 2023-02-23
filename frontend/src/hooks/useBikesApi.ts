@@ -11,7 +11,7 @@ function useBikesApi() {
    }, [loading])
 
    function fetchBikes() {
-      bikesApiService.get(setBikes).finally(() => {
+      bikesApiService.get().finally(() => {
          setLoading(false)
       })
    }
