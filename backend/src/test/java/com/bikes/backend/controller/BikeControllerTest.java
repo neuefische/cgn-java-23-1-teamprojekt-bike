@@ -36,7 +36,7 @@ class BikeControllerTest {
         @Test
         @DisplayName("...should return an empty array if there are no bikes in the database")
         void testGetAllBikes_emptyArray() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes"))
+            mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/"))
                     .andExpect(status().isOk())
                     .andExpect(content().json("[]"));
         }
