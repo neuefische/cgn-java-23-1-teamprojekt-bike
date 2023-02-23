@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @RestController
@@ -23,7 +24,7 @@ public class BikeController {
 	}
 
 	@GetMapping("bikes/{id}")
-	public Bike getBikeByID(@PathVariable String id) throws Exception {
+	public Bike getBikeByID(@PathVariable String id) throws NoSuchElementException {
 		return bikeService.getBikeById(id);
 	}
 
