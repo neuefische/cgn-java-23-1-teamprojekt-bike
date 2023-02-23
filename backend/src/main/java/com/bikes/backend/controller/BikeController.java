@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @RestController
@@ -21,7 +20,7 @@ public class BikeController {
         return bikeService.getAllBikes();
     }
     @GetMapping("/{id}")
-    public Bike getBikeByID(@PathVariable String id) throws NoSuchElementException {
+    public Bike getBikeByID(@PathVariable String id) {
         return bikeService.getBikeById(id);
     }
     @PostMapping("/")

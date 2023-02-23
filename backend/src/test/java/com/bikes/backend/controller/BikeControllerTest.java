@@ -2,6 +2,7 @@ package com.bikes.backend.controller;
 
 import com.bikes.backend.model.Bike;
 import com.bikes.backend.repository.BikeRepository;
+import com.bikes.backend.service.NoSuchBikeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -104,23 +105,7 @@ class BikeControllerTest {
 
         }
 
+    }
 }
-//
-//	@Nested
-//	@DisplayName("GET /api/bikes/{id}")
-//	class testGetBikeById {
-//		//Given
-//		private final int someIdThatDoesNotExist = 666;
-//
-//		@Test
-//		@DisplayName("...should throw an exception if the bike does not exist")
-//		void testGetBikeById_throwsException() throws Exception {
-//			//when
-//			mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/" + someIdThatDoesNotExist))
-//					.andExpect(status().isNotFound());
-//
-//		}
-//	}
-//
 
 

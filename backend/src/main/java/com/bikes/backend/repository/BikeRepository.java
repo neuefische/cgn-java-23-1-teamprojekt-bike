@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -18,12 +18,8 @@ public class BikeRepository {
 		return bikeMap.values().stream().toList();
 	}
 
-	public Bike getBikeById(String id) throws NoSuchElementException {
-		if (bikeMap.get(id) != null) {
-			return bikeMap.get(id);
-		} else {
-			throw new NoSuchElementException("Bike with id " + id + " does not exist.");
-		}
+	public Optional<Bike> getBikeById(String id) {
+		return Optional.ofNullable(bikeMap.get(id));
 	}
 
 
