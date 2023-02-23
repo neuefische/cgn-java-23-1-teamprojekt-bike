@@ -19,8 +19,8 @@ public class BikeService {
         return bikeRepository.getAllBikes();
     }
 
-
-    public Bike addBike(Bike bikeToAdd) {
+    public Bike addBike(Bike incomingBike) {
+        Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
         return bikeRepository.addBike(bikeToAdd);
     }
 }

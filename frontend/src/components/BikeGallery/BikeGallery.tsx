@@ -11,11 +11,16 @@ type BikeGalleryProps = {
 
 function BikeGallery(props: BikeGalleryProps) {
    return (
-      <div className="gallery">
-         {props.bikes.map((bike) => (
-            <BikeCard key={bike.id} bike={bike} />
-         ))}
-      </div>
-   );
+       <>
+         <div className="gallery">
+            {props.bikes.map((bike) => (
+               <BikeCard key={bike.id} bike={bike} />
+            ))}
+         </div>
+          <div className = "add-bike">
+             <AddBike handleSubmit={props.addBike}/>
+          </div>
+       </>
+   )
 }
 export default BikeGallery;

@@ -21,7 +21,7 @@ function useBikesApi() {
           .then((r)=> setBikes([...bikes, r.data.bike]))
    }
 
-   return { loading, bikes }
+   return { loading, bikes, addBike }
 }
 
 export default useBikesApi

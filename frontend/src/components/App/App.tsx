@@ -7,7 +7,7 @@ import useBikesApi from '../../hooks/useBikesApi'
 import AddBike from "../AddBike/AddBike";
 
 function App() {
-   const { bikes, loading } = useBikesApi()
+   const { bikes, loading, addBike } = useBikesApi()
 
    return (
       <div id="app">
