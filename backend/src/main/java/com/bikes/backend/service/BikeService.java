@@ -15,7 +15,7 @@ public class BikeService {
 
 	private final BikeRepository bikeRepository;
 
-	public List<Bike> getAllBikes() {
+	private final IdService idService;public List<Bike> getAllBikes() {
 		return bikeRepository.getAllBikes();
 	}
 
@@ -23,7 +23,8 @@ public class BikeService {
 		return bikeRepository.getBikeById(id);
 	}
 
-    public Bike addBike(Bike bikeToAdd) {
+    public Bike addBike(Bike incomingBike) {
+        Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
         return bikeRepository.addBike(bikeToAdd);
     }
 }

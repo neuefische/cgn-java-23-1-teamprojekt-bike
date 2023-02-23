@@ -6,6 +6,11 @@ async function get() {
    return await axios.get(apiUrlSlug).then((response) => response.data)
 }
 
+
+async function post(newBikeTitle: string) {
+   return await axios.post(apiUrlSlug, {title: newBikeTitle})
+}
+
 export default {
-   get,
+   get, post
 }

@@ -16,7 +16,8 @@ import static org.mockito.Mockito.*;
 class BikeServiceTest {
 
 	BikeRepository bikeRepository = mock(BikeRepository.class);
-	BikeService bikeService = new BikeService(bikeRepository);
+	IdService idService = mock(IdService.class);
+    BikeService bikeService = new BikeService(bikeRepository, idService);
 
 	Bike testBike = new Bike("testId", "testBike");
 	List<Bike> expectedBikes = List.of(testBike);
@@ -95,6 +96,7 @@ class BikeServiceTest {
     void addBike(){
         //GIVEN
         when(bikeRepository.addBike(testBike)).thenReturn(testBike);
+        when(idService.generateId()).thenReturn(testBike.id());
         //WHEN
         Bike actual = bikeService.addBike(testBike);
         //THEN

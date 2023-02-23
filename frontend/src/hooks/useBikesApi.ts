@@ -21,7 +21,12 @@ function useBikesApi() {
          })
    }
 
-   return { loading, bikes }
+   function addBike(newBikeTitle: string){
+      return bikesApiService.post(newBikeTitle)
+          .then((r)=> setBikes([...bikes, r.data.bike]))
+   }
+
+   return { loading, bikes, addBike }
 }
 
 export default useBikesApi
