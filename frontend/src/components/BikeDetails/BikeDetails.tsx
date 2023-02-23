@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Bike } from '../../models/Bike'
+import './BikeDetails.css'
 
 type BikeDetailsProps = {
    bikes: Bike[]

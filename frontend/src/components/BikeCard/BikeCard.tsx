@@ -1,6 +1,7 @@
 import React from 'react'
 import { Bike } from '../../models/Bike'
 import { Link } from 'react-router-dom'
+import './BikeCard.css'
 
 type BikeCardProps = {
    bike: Bike
