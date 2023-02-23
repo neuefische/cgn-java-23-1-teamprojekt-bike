@@ -17,7 +17,7 @@ function useBikesApi() {
    }
 
    function addBike(newBikeTitle: string){
-      bikesApiService.post(newBikeTitle)
+      return bikesApiService.post(newBikeTitle)
           .then((r)=> setBikes([...bikes, r.data.bike]))
    }
 
