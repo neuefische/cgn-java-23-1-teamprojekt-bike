@@ -18,7 +18,7 @@ class BikeServiceTest {
 	BikeRepository bikeRepository = mock(BikeRepository.class);
 	BikeService bikeService = new BikeService(bikeRepository);
 
-	Bike testBike = new Bike("testBike", "testId");
+	Bike testBike = new Bike("testId", "testBike");
 	List<Bike> expectedBikes = List.of(testBike);
 	List<Bike> expectedBikesEmpty = new ArrayList<>();
 
@@ -79,4 +79,28 @@ class BikeServiceTest {
 		}
 	}
 
+    @Test
+    void getAllBikesEmptyRepo() {
+        //GIVEN
+        when(bikeRepository.getAllBikes()).thenReturn(expectedBikesEmpty);
+        //WHEN
+        List<Bike> actual = bikeService.getAllBikes();
+        //THEN
+        verify(bikeRepository).getAllBikes();
+        Assertions.assertEquals(expectedBikesEmpty, actual);
+    }
+
+
+    @Test
+    void addBike(){
+        //GIVEN
+        when(bikeRepository.addBike(testBike)).thenReturn(testBike);
+        //WHEN
+        Bike actual = bikeService.addBike(testBike);
+        //THEN
+        verify(bikeRepository).addBike(testBike);
+        Assertions.assertEquals(testBike, actual);
+
+
+    }
 }

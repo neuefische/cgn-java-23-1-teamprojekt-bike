@@ -23,4 +23,7 @@ public class BikeService {
 		return bikeRepository.getBikeById(id);
 	}
 
+    public Bike addBike(Bike bikeToAdd) {
+        return bikeRepository.addBike(bikeToAdd);
+    }
 }

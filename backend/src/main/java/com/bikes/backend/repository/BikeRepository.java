@@ -27,4 +27,8 @@ public class BikeRepository {
 	}
 
 
+    public Bike addBike(Bike bikeToAdd) {
+        bikeMap.put(bikeToAdd.id(), bikeToAdd);
+        return bikeToAdd;
+    }
 }
