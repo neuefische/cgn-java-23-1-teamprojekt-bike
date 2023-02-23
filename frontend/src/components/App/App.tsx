@@ -4,6 +4,7 @@ import './App.scss'
 
 import BikeGallery from '../BikeGallery/BikeGallery'
 import useBikesApi from '../../hooks/useBikesApi'
+import AddBike from "../AddBike/AddBike";
 
 function App() {
    const { bikes, loading } = useBikesApi()
@@ -13,7 +14,7 @@ function App() {
          <header className="header">Frontend will be here</header>
          <main className="main">
             <Routes>
-               <Route path="/" element={!loading && <BikeGallery bikes={bikes} />} />
+                <Route path="/" element={!loading && <BikeGallery bikes={bikes}  addBike={addBike}/>} />
             </Routes>
          </main>
          <footer className="footer">Footer - Impressum</footer>
