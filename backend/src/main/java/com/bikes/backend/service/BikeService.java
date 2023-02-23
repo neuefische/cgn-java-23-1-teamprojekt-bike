@@ -15,6 +15,8 @@ public class BikeService {
 
     private final BikeRepository bikeRepository;
 
+    private final IdService idService;
+
     public List<Bike> getAllBikes(){
         return bikeRepository.getAllBikes();
     }
