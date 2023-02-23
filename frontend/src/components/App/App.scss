@@ -1,7 +1,7 @@
 #app {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	min-height: 100vh;
 	text-align: center;
 	justify-content: center;
 	background: #d2cdb2;
@@ -18,7 +18,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		height: 100%;
-		background: #efecdd;
+		padding: 1.5rem 2rem;
+		margin: auto 0 0;
 	}
 }

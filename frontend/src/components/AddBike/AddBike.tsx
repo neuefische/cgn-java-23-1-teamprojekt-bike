@@ -1,24 +1,27 @@
-import React, {ChangeEvent, FormEvent, useState} from "react";
-type inputProps = {
-    handleSubmit(title: string): Promise<void>
+import React, { ChangeEvent, FormEvent, useState } from 'react'
+
+type AddBikeProps = {
+   addBike: (newBikeTitle: string) => void
 }
 
-export default function AddBike(props: inputProps){
-    const [inputTitle, setTitle] = useState<string>("")
+export default function AddBike(props: AddBikeProps) {
+   const [inputTitle, setInputTitle] = useState<string>('')
+   const resetInputs = () => setInputTitle('')
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        props.handleSubmit(inputTitle)
-            .then(() =>setTitle(""))
+   function handleSubmit(event: FormEvent<HTMLFormElement>) {
+      event.preventDefault()
+      props.addBike(inputTitle)
+      resetInputs()
+   }
 
-    }
-    function handleTitleChange(event: ChangeEvent<HTMLInputElement>){
-        setTitle(event.target.value)
-    }
+   function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
+      setInputTitle(event.target.value)
+   }
 
-    return (
-        <form onSubmit={handleSubmit} className={"add-form"}>
-            <input className={"input-title"} onChange={handleTitleChange} type={"text"}/>
-            <button>Add new Bike</button>
-        </form>
-            )
+   return (
+      <form className="add-form" onSubmit={(event) => handleSubmit(event)}>
+         <input className="add-form__input" type="text" value={inputTitle} onChange={handleTitleChange} />
+         <button className="add-form__button">Add new Bike</button>
+      </form>
+   )
 }
