@@ -18,12 +18,13 @@ public class BikeRepository {
 		return bikeMap.values().stream().toList();
 	}
 
-	public Bike getBikeById(String id) {
-		return bikeMap.keySet().stream()
-				.filter(key -> key.equals(id))
-				.map(key -> bikeMap.get(key))
-				.findFirst()
-				.orElseThrow(() -> new NoSuchElementException("No bike with id " + id + " found"));
+	public Bike getBikeById(String id) throws NoSuchElementException {
+		if (bikeMap.get(id) != null) {
+			return bikeMap.get(id);
+		} else {
+			throw new NoSuchElementException("Bike with id " + id + " does not exist.");
+		}
 	}
+
 
 }

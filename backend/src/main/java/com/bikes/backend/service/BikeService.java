@@ -19,9 +19,8 @@ public class BikeService {
 		return bikeRepository.getAllBikes();
 	}
 
-	public Bike getBikeById(String id) throws Exception {
+	public Bike getBikeById(String id) {
 		return bikeRepository.getBikeById(id);
 	}
-
 
 }

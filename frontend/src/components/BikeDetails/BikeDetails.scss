@@ -1,0 +1,12 @@
+.bike-details {
+	width: 360px;
+	height: 500px;
+	border-radius: 1rem;
+	border: #d2cdb2 solid 2px;
+
+	&--title {
+		color: #a68c14;
+		font-size: 1.5rem;
+		font-weight: bold;
+	}
+}

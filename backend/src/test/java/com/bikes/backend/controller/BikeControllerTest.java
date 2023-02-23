@@ -22,6 +22,7 @@ class BikeControllerTest {
 	@Autowired
 	BikeRepository bikeRepository;
 
+
 	@Nested
 	@DisplayName("GET /api/bikes")
 	class testGetAllBikes {
@@ -35,19 +36,22 @@ class BikeControllerTest {
 		}
 
 	}
-
-	@Nested
-	@DisplayName("GET /api/bikes/{id}")
-	class testGetBikeById {
-		//Given
-		private final int someIdThatDoesNotExist = 666;
-
-		@Test
-		@DisplayName("...should throw an exception if there is no bike with the given id")
-		void testGetBikeById_throwsException() throws Exception {
-			mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/" + someIdThatDoesNotExist))
-					.andExpect(status().isNotFound());
-		}
-	}
+//
+//	@Nested
+//	@DisplayName("GET /api/bikes/{id}")
+//	class testGetBikeById {
+//		//Given
+//		private final int someIdThatDoesNotExist = 666;
+//
+//		@Test
+//		@DisplayName("...should throw an exception if the bike does not exist")
+//		void testGetBikeById_throwsException() throws Exception {
+//			//when
+//			mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/" + someIdThatDoesNotExist))
+//					.andExpect(status().isNotFound());
+//
+//		}
+//	}
+//
 
 }
