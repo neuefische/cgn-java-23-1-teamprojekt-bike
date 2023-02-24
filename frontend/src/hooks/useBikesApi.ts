@@ -33,8 +33,18 @@ function useBikesApi() {
             setLoading(false)
          })
    }
-
-   return { loading, bikes, addBike }
+   function editBike(updatedBike: Bike){
+      setLoading(true)
+      bikesApiService
+          .put(updatedBike)
+          .then((incomingBike: Bike) => {
+             setBikes([...bikes.filter(bike => (bike.id !== incomingBike.id)), incomingBike])
+          })
+          .finally(() => {
+             setLoading(false)
+          })
+   }
+   return { loading, bikes, addBike, editBike }
 }
 
 export default useBikesApi

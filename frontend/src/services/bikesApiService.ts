@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Bike} from "../models/Bike";
 
 const apiUrlSlug = '/api/bikes/'
 
@@ -18,7 +19,14 @@ async function post(newBikeTitle: string) {
       .catch((error) => console.error(error))
 }
 
+async function put(bikeToUpdate: Bike) {
+   return await axios
+       .put(apiUrlSlug+bikeToUpdate.id, bikeToUpdate)
+       .then((response) => response.data)
+       .catch((error) => console.error(error))
+}
 export default {
    get,
    post,
+   put,
 }
