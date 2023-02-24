@@ -81,7 +81,7 @@ class BikeServiceTest {
 		}
 	}
 
-
+	@DisplayName("testing addBike()")
     @Test
     void addBike(){
         //GIVEN

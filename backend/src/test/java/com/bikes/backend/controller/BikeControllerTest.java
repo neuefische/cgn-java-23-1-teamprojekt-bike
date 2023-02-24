@@ -27,7 +27,7 @@ class BikeControllerTest {
     Bike testBike = new Bike("testId", "testBike");
 
     @Nested
-    @DisplayName("GET /api/bikes")
+    @DisplayName("GET All /api/bikes")
     class testGetAllBikes {
 
         @Test
@@ -46,7 +46,7 @@ class BikeControllerTest {
         @Test
         @DirtiesContext
         @DisplayName("...should return a bike if the bike with the given id does exist")
-        void testGetBikeById_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
+        void testGetBikeByIdExists() throws Exception {
             bikeRepository.addBike(testBike);
 
             //when
@@ -69,7 +69,6 @@ class BikeControllerTest {
     }
 
 
-
     @Nested
     @DisplayName("POST /api/bikes")
     class testPostBike {
@@ -78,7 +77,7 @@ class BikeControllerTest {
         @Test
         @DirtiesContext
         @DisplayName("...should return a bike if there is a bike with the given id in the database")
-        void addBike_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
+        void addBike_returnsABike() throws Exception {
             mockMvc.perform(MockMvcRequestBuilders.post("/api/bikes/")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(""" 
