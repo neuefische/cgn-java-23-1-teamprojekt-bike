@@ -15,7 +15,7 @@ function App() {
          <main className="main">
             <Routes>
                <Route path="/" element={!loading &&
-                   <BikeGallery bikes={bikes} addBike={addBike}  deleteBike={deleteBike}/>} />
+                   <BikeGallery bikes={bikes} addBike={addBike} deleteBike={deleteBike}/>} />
                <Route path="/details/:id" element={!loading && <BikeDetails bikes={bikes} />} />
             </Routes>
          </main>
