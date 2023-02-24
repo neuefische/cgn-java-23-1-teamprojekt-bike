@@ -24,7 +24,7 @@ function useBikesApi() {
 
    function addBike(newBikeTitle: string) {
       setLoading(true)
-      return bikesApiService
+      bikesApiService
          .post(newBikeTitle)
          .then((incomingBike) => {
             setBikes([...bikes, incomingBike])
