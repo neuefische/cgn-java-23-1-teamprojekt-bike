@@ -8,15 +8,33 @@ function useBikesApi() {
 
    useEffect(() => {
       fetchBikes()
-   }, [loading])
+   }, [])
 
    function fetchBikes() {
-      bikesApiService.get(setBikes).finally(() => {
-         setLoading(false)
-      })
+      setLoading(true)
+      bikesApiService
+         .get()
+         .then((incomingBikes) => {
+            setBikes(incomingBikes)
+         })
+         .finally(() => {
+            setLoading(false)
+         })
    }
 
-   return { loading, bikes }
+   function addBike(newBikeTitle: string) {
+      setLoading(true)
+      bikesApiService
+         .post(newBikeTitle)
+         .then((incomingBike) => {
+            setBikes([...bikes, incomingBike])
+         })
+         .finally(() => {
+            setLoading(false)
+         })
+   }
+
+   return { loading, bikes, addBike }
 }
 
 export default useBikesApi

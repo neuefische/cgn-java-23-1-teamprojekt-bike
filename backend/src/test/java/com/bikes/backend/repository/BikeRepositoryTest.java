@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BikeRepositoryTest {
     Bike testBike;
@@ -18,16 +18,17 @@ class BikeRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        testBike = new Bike("testBike", "testId");
+        testBike = new Bike("testId", "testBike");
         nonEmptyRepo = new BikeRepository(Map.of(testBike.id(), testBike));
         testRepoEmpty = new BikeRepository(new HashMap<>());
     }
+
     @Test
     void getAllBikesEmptyRepo() {
         //GIVEN
-        List<Bike> expectedBikes  = new ArrayList<>();
+        List<Bike> expectedBikes = new ArrayList<>();
         //WHEN
-        List<Bike> actualBikes  = testRepoEmpty.getAllBikes();
+        List<Bike> actualBikes = testRepoEmpty.getAllBikes();
         //THEN
         assertEquals(expectedBikes, actualBikes);
     }
@@ -35,11 +36,12 @@ class BikeRepositoryTest {
     @Test
     void getAllBikesNonEmptyRepo() {
         //GIVEN
-        List<Bike> expectedBikes  = List.of(testBike);
+        List<Bike> expectedBikes = List.of(testBike);
         //WHEN
-        List<Bike> actualBikes  = nonEmptyRepo.getAllBikes();
+        List<Bike> actualBikes = nonEmptyRepo.getAllBikes();
         //THEN
         assertEquals(expectedBikes, actualBikes);
     }
+
 
 }

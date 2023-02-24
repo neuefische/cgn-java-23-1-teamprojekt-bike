@@ -1,0 +1,24 @@
+#app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	text-align: center;
+	justify-content: center;
+	background: #d2cdb2;
+}
+
+#app header.header, footer.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 3rem;
+	background: #eae4b9;
+}
+
+#app main.main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 1.5rem 2rem;
+	margin: auto 0 0;
+}
