@@ -8,9 +8,10 @@ function useBikesApi() {
 
    useEffect(() => {
       fetchBikes()
-   }, [loading])
+   }, [])
 
    function fetchBikes() {
+      setLoading(true)
       bikesApiService
          .get()
          .then((incomingBikes) => {
@@ -21,9 +22,16 @@ function useBikesApi() {
          })
    }
 
-   function addBike(newBikeTitle: string){
-      return bikesApiService.post(newBikeTitle)
-          .then((r)=> setBikes([...bikes, r.data.bike]))
+   function addBike(newBikeTitle: string) {
+      setLoading(true)
+      bikesApiService
+         .post(newBikeTitle)
+         .then((incomingBike) => {
+            setBikes([...bikes, incomingBike])
+         })
+         .finally(() => {
+            setLoading(false)
+         })
    }
 
    return { loading, bikes, addBike }

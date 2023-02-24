@@ -1,7 +1,8 @@
 .gallery {
 	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
-	height: 100%;
 	justify-content: space-around;
-	padding: 1.5rem;
+	min-height: fit-content;
+	max-height: 100%;
 }

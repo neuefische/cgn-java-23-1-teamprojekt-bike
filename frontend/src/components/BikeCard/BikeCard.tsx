@@ -10,8 +10,8 @@ function BikeCard(props: BikeCardProps) {
    return (
       <div className="gallery__card" id={props.bike.id}>
          <h2 className="gallery__card--title">{props.bike.title}</h2>
-         <Link to={'details/' + props.bike.id}>
-            <button className="gallery__card--button">Go to details of Bike No. {props.bike.id}</button>
+         <Link className="gallery__card--button" to={'details/' + props.bike.id}>
+            Go to details
          </Link>
       </div>
    )
