@@ -1,17 +1,15 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+import useBikesApi from '../../hooks/useBikesApi'
 
-type AddBikeProps = {
-   addBike: (newBikeTitle: string) => void
-}
-
-export default function AddBike(props: AddBikeProps) {
+export default function AddBike() {
    const [inputTitle, setInputTitle] = useState<string>('')
-   const resetInputs = () => setInputTitle('')
+
+   const { addBike } = useBikesApi()
 
    function handleSubmit(event: FormEvent<HTMLFormElement>) {
       event.preventDefault()
-      props.addBike(inputTitle)
-      resetInputs()
+      addBike(inputTitle)
+      setInputTitle('')
    }
 
    function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
