@@ -17,8 +17,14 @@ async function post(newBikeTitle: string) {
       .then((response) => response.data)
       .catch((error) => console.error(error))
 }
-
+async function deleteBike(id: string) {
+   return await axios
+       .delete(apiUrlSlug+id)
+       .then(response => response.data)
+       .catch(error => console.error(error))
+}
 export default {
    get,
    post,
+   deleteBike,
 }
