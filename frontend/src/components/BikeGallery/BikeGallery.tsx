@@ -6,6 +6,7 @@ import './BikeGallery.css'
 
 type BikeGalleryProps = {
    bikes: Bike[]
+   addBike: (newBikeTitle: string) => void
 }
 
 function BikeGallery(props: BikeGalleryProps) {
@@ -16,7 +17,7 @@ function BikeGallery(props: BikeGalleryProps) {
                <BikeCard key={bike.id} bike={bike} />
             ))}
          </div>
-         <AddBike />
+         <AddBike addBike={props.addBike} />
       </>
    )
 }

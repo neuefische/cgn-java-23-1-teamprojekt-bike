@@ -1,6 +1,5 @@
 package com.bikes.backend.service;
 
-import com.bikes.backend.service.NoSuchBikeException;
 import com.bikes.backend.model.Bike;
 import com.bikes.backend.repository.BikeRepository;
 import lombok.Getter;
@@ -23,11 +22,11 @@ public class BikeService {
 	}
 
 	public Bike getBikeById(String id) {
-			return bikeRepository.getBikeById(id).orElseThrow(NoSuchBikeException::new);
+		return bikeRepository.getBikeById(id).orElseThrow(NoSuchBikeException::new);
 	}
 
-    public Bike addBike(Bike incomingBike) {
-        Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
-        return bikeRepository.addBike(bikeToAdd);
-    }
+	public Bike addBike(Bike incomingBike) {
+		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
+		return bikeRepository.addBike(bikeToAdd);
+	}
 }
