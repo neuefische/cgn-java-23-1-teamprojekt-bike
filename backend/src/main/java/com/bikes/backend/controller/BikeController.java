@@ -27,4 +27,8 @@ public class BikeController {
     public Bike addBike(@RequestBody Bike bikeToAdd) {
         return bikeService.addBike(bikeToAdd);
     }
+    @PutMapping("/")
+    public Bike updateBike(@RequestBody Bike bikeToUpdate){
+       return bikeService.updateBike(bikeToUpdate);
+    }
 }

@@ -21,7 +21,7 @@ async function post(newBikeTitle: string) {
 
 async function put(bikeToUpdate: Bike) {
    return await axios
-       .put(apiUrlSlug+bikeToUpdate.id, bikeToUpdate)
+       .put(apiUrlSlug, bikeToUpdate)
        .then((response) => response.data)
        .catch((error) => console.error(error))
 }
