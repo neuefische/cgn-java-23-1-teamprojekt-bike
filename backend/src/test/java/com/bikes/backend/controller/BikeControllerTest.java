@@ -83,7 +83,6 @@ class BikeControllerTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(""" 
                                             {
-                                            "id": "testId",
                                             "title": "testBike"
                                             }
                                     """))
