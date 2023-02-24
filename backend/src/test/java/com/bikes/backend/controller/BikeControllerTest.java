@@ -2,7 +2,6 @@ package com.bikes.backend.controller;
 
 import com.bikes.backend.model.Bike;
 import com.bikes.backend.repository.BikeRepository;
-import com.bikes.backend.service.NoSuchBikeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,9 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -46,9 +43,6 @@ class BikeControllerTest {
     @Nested
     @DisplayName("GET /api/bikes/{id}")
     class testGetBikeById {
-
-        private final String someIdThatDoesNotExist = "666";
-
         @Test
         @DirtiesContext
         @DisplayName("...should return a bike if the bike with the given id does exist")
@@ -95,7 +89,7 @@ class BikeControllerTest {
                                     """))
                     .andExpect(status().isOk())
                     .andExpect(content().json(""" 
-                                            {         
+                                            {      
                                             "title": "testBike"
                                             }
                                     """))
@@ -105,6 +99,32 @@ class BikeControllerTest {
 
         }
 
+    }
+
+    @Nested
+    @DisplayName("testing delete bike")
+    class testDeleteBike {
+        @Test
+        @DirtiesContext
+        @DisplayName("deleteExistingBike")
+        void validDelete() throws Exception {
+            bikeRepository.addBike(testBike);
+            mockMvc.perform(MockMvcRequestBuilders.delete("/api/bikes/"+testBike.id()))
+                    .andExpect(status().isOk())
+                    .andExpect(content().json("""
+                                            {  
+                                            "title": "testBike",
+                                            "id": "testId"
+                                            }
+                                    """));
+        }
+        @Test
+        @DirtiesContext
+        @DisplayName("deleteNonExistingBike")
+        void NonValidDelete() throws Exception {
+            mockMvc.perform(MockMvcRequestBuilders.delete("/api/bikes/41"))
+                    .andExpect(status().isNotFound());
+        }
     }
 }
 

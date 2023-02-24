@@ -27,4 +27,7 @@ public class BikeRepository {
         bikeMap.put(bikeToAdd.id(), bikeToAdd);
         return bikeToAdd;
     }
+	public Optional<Bike> deleteBike(String id) {
+		return Optional.ofNullable(bikeMap.remove(id));
+	}
 }
