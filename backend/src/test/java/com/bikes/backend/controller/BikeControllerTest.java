@@ -12,8 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -98,6 +97,78 @@ class BikeControllerTest {
 							"""))
 					.andExpect(jsonPath("$.id").isNotEmpty());
 		}
+
+	}
+
+	@Nested
+	@DisplayName("PUT /api/bikes")
+	class testPutBike {
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...should return a bike if there is a bike with the given id in the database")
+		void updateBike_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
+			//GIVEN
+			bikeRepository.save(testBike);
+
+			//WHEN + THEN
+			mockMvc.perform(put("/api/bikes/")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("""
+									        {
+									        "id": "Some test ID",
+									        "title": "Mega bike 9000 ver.2"
+									        }
+									"""))
+					.andExpect(status().isOk())
+					.andExpect(content().json("""
+							        {
+							        "id": "Some test ID",
+							        "title": "Mega bike 9000 ver.2"
+							        }
+							"""));
+		}
+
+
+//	This is a test of the updateBike version which forbids updating the bike if the bike with the given id does not exist yet.
+//	See the method itself in BikeService.java for more information as well as the service unit test in BikeServiceTest.java.
+//	TODO: Delete one of these versions and its tests after the team has voted on which one to keep.
+
+//		@Test
+//		@DisplayName("...should throw an exception if there is no bike with the given id in the database")
+//		void updateBike_throwsExceptionIfThereIsNoBikeWithTheGivenId() throws Exception {
+//			//WHEN + THEN
+//			mockMvc.perform(put("/api/bikes/")
+//					.contentType(MediaType.APPLICATION_JSON)
+//					.content("""
+//							        {
+//							        "id": "Some invalid ID",
+//							        "title": "Mega bike 9000 ver.2"
+//							        }
+//							""")).andExpect(status().isNotFound());
+//		}
+
+		@Test
+		@DisplayName("...should create a new bike if there is no bike with the given id in the database and return it")
+		void updateBike_createsANewBikeIfThereIsNoBikeWithTheGivenId() throws Exception {
+			//WHEN + THEN
+			mockMvc.perform(put("/api/bikes/")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("""
+									        {
+									        "id": "Some invalid ID",
+									        "title": "Mega bike 9000 ver.2"
+									        }
+									"""))
+					.andExpect(status().isOk())
+					.andExpect(content().json("""
+							        {
+							        "id": "Some invalid ID",
+							        "title": "Mega bike 9000 ver.2"
+							        }
+							"""));
+		}
+
 
 	}
 

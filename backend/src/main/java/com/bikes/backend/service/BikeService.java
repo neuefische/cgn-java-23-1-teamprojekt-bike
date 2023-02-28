@@ -30,8 +30,19 @@ public class BikeService {
 		return bikeRepository.save(bikeToAdd);
 	}
 
-	public Bike updateBike(Bike incomingBike) {
+	public Bike updateBike(Bike incomingBike) throws NoSuchBikeException {
 		return bikeRepository.save(incomingBike);
 	}
+
+//	This is the version of the updateBike method that forbids updating the bike if the ID is not found.
+//	See the respective tests in BikeServiceTest.java and BikeControllerTest.java.
+//	TODO: Delete one of these versions and its tests after the team has voted on which one to keep.
+
+//	public Bike updateBike(Bike incomingBike) throws NoSuchBikeException {
+//		if (!bikeRepository.existsById(incomingBike.id())) {
+//			throw new NoSuchBikeException();
+//		}
+//		return bikeRepository.save(incomingBike);
+//	}
 
 }

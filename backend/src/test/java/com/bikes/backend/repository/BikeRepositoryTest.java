@@ -113,7 +113,7 @@ class BikeRepositoryTest {
 		@DirtiesContext
 		void save_updatesBikeInDatabase() {
 			//GIVEN
-			Bike expectedBike = new Bike(testBike.id(), "updatedTitle");
+			Bike expectedBike = new Bike(testBike.id(), "Mega bike 9000 ver.2");
 			repository.save(testBike);
 			//WHEN
 			repository.save(expectedBike);
