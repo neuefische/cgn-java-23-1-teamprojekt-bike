@@ -1,9 +1,11 @@
 name: Deploy to fly.io
+
 on:
   push:
     branches:
       - main
       - feature/mongodb
+
 jobs:
   build-frontend:
     runs-on: ubuntu-latest
