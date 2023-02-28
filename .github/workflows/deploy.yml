@@ -3,7 +3,7 @@ name: Deploy to fly.io
 on:
   push:
     branches:
-      - feature/mongodb
+      - main
 
 jobs:
   build-frontend:
@@ -57,4 +57,4 @@ jobs:
           name: app.jar
           path: backend/target
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --app mega-bikes --image backend/target/app.jar
+      - run: flyctl deploy
