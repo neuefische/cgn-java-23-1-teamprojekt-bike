@@ -22,9 +22,9 @@ class BikeServiceTest {
 	@Autowired
 	BikeService bikeService;
 
-	String testId = "testId";
-	String invalidId = "invalidId";
-	Bike testBike = new Bike(testId, "testBike");
+	String testId = "Some test ID";
+	String invalidId = "Some invalid ID";
+	Bike testBike = new Bike(testId, "Mega bike 9000");
 
 	@Test
 	@BeforeEach
@@ -50,6 +50,7 @@ class BikeServiceTest {
 		}
 
 		@Test
+		@DirtiesContext
 		@DisplayName("...returns all bikes if the repo is not empty")
 		void getAllBikes_returnsAllBikesIfTheRepoIsNotEmpty() {
 			//GIVEN
@@ -88,6 +89,7 @@ class BikeServiceTest {
 			//THEN
 			Assertions.assertThrows(expected, () -> bikeService.getBikeById(invalidId));
 		}
+
 	}
 
 	@Nested
@@ -108,5 +110,35 @@ class BikeServiceTest {
 
 	}
 
+	@Nested
+	@DisplayName("testing updateBike()")
+	class updateBikeTest {
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...adds a bike to the database if the bike with the given id does not exist yet")
+		void updateBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesNotExist() {
+			//WHEN
+			Bike actual = bikeService.updateBike(testBike);
+			//GIVEN
+			Bike expected = new Bike(actual.id(), testBike.title());
+			//THEN
+			Assertions.assertEquals(expected, actual);
+		}
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...updates an existing bike in the database if the bike with the given id does already exist")
+		void updateBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesExist() {
+			//GIVEN
+			bikeRepository.save(testBike);
+			Bike updatedBike = new Bike(testBike.id(), "Updated bike title");
+			//WHEN
+			Bike actual = bikeService.updateBike(updatedBike);
+			//THEN
+			Assertions.assertEquals(updatedBike, actual);
+		}
+
+	}
 
 }
