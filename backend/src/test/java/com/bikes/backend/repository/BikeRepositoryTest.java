@@ -29,12 +29,12 @@ class BikeRepositoryTest {
 
 	@DisplayName("getAllBikes()")
 	@Nested
-	class testGetAllBikes {
+	class testFindAll {
 
 		@Test
 		@DisplayName("...should return an empty array if there are no bikes in the database")
 		@DirtiesContext
-		void getAllBikes_returnsEmptyArrayIfRepoIsEmpty() {
+		void findAll_returnsEmptyArrayIfRepoIsEmpty() {
 			//GIVEN
 			List<Bike> expectedBikes = new ArrayList<>();
 			//WHEN
@@ -46,7 +46,7 @@ class BikeRepositoryTest {
 		@Test
 		@DisplayName("...should return all bikes if there are bikes in the database")
 		@DirtiesContext
-		void getAllBikes_returnsAllBikesIfRepoIsNotEmpty() {
+		void findAll_returnsAllBikesIfRepoIsNotEmpty() {
 			//GIVEN
 			List<Bike> expectedBikes = List.of(testBike);
 			repository.save(testBike);
@@ -58,14 +58,14 @@ class BikeRepositoryTest {
 
 	}
 
-	@DisplayName("getBikeById()")
+	@DisplayName("findById()")
 	@Nested
-	class testGetBikeById {
+	class testFindById {
 
 		@Test
 		@DisplayName("...should return a bike if the bike with the given id does exist")
 		@DirtiesContext
-		void getBikeById_returnsABikeIfThereIsABikeWithTheGivenId() {
+		void findById_returnsABikeIfThereIsABikeWithTheGivenId() {
 			//GIVEN
 			repository.save(testBike);
 			//WHEN
@@ -77,7 +77,7 @@ class BikeRepositoryTest {
 		@Test
 		@DisplayName("...should return an empty optional if the bike with the given id does not exist")
 		@DirtiesContext
-		void getBikeById_returnsEmptyOptionalIfThereIsNoBikeWithTheGivenId() {
+		void findById_returnsEmptyOptionalIfThereIsNoBikeWithTheGivenId() {
 			//GIVEN
 			String someIdThatDoesNotExist = "666";
 			Optional<Bike> expectedBike = Optional.empty();
