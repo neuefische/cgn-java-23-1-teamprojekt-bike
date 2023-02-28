@@ -22,9 +22,11 @@ class BikeRepositoryTest {
 	@Autowired
 	BikeRepository repository;
 
+	String invalidId = "Some invalid ID";
+
 	@BeforeEach
 	public void setUp() {
-		testBike = new Bike("testId", "testBike");
+		testBike = new Bike("Some test ID", "Mega bike 9000");
 	}
 
 	@DisplayName("getAllBikes()")
@@ -79,10 +81,9 @@ class BikeRepositoryTest {
 		@DirtiesContext
 		void findById_returnsEmptyOptionalIfThereIsNoBikeWithTheGivenId() {
 			//GIVEN
-			String someIdThatDoesNotExist = "666";
 			Optional<Bike> expectedBike = Optional.empty();
 			//WHEN
-			Optional<Bike> actualBike = repository.findById(someIdThatDoesNotExist);
+			Optional<Bike> actualBike = repository.findById(invalidId);
 			//THEN
 			assertEquals(expectedBike, actualBike);
 		}
