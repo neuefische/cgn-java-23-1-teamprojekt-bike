@@ -2,92 +2,111 @@ package com.bikes.backend.service;
 
 import com.bikes.backend.model.Bike;
 import com.bikes.backend.repository.BikeRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class BikeServiceTest {
 
-	BikeRepository bikeRepository = mock(BikeRepository.class);
+	@Autowired
+	BikeRepository bikeRepository;
 	IdService idService = mock(IdService.class);
-	BikeService bikeService = new BikeService(bikeRepository, idService);
+	@Autowired
+	BikeService bikeService;
 
-	Bike testBike = new Bike("testId", "testBike");
-	List<Bike> expectedBikes = List.of(testBike);
-	List<Bike> expectedBikesEmpty = new ArrayList<>();
+	String testId = "testId";
+	String invalidId = "invalidId";
+	Bike testBike = new Bike(testId, "testBike");
 
 	@Test
-	void addBike() {
-		//GIVEN
-		when(bikeRepository.save(testBike)).thenReturn(testBike);
+	@BeforeEach
+	@DisplayName("set up test environment")
+	void setUp() {
+		bikeRepository.deleteAll();
 		when(idService.generateId()).thenReturn(testBike.id());
-		//WHEN
-		Bike actual = bikeService.addBike(testBike);
-		//THEN
-		verify(bikeRepository).save(testBike);
-		Assertions.assertEquals(testBike, actual);
+	}
 
+	@Nested
+	@DisplayName("testing getAllBikes()")
+	class getAllBikesTest {
+
+		@Test
+		@DisplayName("...returns an empty list if the repo is empty")
+		void getAllBikes_returnsEmptyListIfTheRepoIsEmpty() {
+			//GIVEN
+			List<Bike> expected = new ArrayList<>();
+			//WHEN
+			List<Bike> actual = bikeService.getAllBikes();
+			//THEN
+			Assertions.assertEquals(expected, actual);
+		}
+
+		@Test
+		@DisplayName("...returns all bikes if the repo is not empty")
+		void getAllBikes_returnsAllBikesIfTheRepoIsNotEmpty() {
+			//GIVEN
+			bikeRepository.save(testBike);
+			List<Bike> expected = List.of(testBike);
+			//WHEN
+			List<Bike> actual = bikeService.getAllBikes();
+			//THEN
+			Assertions.assertEquals(expected, actual);
+		}
 
 	}
 
-//	@Nested
-//	@DisplayName("testing getAllBikes()")
-//	class getAllBikesTest {
-//		@Test
-//		@DisplayName("...returns all bikes if the repo is not empty")
-//		void getAllBikes_returnsAllBikesIfTheRepoIsNotEmpty() {
-//			//GIVEN
-//
-//			//WHEN
-//			List<Bike> actual = bikeService.getAllBikes();
-//			//THEN
-//			verify(bikeRepository).findAll();
-//			Assertions.assertEquals(expectedBikes, actual);
-//		}
-//
-//		@Test
-//		@DisplayName("...returns an empty list if the repo is empty")
-//		void getAllBikesEmptyRepo() {
-//			//GIVEN
-//			when(bikeRepository.getAllBikes()).thenReturn(expectedBikesEmpty);
-//			//WHEN
-//			List<Bike> actual = bikeService.getAllBikes();
-//			//THEN
-//			verify(bikeRepository).getAllBikes();
-//			Assertions.assertEquals(expectedBikesEmpty, actual);
-//		}
+	@Nested
+	@DisplayName("testing getBikeById()")
+	class getBikeByIdTest {
 
-//	}
-//
-//	@Nested
-//	@DisplayName("testing getBikeById()")
-//	class getBikeByIdTest {
-//
-//		@Test
-//		@DisplayName("...returns a bike if a bike with the given id exists")
-//		void getBikeById_returnsABikeIfABikeWithTheGivenIdExists() throws Exception {
-//			//GIVEN
-//			when(bikeRepository.findById(testBike.id())).thenReturn(Optional.of(testBike));
-//			//WHEN
-//			Bike actual = bikeService.getBikeById(testBike.id());
-//			//THEN
-//			verify(bikeRepository).findById(testBike.id());
-//			Assertions.assertEquals(testBike, actual);
-//		}
-//
-//		@Test
-//		@DisplayName("...throws an exception if no bike with the given id exists")
-//		void getBikeById_throwExceptionIfNoBikeWithTheGivenIdExists() throws Exception {
-//			//GIVEN
-//			String invalidId = "invalidId";
-//			//WHEN
-//			when(bikeRepository.findById(invalidId)).thenThrow(new NoSuchBikeException());
-//			//THEN
-//			Assertions.assertThrows(NoSuchBikeException.class, () -> bikeService.getBikeById(invalidId));
-//		}
-//	}
+		@Test
+		@DirtiesContext
+		@DisplayName("...returns a bike if a bike with the given id exists")
+		void getBikeById_returnsABikeIfABikeWithTheGivenIdExists() throws NoSuchBikeException {
+			//GIVEN
+			bikeRepository.save(testBike);
+			//WHEN
+			Bike actual = bikeService.getBikeById(testBike.id());
+			//THEN
+			Assertions.assertEquals(testBike, actual);
+		}
+
+		@Test
+		@DisplayName("...throws an exception if no bike with the given id exists")
+		void getBikeById_throwExceptionIfNoBikeWithTheGivenIdExists() throws NoSuchBikeException {
+			//GIVEN
+			Class<NoSuchBikeException> expected = NoSuchBikeException.class;
+			//WHEN
+			//THEN
+			Assertions.assertThrows(expected, () -> bikeService.getBikeById(invalidId));
+		}
+	}
+
+	@Nested
+	@DisplayName("testing addBike()")
+	class addBikeTest {
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...adds a bike to the database if the bike with the given id does not exist")
+		void addBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesNotExist() {
+			//GIVEN
+			//WHEN
+			Bike actual = bikeService.addBike(testBike);
+			Bike expected = new Bike(actual.id(), testBike.title());
+			//THEN
+			Assertions.assertEquals(expected, actual);
+		}
+
+	}
+
+
 }
