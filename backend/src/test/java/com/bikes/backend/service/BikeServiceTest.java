@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.NoSuchElementException;
 
 import static org.mockito.Mockito.*;
 
@@ -18,12 +17,26 @@ class BikeServiceTest {
 
 	BikeRepository bikeRepository = mock(BikeRepository.class);
 	IdService idService = mock(IdService.class);
-    BikeService bikeService = new BikeService(bikeRepository, idService);
+	BikeService bikeService = new BikeService(bikeRepository, idService);
 
 	Bike testBike = new Bike("testId", "testBike");
 	List<Bike> expectedBikes = List.of(testBike);
 	List<Bike> expectedBikesEmpty = new ArrayList<>();
 
+	@DisplayName("testing addBike()")
+	@Test
+	void addBike() {
+		//GIVEN
+		when(bikeRepository.addBike(testBike)).thenReturn(testBike);
+		when(idService.generateId()).thenReturn(testBike.id());
+		//WHEN
+		Bike actual = bikeService.addBike(testBike);
+		//THEN
+		verify(bikeRepository).addBike(testBike);
+		Assertions.assertEquals(testBike, actual);
+
+
+	}
 
 	@Nested
 	@DisplayName("testing getAllBikes()")
@@ -60,7 +73,7 @@ class BikeServiceTest {
 
 		@Test
 		@DisplayName("...returns a bike if a bike with the given id exists")
-		void getBikeById_returnsABikeIfABikeWithTheGivenIdExists() throws Exception {
+		void getBikeById_returnsABikeIfABikeWithTheGivenIdExists() {
 			//GIVEN
 			when(bikeRepository.getBikeById(testBike.id())).thenReturn(Optional.of(testBike));
 			//WHEN
@@ -72,28 +85,36 @@ class BikeServiceTest {
 
 		@Test
 		@DisplayName("...throws an exception if no bike with the given id exists")
-		void getBikeById_throwExceptionIfNoBikeWithTheGivenIdExists() throws Exception {
+		void getBikeById_throwExceptionIfNoBikeWithTheGivenIdExists() {
 			//GIVEN
 			String invalidId = "invalidId";
 			//WHEN
-			when(bikeRepository.getBikeById(invalidId)).thenThrow(new NoSuchBikeException());
 			//THEN
 			Assertions.assertThrows(NoSuchBikeException.class, () -> bikeService.getBikeById(invalidId));
 		}
 	}
 
+	@Nested
+	@DisplayName("testing deleteBike()")
+	class deleteBikeTest {
+		@Test
+		@DisplayName("deleting existingBike")
+		void deleteExistingBike() {
+			//GIVEN
+			when(bikeRepository.deleteBike(testBike.id())).thenReturn(Optional.ofNullable(testBike));
+			//WHEN
+			Bike actual = bikeService.deleteBike(testBike.id());
+			//THEN
+			verify(bikeRepository).deleteBike(testBike.id());
+			Assertions.assertEquals(testBike, actual);
+		}
 
-    @Test
-    void addBike(){
-        //GIVEN
-        when(bikeRepository.addBike(testBike)).thenReturn(testBike);
-        when(idService.generateId()).thenReturn(testBike.id());
-        //WHEN
-        Bike actual = bikeService.addBike(testBike);
-        //THEN
-        verify(bikeRepository).addBike(testBike);
-        Assertions.assertEquals(testBike, actual);
-
-
-    }
+		@Test
+		@DisplayName("deleting invalid BikeId")
+		void deleteBikeIdInvalid() {
+			//GIVEN
+			//THEN
+			Assertions.assertThrows(NoSuchBikeException.class, () -> bikeService.deleteBike("41"));
+		}
+	}
 }

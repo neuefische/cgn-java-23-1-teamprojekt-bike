@@ -7,6 +7,7 @@ import './BikeGallery.css'
 type BikeGalleryProps = {
    bikes: Bike[]
    addBike: (newBikeTitle: string) => void
+   deleteBike: (id:string) => void
 }
 
 function BikeGallery(props: BikeGalleryProps) {
@@ -14,7 +15,7 @@ function BikeGallery(props: BikeGalleryProps) {
       <>
          <div className="gallery">
             {props.bikes.map((bike) => (
-               <BikeCard key={bike.id} bike={bike} />
+               <BikeCard key={bike.id} bike={bike}  deleteBike={props.deleteBike}/>
             ))}
          </div>
          <AddBike addBike={props.addBike} />

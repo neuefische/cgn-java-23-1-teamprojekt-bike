@@ -27,4 +27,9 @@ public class BikeController {
     public Bike addBike(@RequestBody Bike bikeToAdd) {
         return bikeService.addBike(bikeToAdd);
     }
+
+    @DeleteMapping("/{id}")
+    public Bike deleteBike(@PathVariable String id){
+        return bikeService.deleteBike(id);
+    }
 }

@@ -33,8 +33,22 @@ function useBikesApi() {
             setLoading(false)
          })
    }
+   function deleteBike(id: string): void {
+      setLoading(true)
+      bikesApiService
+          .deleteBike(id)
+          .then((bikeToDelete: Bike): Bike[] => {
+             return bikes.filter(bike => (bike.id !== bikeToDelete.id))
+          })
+          .then((newBikeArray: Bike[]): void => {
+             setBikes(newBikeArray)
+          })
+          .finally(() => {
+             setLoading(false)
+          })
+   }
 
-   return { loading, bikes, addBike }
+   return { loading, bikes, addBike, deleteBike }
 }
 
 export default useBikesApi
