@@ -2,14 +2,12 @@ package com.bikes.backend.service;
 
 import com.bikes.backend.model.Bike;
 import com.bikes.backend.repository.BikeRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@Getter
 @Service
 public class BikeService {
 
@@ -37,4 +35,9 @@ public class BikeService {
 		return bikeRepository.save(incomingBike);
 	}
 
+
+	public Bike deleteBike(String id) {
+		return bikeRepository.deleteById(id).orElseThrow(NoSuchBikeException::new);
+		// TODO: after merge adjust this method
+	}
 }

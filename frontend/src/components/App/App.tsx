@@ -7,14 +7,15 @@ import BikeDetails from '../BikeDetails/BikeDetails'
 import useBikesApi from '../../hooks/useBikesApi'
 
 function App() {
-   const { bikes, addBike, editBike, loading } = useBikesApi()
+   const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
 
    return (
       <div id="app">
          <header className="header">Frontend will be here</header>
          <main className="main">
             <Routes>
-               <Route path="/" element={!loading && <BikeGallery bikes={bikes} addBike={addBike}  editBike={editBike}/>} />
+               <Route path="/" element={!loading &&
+                   <BikeGallery bikes={bikes} addBike={addBike} editBike={editBike} deleteBike={deleteBike}/>} />
                <Route path="/details/:id" element={!loading && <BikeDetails bikes={bikes} />} />
             </Routes>
          </main>

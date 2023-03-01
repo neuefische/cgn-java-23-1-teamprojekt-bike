@@ -27,7 +27,7 @@ class BikeControllerTest {
 	String invalidId = "Some invalid ID";
 
 	@Nested
-	@DisplayName("GET /api/bikes")
+	@DisplayName("GET All /api/bikes")
 	class testGetAllBikes {
 
 		@Test
@@ -48,7 +48,7 @@ class BikeControllerTest {
 		@Test
 		@DirtiesContext
 		@DisplayName("...should return a bike if the bike with the given id does exist")
-		void testGetBikeById_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
+		void testGetBikeByIdExists() throws Exception {
 			//GIVEN
 			bikeRepository.save(testBike);
 
@@ -57,6 +57,7 @@ class BikeControllerTest {
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							        {
+							            "id": "Some test ID",
 							            "title": "Mega bike 9000"
 							        }
 							"""));
@@ -80,7 +81,7 @@ class BikeControllerTest {
 		@Test
 		@DirtiesContext
 		@DisplayName("...should return a bike if there is a bike with the given id in the database")
-		void addBike_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
+		void addBike_returnsABike() throws Exception {
 			//WHEN + THEN
 			mockMvc.perform(post("/api/bikes/")
 							.contentType(MediaType.APPLICATION_JSON)
@@ -141,6 +142,33 @@ class BikeControllerTest {
 							        "title": "Mega bike 9000 ver.2"
 							        }
 							""")).andExpect(status().isNotFound());
+		}
+
+   }
+	@Nested
+	@DisplayName("DELETE /api/bikes/{id}")
+	class testDeleteBike {
+		@Test
+		@DirtiesContext
+		@DisplayName("...deletes a bike if the bike withe given id does exist")
+		void validDelete() throws Exception {
+			bikeRepository.save(testBike);
+			mockMvc.perform(delete("/api/bikes/" + testBike.id()))
+					.andExpect(status().isOk())
+					.andExpect(content().json("""
+							        {  
+							           "title": "Mega bike 9000",
+							           "id": "Some test ID"
+							        }
+							"""));
+		}
+
+		@Test
+		@DirtiesContext
+      @DisplayName("...throws an exception if the bike with the given id does not exist")
+		void NonValidDelete() throws Exception {
+			mockMvc.perform(delete("/api/bikes/41"))
+					.andExpect(status().isNotFound());
 		}
 
 	}

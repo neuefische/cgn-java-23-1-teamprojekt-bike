@@ -9,6 +9,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -134,6 +135,29 @@ class BikeServiceTest {
 			Bike actual = bikeService.updateBike(updatedBike);
 			//THEN
 			Assertions.assertEquals(updatedBike, actual);
+		}
+
+	}
+
+	@Nested
+	@DisplayName("testing deleteBike()")
+	class deleteBikeTest {
+		@Test
+		@DisplayName("deleting existingBike")
+		void deleteExistingBike() {
+			//GIVEN
+			//WHEN
+			Bike actual = bikeService.deleteBike(testBike.id());
+			//THEN
+			Assertions.assertEquals(testBike, actual);
+		}
+
+		@Test
+		@DisplayName("deleting invalid BikeId")
+		void deleteBikeIdInvalid() {
+			//GIVEN
+			//THEN
+			Assertions.assertThrows(NoSuchBikeException.class, () -> bikeService.deleteBike("41"));
 		}
 
 	}

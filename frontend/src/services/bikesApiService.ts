@@ -27,5 +27,12 @@ export default function bikeApiService() {
          .catch((error) => console.error(error))
    }
 
-   return { get, post, put }
+   async function deleteBike(id: string) {
+      return await axios
+         .delete(apiUrlSlug+id)
+         .then(response => response.data)
+         .catch(error => console.error(error))
+   }
+
+   return { get, post, put, deleteBike }
 }

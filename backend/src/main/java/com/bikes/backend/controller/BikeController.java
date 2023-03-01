@@ -14,23 +14,26 @@ public class BikeController {
 
 	private final BikeService bikeService;
 
-	@GetMapping("/")
-	public List<Bike> getAllBikes() {
-		return bikeService.getAllBikes();
-	}
 
-	@GetMapping("/{id}")
-	public Bike getBikeByID(@PathVariable String id) {
-		return bikeService.getBikeById(id);
-	}
+    @GetMapping("/")
+    public List<Bike> getAllBikes() {
+        return bikeService.getAllBikes();
+    }
+    @GetMapping("/{id}")
+    public Bike getBikeByID(@PathVariable String id) {
+        return bikeService.getBikeById(id);
+    }
+    @PostMapping("/")
+    public Bike addBike(@RequestBody Bike bikeToAdd) {
+        return bikeService.addBike(bikeToAdd);
+    }
+    @PutMapping("/")
+    public Bike updateBike(@RequestBody Bike bikeToUpdate) {
+        return bikeService.updateBike(bikeToUpdate);
+    }
+    @DeleteMapping("/{id}")
+    public Bike deleteBike(@PathVariable String id){
+        return bikeService.deleteBike(id);
+    }
 
-	@PostMapping("/")
-	public Bike addBike(@RequestBody Bike bikeToAdd) {
-		return bikeService.addBike(bikeToAdd);
-	}
-
-	@PutMapping("/")
-	public Bike updateBike(@RequestBody Bike bikeToUpdate) {
-		return bikeService.updateBike(bikeToUpdate);
-	}
 }
