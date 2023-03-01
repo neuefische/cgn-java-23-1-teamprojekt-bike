@@ -17,12 +17,26 @@ class BikeServiceTest {
 
 	BikeRepository bikeRepository = mock(BikeRepository.class);
 	IdService idService = mock(IdService.class);
-    BikeService bikeService = new BikeService(bikeRepository, idService);
+	BikeService bikeService = new BikeService(bikeRepository, idService);
 
 	Bike testBike = new Bike("testId", "testBike");
 	List<Bike> expectedBikes = List.of(testBike);
 	List<Bike> expectedBikesEmpty = new ArrayList<>();
 
+	@DisplayName("testing addBike()")
+	@Test
+	void addBike() {
+		//GIVEN
+		when(bikeRepository.addBike(testBike)).thenReturn(testBike);
+		when(idService.generateId()).thenReturn(testBike.id());
+		//WHEN
+		Bike actual = bikeService.addBike(testBike);
+		//THEN
+		verify(bikeRepository).addBike(testBike);
+		Assertions.assertEquals(testBike, actual);
+
+
+	}
 
 	@Nested
 	@DisplayName("testing getAllBikes()")
@@ -75,26 +89,10 @@ class BikeServiceTest {
 			//GIVEN
 			String invalidId = "invalidId";
 			//WHEN
-			when(bikeRepository.getBikeById(invalidId)).thenThrow(new NoSuchBikeException());
 			//THEN
 			Assertions.assertThrows(NoSuchBikeException.class, () -> bikeService.getBikeById(invalidId));
 		}
 	}
-
-	@DisplayName("testing addBike()")
-    @Test
-    void addBike(){
-        //GIVEN
-        when(bikeRepository.addBike(testBike)).thenReturn(testBike);
-        when(idService.generateId()).thenReturn(testBike.id());
-        //WHEN
-        Bike actual = bikeService.addBike(testBike);
-        //THEN
-        verify(bikeRepository).addBike(testBike);
-        Assertions.assertEquals(testBike, actual);
-
-
-    }
 
 	@Nested
 	@DisplayName("testing deleteBike()")
@@ -110,11 +108,11 @@ class BikeServiceTest {
 			verify(bikeRepository).deleteBike(testBike.id());
 			Assertions.assertEquals(testBike, actual);
 		}
+
 		@Test
 		@DisplayName("deleting invalid BikeId")
 		void deleteBikeIdInvalid() {
 			//GIVEN
-			when(bikeRepository.deleteBike(testBike.id())).thenThrow(new NoSuchBikeException());
 			//THEN
 			Assertions.assertThrows(NoSuchBikeException.class, () -> bikeService.deleteBike("41"));
 		}
