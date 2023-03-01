@@ -29,7 +29,7 @@ class BikeRepositoryTest {
 		testBike = new Bike("Some test ID", "Mega bike 9000");
 	}
 
-	@DisplayName("getAllBikes()")
+	@DisplayName("findAll()")
 	@Nested
 	class testFindAll {
 

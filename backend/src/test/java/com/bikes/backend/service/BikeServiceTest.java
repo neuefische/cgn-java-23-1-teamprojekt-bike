@@ -1,6 +1,8 @@
 package com.bikes.backend.service;
 
 import com.bikes.backend.model.Bike;
+import com.bikes.backend.model.BikeDTO;
+import com.bikes.backend.model.BikeWithIdDTO;
 import com.bikes.backend.repository.BikeRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ class BikeServiceTest {
 	String testId = "Some test ID";
 	String invalidId = "Some invalid ID";
 	Bike testBike = new Bike(testId, "Mega bike 9000");
+	BikeDTO testBikeDTO = new BikeDTO("Mega bike 9000");
+	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000");
 
 	@BeforeEach
 	@DisplayName("set up test environment")
@@ -101,7 +105,7 @@ class BikeServiceTest {
 			//GIVEN
 			Bike expected = testBike;
 			//WHEN
-			Bike actual = bikeService.addBike(testBike);
+			Bike actual = bikeService.addBike(testBikeDTO);
 			//THEN
 			verify(mockedIdService).generateId();
 			Assertions.assertEquals(expected, actual);
@@ -120,7 +124,7 @@ class BikeServiceTest {
 			//GIVEN
 			Class<NoSuchBikeException> expected = NoSuchBikeException.class;
 			//WHEN + THEN
-			Assertions.assertThrows(expected, () -> bikeService.updateBike(testBike));
+			Assertions.assertThrows(expected, () -> bikeService.updateBike(testBikeWithIdDTO));
 		}
 
 		@Test
@@ -129,11 +133,12 @@ class BikeServiceTest {
 		void updateBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesExist() {
 			//GIVEN
 			bikeRepository.save(testBike);
-			Bike updatedBike = new Bike(testBike.id(), "Updated bike title");
+			BikeWithIdDTO updatedBike = new BikeWithIdDTO(testBike.id(), "Updated bike title");
+			Bike expected = new Bike(testBike.id(), "Updated bike title");
 			//WHEN
 			Bike actual = bikeService.updateBike(updatedBike);
 			//THEN
-			Assertions.assertEquals(updatedBike, actual);
+			Assertions.assertEquals(expected, actual);
 		}
 
 	}
