@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Bike } from '../models/Bike'
-import bikesApiService from '../services/bikesApiService'
+import bikeApiService from '../services/bikesApiService'
 
 function useBikesApi() {
    const [bikes, setBikes] = useState<Bike[]>([])
@@ -12,7 +12,7 @@ function useBikesApi() {
 
    function fetchBikes() {
       setLoading(true)
-      bikesApiService
+      bikeApiService()
          .get()
          .then((incomingBikes) => {
             setBikes(incomingBikes)
@@ -24,7 +24,7 @@ function useBikesApi() {
 
    function addBike(newBikeTitle: string) {
       setLoading(true)
-      bikesApiService
+      bikeApiService()
          .post(newBikeTitle)
          .then((incomingBike) => {
             setBikes([...bikes, incomingBike])
@@ -33,17 +33,19 @@ function useBikesApi() {
             setLoading(false)
          })
    }
-   function editBike(updatedBike: Bike){
+
+   function editBike(updatedBike: Bike) {
       setLoading(true)
-      bikesApiService
-          .put(updatedBike)
-          .then((incomingBike: Bike) => {
-             setBikes([...bikes.filter(bike => (bike.id !== incomingBike.id)), incomingBike])
-          })
-          .finally(() => {
-             setLoading(false)
-          })
+      bikeApiService()
+         .put(updatedBike)
+         .then((incomingBike: Bike) => {
+            setBikes([...bikes.filter((bike) => bike.id !== incomingBike.id), incomingBike])
+         })
+         .finally(() => {
+            setLoading(false)
+         })
    }
+
    return { loading, bikes, addBike, editBike }
 }
 

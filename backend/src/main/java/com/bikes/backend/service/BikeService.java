@@ -18,19 +18,23 @@ public class BikeService {
 	private final IdService idService;
 
 	public List<Bike> getAllBikes() {
-		return bikeRepository.getAllBikes();
+		return bikeRepository.findAll();
 	}
 
 	public Bike getBikeById(String id) {
-		return bikeRepository.getBikeById(id).orElseThrow(NoSuchBikeException::new);
+		return bikeRepository.findById(id).orElseThrow(NoSuchBikeException::new);
 	}
 
 	public Bike addBike(Bike incomingBike) {
 		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
-		return bikeRepository.addBike(bikeToAdd);
+		return bikeRepository.save(bikeToAdd);
 	}
-	public Bike updateBike(Bike incomingBike) {
-		return bikeRepository.addBike(incomingBike);
+
+	public Bike updateBike(Bike incomingBike) throws NoSuchBikeException {
+		if (!bikeRepository.existsById(incomingBike.id())) {
+			throw new NoSuchBikeException();
+		}
+		return bikeRepository.save(incomingBike);
 	}
 
 }
