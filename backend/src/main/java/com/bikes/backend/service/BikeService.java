@@ -37,7 +37,12 @@ public class BikeService {
 
 
 	public Bike deleteBike(String id) {
-		return bikeRepository.deleteById(id).orElseThrow(NoSuchBikeException::new);
-		// TODO: after merge adjust this method
+		if (!bikeRepository.existsById(id)) {
+			throw new NoSuchBikeException();
+		}
+		Bike bikeToDelete = bikeRepository.findById(id).get();
+		bikeRepository.deleteById(id);
+		return bikeToDelete;
 	}
+
 }

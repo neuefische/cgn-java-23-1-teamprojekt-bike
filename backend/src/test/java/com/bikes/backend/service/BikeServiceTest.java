@@ -9,7 +9,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -143,9 +142,10 @@ class BikeServiceTest {
 	@DisplayName("testing deleteBike()")
 	class deleteBikeTest {
 		@Test
-		@DisplayName("deleting existingBike")
+		@DisplayName("...deletes an existing bike and returns it back")
 		void deleteExistingBike() {
 			//GIVEN
+			bikeRepository.save(testBike);
 			//WHEN
 			Bike actual = bikeService.deleteBike(testBike.id());
 			//THEN
@@ -153,7 +153,7 @@ class BikeServiceTest {
 		}
 
 		@Test
-		@DisplayName("deleting invalid BikeId")
+		@DisplayName("...throws an exception if the bike with the given id does not exist")
 		void deleteBikeIdInvalid() {
 			//GIVEN
 			//THEN
