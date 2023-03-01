@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -40,12 +41,12 @@ public class BikeService {
 
 
 	public Bike deleteBike(String id) {
-		if (!bikeRepository.findById(id).isPresent()) {
+		Optional<Bike> bikeToDelete = bikeRepository.findById(id);
+		if (bikeToDelete.isEmpty()) {
 			throw new NoSuchBikeException();
 		} else {
-			Bike bikeToDelete = bikeRepository.findById(id).get();
 			bikeRepository.deleteById(id);
-			return bikeToDelete;
+			return bikeToDelete.get();
 		}
 	}
 
