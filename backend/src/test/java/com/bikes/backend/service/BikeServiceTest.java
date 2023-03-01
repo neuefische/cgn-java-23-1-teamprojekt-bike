@@ -10,15 +10,14 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class BikeServiceTest {
 
 	@Autowired
 	BikeRepository bikeRepository;
-	IdService idService = mock(IdService.class);
+	IdService mockedIdService = mock(IdService.class);
 	@Autowired
 	BikeService bikeService;
 
@@ -30,8 +29,8 @@ class BikeServiceTest {
 	@BeforeEach
 	@DisplayName("set up test environment")
 	void setUp() {
-		bikeRepository.deleteAll();
-		when(idService.generateId()).thenReturn(testBike.id());
+		bikeService = new BikeService(bikeRepository, mockedIdService);
+		when(mockedIdService.generateId()).thenReturn(testBike.id());
 	}
 
 	@Nested
@@ -101,10 +100,11 @@ class BikeServiceTest {
 		@DisplayName("...adds a bike to the database if the bike with the given id does not exist")
 		void addBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesNotExist() {
 			//GIVEN
+			Bike expected = testBike;
 			//WHEN
 			Bike actual = bikeService.addBike(testBike);
-			Bike expected = new Bike(actual.id(), testBike.title());
 			//THEN
+			verify(mockedIdService).generateId();
 			Assertions.assertEquals(expected, actual);
 		}
 
@@ -116,29 +116,13 @@ class BikeServiceTest {
 
 		@Test
 		@DirtiesContext
-		@DisplayName("...adds a bike to the database if the bike with the given id does not exist yet")
-		void updateBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesNotExist() {
-			//WHEN
-			Bike actual = bikeService.updateBike(testBike);
+		@DisplayName("...throws an exception if the bike with the given id does not exist yet")
+		void updateBike_throwsExceptionIfTheBikeWithTheGivenIdDoesNotExist() {
 			//GIVEN
-			Bike expected = new Bike(actual.id(), testBike.title());
-			//THEN
-			Assertions.assertEquals(expected, actual);
+			Class<NoSuchBikeException> expected = NoSuchBikeException.class;
+			//WHEN + THEN
+			Assertions.assertThrows(expected, () -> bikeService.updateBike(testBike));
 		}
-
-//	This is a test of the updateBike version which forbids updating the bike if the bike with the given id does not exist yet.
-//	See the method itself in BikeService.java for more information as well as the controller integration test in BikeControllerTest.java.
-//	TODO: Delete one of these versions and its tests after the team has voted on which one to keep.
-
-//		@Test
-//		@DirtiesContext
-//		@DisplayName("...throws an exception if the bike with the given id does not exist yet")
-//		void updateBike_throwsExceptionIfTheBikeWithTheGivenIdDoesNotExist() {
-//			//GIVEN
-//			Class<NoSuchBikeException> expected = NoSuchBikeException.class;
-//			//WHEN + THEN
-//			Assertions.assertThrows(expected, () -> bikeService.updateBike(testBike));
-//		}
 
 		@Test
 		@DirtiesContext

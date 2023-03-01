@@ -129,46 +129,19 @@ class BikeControllerTest {
 							"""));
 		}
 
-
-//	This is a test of the updateBike version which forbids updating the bike if the bike with the given id does not exist yet.
-//	See the method itself in BikeService.java for more information as well as the service unit test in BikeServiceTest.java.
-//	TODO: Delete one of these versions and its tests after the team has voted on which one to keep.
-
-//		@Test
-//		@DisplayName("...should throw an exception if there is no bike with the given id in the database")
-//		void updateBike_throwsExceptionIfThereIsNoBikeWithTheGivenId() throws Exception {
-//			//WHEN + THEN
-//			mockMvc.perform(put("/api/bikes/")
-//					.contentType(MediaType.APPLICATION_JSON)
-//					.content("""
-//							        {
-//							        "id": "Some invalid ID",
-//							        "title": "Mega bike 9000 ver.2"
-//							        }
-//							""")).andExpect(status().isNotFound());
-//		}
-
 		@Test
-		@DisplayName("...should create a new bike if there is no bike with the given id in the database and return it")
-		void updateBike_createsANewBikeIfThereIsNoBikeWithTheGivenId() throws Exception {
+		@DisplayName("...should throw an exception if there is no bike with the given id in the database")
+		void updateBike_throwsExceptionIfThereIsNoBikeWithTheGivenId() throws Exception {
 			//WHEN + THEN
 			mockMvc.perform(put("/api/bikes/")
-							.contentType(MediaType.APPLICATION_JSON)
-							.content("""
-									        {
-									        "id": "Some invalid ID",
-									        "title": "Mega bike 9000 ver.2"
-									        }
-									"""))
-					.andExpect(status().isOk())
-					.andExpect(content().json("""
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("""
 							        {
 							        "id": "Some invalid ID",
 							        "title": "Mega bike 9000 ver.2"
 							        }
-							"""));
+							""")).andExpect(status().isNotFound());
 		}
-
 
 	}
 
