@@ -25,7 +25,6 @@ class BikeServiceTest {
 	String invalidId = "Some invalid ID";
 	Bike testBike = new Bike(testId, "Mega bike 9000");
 
-	@Test
 	@BeforeEach
 	@DisplayName("set up test environment")
 	void setUp() {
