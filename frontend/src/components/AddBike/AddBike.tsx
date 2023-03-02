@@ -5,7 +5,7 @@ type AddBikeProps = {
    addBike: (newBikeTitle: string) => void
 }
 
-export default function AddBike(props: AddBikeProps) {
+function AddBike(props: AddBikeProps) {
    const [inputTitle, setInputTitle] = useState<string>('')
 
    function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -27,3 +27,5 @@ export default function AddBike(props: AddBikeProps) {
       </form>
    )
 }
+
+export default AddBike

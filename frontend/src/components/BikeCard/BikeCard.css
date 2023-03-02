@@ -17,18 +17,18 @@
 	margin: 0.75rem;
 }
 
-.card__edit-label--title {
-	margin-bottom: 0.25rem;
-	margin-left: 0.25rem;
-	font-weight: bold;
-	font-size: 1rem;
-}
-
 .card__edit-label {
 	display: flex;
 	flex-direction: column;
 	margin: 0.5rem 0.75rem;
 	align-items: flex-start;
+}
+
+.card__edit-label--title {
+	margin-bottom: 0.25rem;
+	margin-left: 0.25rem;
+	font-weight: bold;
+	font-size: 1rem;
 }
 
 .card__edit-input--wrapper {
@@ -50,7 +50,6 @@
 	margin-top: auto;
 	display: flex;
 	flex-direction: column;
-
 }
 
 .card__controls--horizontal {
