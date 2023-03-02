@@ -7,13 +7,7 @@
 	background: #d2cdb2;
 }
 
-#app header.header, footer.footer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 1rem 3rem;
-	background: #eae4b9;
-}
+
 
 #app main.main {
 	display: flex;
