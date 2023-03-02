@@ -18,20 +18,12 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"types": [
+			"cypress"
+		]
 	},
 	"include": [
 		"src"
-	],
-	"types": [
-		"cypress"
 	]
-	//	"exclude": [
-	//		"node_modules",
-	//		"build",
-	//		"scripts",
-	//		"acceptance-tests",
-	//		"jest",
-	//		"cypress"
-	//	]
 }
