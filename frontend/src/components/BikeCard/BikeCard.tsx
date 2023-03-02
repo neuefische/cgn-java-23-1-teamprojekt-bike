@@ -47,7 +47,9 @@ function BikeCard(props: BikeCardProps) {
 
             </div> :
              <div className={"card"}>
-                 Title: <input className={"add-form__input"} value={updatedTitle} onChange={handleUpdateTitle}/>
+                <label className={"card__edit-label"}>
+                 Title: <input className={"card__edit-input"} value={updatedTitle} onChange={handleUpdateTitle}/>
+                </label>
                 <div className={"card__controls"}>
                    <div  className={"card__controls--horizontal"}>
                       <button className="card__button inline-half" onClick={handleSaveChanges}>Save Changes</button>
@@ -58,7 +60,6 @@ function BikeCard(props: BikeCardProps) {
          }
        </>
    )
-
 }
 
 export default BikeCard

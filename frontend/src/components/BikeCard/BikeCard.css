@@ -16,6 +16,20 @@
 	font-weight: bold;
 	margin: 0.75rem;
 }
+.card__edit-label {
+	display: flex;
+	flex-direction: column;
+	margin: 0.5rem 0.75rem;
+	align-items: flex-start;
+}
+.card__edit-input{
+	padding: 0.5rem;
+	border: #a68c14 solid 2px;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	font-weight: bold;
+	background: white;
+}
 .card__controls {
 	margin-top: auto;
 	display: flex;
