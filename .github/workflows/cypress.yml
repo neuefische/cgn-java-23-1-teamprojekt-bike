@@ -2,7 +2,7 @@ name: E2E
 on: push
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Install dependencies
@@ -17,7 +17,7 @@ jobs:
           # we have already installed all dependencies above
           install: false
           # Cypress tests and config file are in "e2e" folder
-          working-directory: e2e
+          working-directory: ./frontend/cypress
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
