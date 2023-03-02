@@ -1,4 +1,4 @@
-.gallery__card {
+.card {
 	display: flex;
 	flex-direction: column;
 	width: 420px;
@@ -9,15 +9,24 @@
 	background: #efecdd;
 }
 
-.gallery__card--title {
+.card__title {
 	color: #a68c14;
 	font-size: 2rem;
 	white-space: break-spaces;
 	font-weight: bold;
 	margin: 0.75rem;
 }
+.card__controls {
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
 
-.gallery__card--button {
+}
+.card__controls--horizontal {
+	display: flex;
+
+}
+.card__button {
 	background: white;
 	border: #a68c14 solid 2px;
 	border-radius: 0.5rem;
@@ -28,4 +37,9 @@
 	font-size: 1rem;
 	font-weight: bold;
 	white-space: pre-line;
+}
+
+.card__button.inline-half {
+	width: 50%;
+	justify-content: center;
 }

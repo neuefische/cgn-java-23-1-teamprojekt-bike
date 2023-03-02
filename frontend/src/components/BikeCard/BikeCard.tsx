@@ -33,18 +33,27 @@ function BikeCard(props: BikeCardProps) {
    return (
        <>
          {!editMode?
-            <div className="gallery__card" id={props.bike.id}>
-               <h2 className="gallery__card--title">{props.bike.title}</h2>
-                <Link className="gallery__card--button" to={'details/' + props.bike.id}>
-                  Go to details
-               </Link>
-               <button onClick={handleEditButton} className={"gallery__card--button"}>Edit</button>
-               <button onClick={handleDelete}>Delete this bike</button>
+            <div className="card" id={props.bike.id}>
+               <h2 className="card__title">{props.bike.title}</h2>
+               <div className={"card__controls"}>
+                  <Link className="card__button" to={'details/' + props.bike.id}>
+                     Go to details
+                  </Link>
+                  <div  className={"card__controls--horizontal"}>
+                     <button onClick={handleEditButton} className={"card__button inline-half"}>Edit</button>
+                     <button onClick={handleDelete} className={"card__button inline-half"}>Delete this bike</button>
+                  </div>
+               </div>
+
             </div> :
-             <div className={"gallery__card"}>
+             <div className={"card"}>
                  Title: <input className={"add-form__input"} value={updatedTitle} onChange={handleUpdateTitle}/>
-                 <button className="gallery__card--button" onClick={handleSaveChanges}>Save Changes</button>
-                 <button className="gallery__card--button" onClick={handleCancelEdit}>Save Cancel</button>
+                <div className={"card__controls"}>
+                   <div  className={"card__controls--horizontal"}>
+                      <button className="card__button inline-half" onClick={handleSaveChanges}>Save Changes</button>
+                      <button className="card__button inline-half" onClick={handleCancelEdit}>Save Cancel</button>
+                   </div>
+                </div>
              </div>
          }
        </>
