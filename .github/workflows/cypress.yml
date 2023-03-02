@@ -20,10 +20,10 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           install: false # Skip npm install
-          build: cd .. && npm run build
+          build: npm run build
           # Starts web server for E2E tests - replace with your own server invocation
           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
-          start: cd .. && npm run start
+          start: npm run start
           wait-on: 'http://localhost:3000' # Waits for above
           # Records to Cypress Cloud
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
