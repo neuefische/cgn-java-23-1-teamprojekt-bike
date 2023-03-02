@@ -55,6 +55,7 @@ function BikeCard(props: BikeCardProps) {
             </div>
          ) : (
             <div className="card">
+               <h2 className="card__title">Edit bike</h2>
                <label className="card__edit-label">
                   <span className="card__edit-label--title">Title:</span>
                   <div className="card__edit-input--wrapper">
@@ -67,7 +68,7 @@ function BikeCard(props: BikeCardProps) {
                         Save Changes
                      </button>
                      <button className="card__button inline-half" onClick={handleCancelEdit}>
-                        Save Cancel
+                        Cancel
                      </button>
                   </div>
                </div>
