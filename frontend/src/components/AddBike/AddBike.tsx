@@ -19,9 +19,11 @@ export default function AddBike(props: AddBikeProps) {
    }
 
    return (
-      <form className="add-form" onSubmit={(event) => handleSubmit(event)}>
+      <form onSubmit={(event) => handleSubmit(event)}>
          <input className="add-form__input" type="text" value={inputTitle} onChange={handleTitleChange} />
-         <button className="add-form__button" disabled={inputTitle.trim().length === 0} >Add new Bike</button>
+         <button className="add-form__button" disabled={inputTitle.trim().length === 0}>
+            Add new Bike
+         </button>
       </form>
    )
 }
