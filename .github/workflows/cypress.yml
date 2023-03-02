@@ -17,7 +17,7 @@ jobs:
           # we have already installed all dependencies above
           install: false
           # Cypress tests and config file are in "e2e" folder
-          working-directory: ./frontend/cypress
+          working-directory: .
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
