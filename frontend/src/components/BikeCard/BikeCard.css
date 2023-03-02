@@ -16,13 +16,27 @@
 	font-weight: bold;
 	margin: 0.75rem;
 }
+
+.card__edit-label--title {
+	margin-bottom: 0.25rem;
+	margin-left: 0.25rem;
+	font-weight: bold;
+	font-size: 1rem;
+}
+
 .card__edit-label {
 	display: flex;
 	flex-direction: column;
 	margin: 0.5rem 0.75rem;
 	align-items: flex-start;
 }
-.card__edit-input{
+
+.card__edit-input--wrapper {
+	display: flex;
+	width: 100%;
+}
+
+.card__edit-input {
 	padding: 0.5rem;
 	border: #a68c14 solid 2px;
 	border-radius: 0.5rem;
@@ -30,16 +44,19 @@
 	font-weight: bold;
 	background: white;
 }
+
 .card__controls {
 	margin-top: auto;
 	display: flex;
 	flex-direction: column;
 
 }
+
 .card__controls--horizontal {
 	display: flex;
 
 }
+
 .card__button {
 	background: white;
 	border: #a68c14 solid 2px;
