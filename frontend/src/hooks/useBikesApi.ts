@@ -12,7 +12,7 @@ function useBikesApi() {
 
    function fetchBikes() {
       setLoading(true)
-      bikesApiService
+      bikesApiService()
          .get()
          .then((incomingBikes) => {
             setBikes(incomingBikes)
@@ -24,7 +24,7 @@ function useBikesApi() {
 
    function addBike(newBikeTitle: string) {
       setLoading(true)
-      bikesApiService
+      bikesApiService()
          .post(newBikeTitle)
          .then((incomingBike) => {
             setBikes([...bikes, incomingBike])
@@ -33,22 +33,36 @@ function useBikesApi() {
             setLoading(false)
          })
    }
-   function deleteBike(id: string): void {
+
+   function editBike(updatedBike: Bike) {
       setLoading(true)
-      bikesApiService
-          .deleteBike(id)
-          .then((bikeToDelete: Bike): Bike[] => {
-             return bikes.filter(bike => (bike.id !== bikeToDelete.id))
-          })
-          .then((newBikeArray: Bike[]): void => {
-             setBikes(newBikeArray)
-          })
-          .finally(() => {
-             setLoading(false)
-          })
+      bikesApiService()
+         .put(updatedBike)
+         .then((incomingBike: Bike) => {
+            setBikes([...bikes.filter((bike) => bike.id !== incomingBike.id), incomingBike])
+         })
+         .finally(() => {
+            setLoading(false)
+         })
    }
 
-   return { loading, bikes, addBike, deleteBike }
+   function deleteBike(id: string): void {
+      setLoading(true)
+      bikesApiService()
+         .deleteBike(id)
+         .then((bikeToDelete: Bike): Bike[] => {
+            return bikes.filter(bike => (bike.id !== bikeToDelete.id))
+         })
+         .then((newBikeArray: Bike[]): void => {
+            setBikes(newBikeArray)
+         })
+         .finally(() => {
+            setLoading(false)
+         })
+   }
+
+   return { loading, bikes, addBike, editBike, deleteBike }
+
 }
 
 export default useBikesApi

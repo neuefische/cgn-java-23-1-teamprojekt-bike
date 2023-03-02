@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -21,10 +21,10 @@ class BikeControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
-
 	@Autowired
 	BikeRepository bikeRepository;
-	Bike testBike = new Bike("testId", "testBike");
+	Bike testBike = new Bike("Some test ID", "Mega bike 9000");
+	String invalidId = "Some invalid ID";
 
 	@Nested
 	@DisplayName("GET All /api/bikes")
@@ -33,29 +33,32 @@ class BikeControllerTest {
 		@Test
 		@DisplayName("...should return an empty array if there are no bikes in the database")
 		void testGetAllBikes_emptyArray() throws Exception {
-			mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/"))
+			mockMvc.perform(get("/api/bikes/"))
 					.andExpect(status().isOk())
 					.andExpect(content().json("[]"));
 		}
+
 	}
 
 
 	@Nested
 	@DisplayName("GET /api/bikes/{id}")
 	class testGetBikeById {
+
 		@Test
 		@DirtiesContext
 		@DisplayName("...should return a bike if the bike with the given id does exist")
 		void testGetBikeByIdExists() throws Exception {
-			bikeRepository.addBike(testBike);
+			//GIVEN
+			bikeRepository.save(testBike);
 
-			//when
-			mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/" + testBike.id()))
+			//WHEN + THEN
+			mockMvc.perform(get("/api/bikes/" + testBike.id()))
 					.andExpect(status().isOk())
-					.andExpect(content().json(""" 
+					.andExpect(content().json("""
 							        {
-							            "id": "testId",
-							            "title": "testBike"
+							            "id": "Some test ID",
+							            "title": "Mega bike 9000"
 							        }
 							"""));
 		}
@@ -63,10 +66,11 @@ class BikeControllerTest {
 		@Test
 		@DisplayName("...should throw an exception if the bike with the given id does not exist")
 		void testGetBikeById_throwsException() throws Exception {
-			//when
-			mockMvc.perform(MockMvcRequestBuilders.get("/api/bikes/1"))
+			//WHEN + THEN
+			mockMvc.perform(get("/api/bikes/" + invalidId))
 					.andExpect(status().isNotFound());
 		}
+
 	}
 
 
@@ -74,57 +78,99 @@ class BikeControllerTest {
 	@DisplayName("POST /api/bikes")
 	class testPostBike {
 
-
 		@Test
 		@DirtiesContext
 		@DisplayName("...should return a bike if there is a bike with the given id in the database")
 		void addBike_returnsABike() throws Exception {
-			mockMvc.perform(MockMvcRequestBuilders.post("/api/bikes/")
+			//WHEN + THEN
+			mockMvc.perform(post("/api/bikes/")
 							.contentType(MediaType.APPLICATION_JSON)
-							.content(""" 
+							.content("""
 									        {
-									        "title": "testBike"
+									        "title": "Mega bike 9000"
 									        }
 									"""))
 					.andExpect(status().isOk())
-					.andExpect(content().json(""" 
-							        {      
-							        "title": "testBike"
+					.andExpect(content().json("""
+							        {
+							        "title": "Mega bike 9000"
 							        }
 							"""))
 					.andExpect(jsonPath("$.id").isNotEmpty());
-
-
 		}
 
 	}
 
 	@Nested
-	@DisplayName("testing delete bike")
+	@DisplayName("PUT /api/bikes")
+	class testPutBike {
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...should return a bike if there is a bike with the given id in the database")
+		void updateBike_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
+			//GIVEN
+			bikeRepository.save(testBike);
+
+			//WHEN + THEN
+			mockMvc.perform(put("/api/bikes/")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("""
+									        {
+									        "id": "Some test ID",
+									        "title": "Mega bike 9000 ver.2"
+									        }
+									"""))
+					.andExpect(status().isOk())
+					.andExpect(content().json("""
+							        {
+							        "id": "Some test ID",
+							        "title": "Mega bike 9000 ver.2"
+							        }
+							"""));
+		}
+
+		@Test
+		@DisplayName("...should throw an exception if there is no bike with the given id in the database")
+		void updateBike_throwsExceptionIfThereIsNoBikeWithTheGivenId() throws Exception {
+			//WHEN + THEN
+			mockMvc.perform(put("/api/bikes/")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("""
+							        {
+							        "id": "Some invalid ID",
+							        "title": "Mega bike 9000 ver.2"
+							        }
+							""")).andExpect(status().isNotFound());
+		}
+
+   }
+	@Nested
+	@DisplayName("DELETE /api/bikes/{id}")
 	class testDeleteBike {
 		@Test
 		@DirtiesContext
-		@DisplayName("deleteExistingBike")
+		@DisplayName("...deletes a bike if the bike withe given id does exist")
 		void validDelete() throws Exception {
-			bikeRepository.addBike(testBike);
-			mockMvc.perform(MockMvcRequestBuilders.delete("/api/bikes/" + testBike.id()))
+			bikeRepository.save(testBike);
+			mockMvc.perform(delete("/api/bikes/" + testBike.id()))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							        {  
-							        "title": "testBike",
-							        "id": "testId"
+							           "title": "Mega bike 9000",
+							           "id": "Some test ID"
 							        }
 							"""));
 		}
 
 		@Test
 		@DirtiesContext
-		@DisplayName("deleteNonExistingBike")
+      @DisplayName("...throws an exception if the bike with the given id does not exist")
 		void NonValidDelete() throws Exception {
-			mockMvc.perform(MockMvcRequestBuilders.delete("/api/bikes/41"))
+			mockMvc.perform(delete("/api/bikes/41"))
 					.andExpect(status().isNotFound());
 		}
+
 	}
+
 }
-
-

@@ -1,11 +1,14 @@
 package com.bikes.backend.service;
 
 import com.bikes.backend.model.Bike;
+import com.bikes.backend.model.BikeDTO;
+import com.bikes.backend.model.BikeWithIdDTO;
 import com.bikes.backend.repository.BikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -16,19 +19,36 @@ public class BikeService {
 	private final IdService idService;
 
 	public List<Bike> getAllBikes() {
-		return bikeRepository.getAllBikes();
+		return bikeRepository.findAll();
 	}
 
 	public Bike getBikeById(String id) {
-		return bikeRepository.getBikeById(id).orElseThrow(NoSuchBikeException::new);
+		return bikeRepository.findById(id).orElseThrow(NoSuchBikeException::new);
 	}
 
-	public Bike addBike(Bike incomingBike) {
+	public Bike addBike(BikeDTO incomingBike) {
 		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
-		return bikeRepository.addBike(bikeToAdd);
+		return bikeRepository.save(bikeToAdd);
 	}
+
+	public Bike updateBike(BikeWithIdDTO incomingBike) throws NoSuchBikeException {
+		if (!bikeRepository.existsById(incomingBike.id())) {
+			throw new NoSuchBikeException();
+		}
+		Bike result = new Bike(incomingBike.id(), incomingBike.title());
+		return bikeRepository.save(result);
+	}
+
 
 	public Bike deleteBike(String id) {
-		return bikeRepository.deleteBike(id).orElseThrow(NoSuchBikeException::new);
+		Optional<Bike> bikeToDelete = bikeRepository.findById(id);
+		if (bikeToDelete.isEmpty()) {
+			throw new NoSuchBikeException();
+		} else {
+			bikeRepository.deleteById(id);
+			return bikeToDelete.get();
+		}
 	}
+
+
 }
