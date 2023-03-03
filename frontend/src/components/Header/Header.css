@@ -21,7 +21,7 @@
 
 .header__container.horizontal {
 	flex-direction: row;
-	width: 100pc;
+	width: 100%;
 }
 
 .header__container--third {
