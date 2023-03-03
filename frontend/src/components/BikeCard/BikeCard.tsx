@@ -48,7 +48,7 @@ function BikeCard(props: BikeCardProps) {
                         Edit
                      </button>
                      <button onClick={handleDelete} className="card__button inline-half">
-                        Delete this bike
+                        Delete bike
                      </button>
                   </div>
                </div>
