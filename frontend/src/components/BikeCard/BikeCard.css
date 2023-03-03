@@ -1,15 +1,15 @@
-.gallery__card {
+.card {
 	display: flex;
 	flex-direction: column;
 	width: 420px;
 	height: 420px;
 	border-radius: 1rem;
 	border: #a68c14 solid 2px;
-	margin: 0.5rem;
+	margin: 0.50rem 0;
 	background: #efecdd;
 }
 
-.gallery__card--title {
+.card__title {
 	color: #a68c14;
 	font-size: 2rem;
 	white-space: break-spaces;
@@ -17,7 +17,47 @@
 	margin: 0.75rem;
 }
 
-.gallery__card--button {
+.card__edit-label {
+	display: flex;
+	flex-direction: column;
+	margin: 0.5rem 0.75rem;
+	align-items: flex-start;
+}
+
+.card__edit-label--title {
+	margin-bottom: 0.25rem;
+	margin-left: 0.25rem;
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.card__edit-input--wrapper {
+	display: flex;
+	width: 100%;
+}
+
+.card__edit-input {
+	padding: 0.5rem;
+	border: #a68c14 solid 2px;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	font-weight: bold;
+	background: white;
+	width: 100%
+}
+
+.card__controls {
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.card__controls--horizontal {
+	display: flex;
+
+}
+
+.card__button {
 	background: white;
 	border: #a68c14 solid 2px;
 	border-radius: 0.5rem;
@@ -28,4 +68,9 @@
 	font-size: 1rem;
 	font-weight: bold;
 	white-space: pre-line;
+}
+
+.card__button.inline-half {
+	width: 50%;
+	justify-content: center;
 }

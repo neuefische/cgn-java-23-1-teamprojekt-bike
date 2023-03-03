@@ -1,0 +1,29 @@
+#app header.header, footer.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 2rem;
+	background: #20283d;
+	color: #d2cdb2;
+	font-weight: bold;
+}
+
+.header__logo {
+	width: auto;
+	height: 150px;
+}
+
+.header__container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.header__container.horizontal {
+	flex-direction: row;
+	width: 100%;
+}
+
+.header__container--third {
+	min-width: 127px;
+}
