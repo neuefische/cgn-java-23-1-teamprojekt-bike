@@ -13,6 +13,12 @@
 	height: 150px;
 }
 
+.header__logo.squared {
+	width: 30%;
+	height: auto;
+	align-self: center;
+}
+
 .header__container {
 	display: flex;
 	flex-direction: column;
@@ -26,4 +32,25 @@
 
 .header__container--third {
 	min-width: 127px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.navigation {
+	flex-direction: row;
+	gap: 20px;
+}
+
+.navigation a, .navigation div {
+	background: white;
+	border: #a68c14 solid 2px;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	text-decoration: none;
+	color: #a68c14;
+	font-size: 1rem;
+	font-weight: bold;
+	white-space: pre-line;
 }
