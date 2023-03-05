@@ -5,6 +5,12 @@ module.exports = {
       bundler: "webpack",
     },
   },
+
   projectId: "vvu8e5",
-  fileServerFolder: "frontend",
+
+  e2e: {
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    },
+  },
 };
