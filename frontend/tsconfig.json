@@ -2,9 +2,14 @@
 	"compilerOptions": {
 		"target": "es5",
 		"lib": [
+			"es5",
 			"dom",
 			"dom.iterable",
 			"esnext"
+		],
+		"types": [
+			"cypress",
+			"node"
 		],
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -18,12 +23,7 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"jsx": "react-jsx",
-		"types": [
-			"cypress"
-		]
+		"jsx": "react-jsx"
 	},
-	"include": [
-		"src"
-	]
+	"include": ["./src", "cypress.d.ts"]
 }
