@@ -18,7 +18,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           working-directory: frontend
-          build: npm install && npm run build
+          build: npm run build
           # Starts web server for E2E tests - replace with your own server invocation
           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
           start: npm start
