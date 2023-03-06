@@ -2,19 +2,36 @@ package com.bikes.backend.controller;
 
 import com.bikes.backend.model.MongoUser;
 import com.bikes.backend.repository.MongoUserRepository;
+import com.bikes.backend.service.IdService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class MongoUserController {
     private final MongoUserRepository mongoUserRepository;
-
+    private final PasswordEncoder passwordEncoder;
+    private final IdService idService;
     @PostMapping
     public MongoUser create (@RequestBody MongoUser user) {
-        return mongoUserRepository.save(user);
+        if (user.username() == null || user.username().length()==0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
+        }
+        if (user.password() == null || user.password().length()==0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
+        }
+        if (mongoUserRepository.existsByUsername(user.username())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
+
+        MongoUser newUser = new MongoUser(idService.generateId(), user.username(), passwordEncoder.encode(user.password()), "BASIC" );
+        MongoUser userOut = mongoUserRepository.save(newUser);
+        return new MongoUser(userOut.id(), userOut.username(),null, userOut.role());
     }
 
     @GetMapping("/me")
