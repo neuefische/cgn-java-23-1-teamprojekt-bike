@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -132,6 +133,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should throw an exception if there is no bike with the given id in the database")
+		@WithMockUser(username="user", password="123")
 		void updateBike_throwsExceptionIfThereIsNoBikeWithTheGivenId() throws Exception {
 			//WHEN + THEN
 			mockMvc.perform(put("/api/bikes/")
