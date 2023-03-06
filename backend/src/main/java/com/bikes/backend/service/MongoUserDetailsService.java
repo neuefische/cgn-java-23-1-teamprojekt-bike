@@ -2,6 +2,7 @@ package com.bikes.backend.service;
 
 import com.bikes.backend.model.MongoUser;
 import com.bikes.backend.repository.MongoUserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,9 +21,10 @@ public class MongoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MongoUser optionalMongoUser = repository.findByUsername(username)
+        MongoUser mongoUser = repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return new User(optionalMongoUser.username(), optionalMongoUser.password(), List.of());
+        return new User(mongoUser.username(), mongoUser.password(),
+                List.of(new SimpleGrantedAuthority("ROLE_" + mongoUser.role())));
     }
 }

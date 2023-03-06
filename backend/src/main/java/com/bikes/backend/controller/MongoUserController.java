@@ -24,4 +24,9 @@ public class MongoUserController {
                 .getAuthentication()
                 .getName();
     }
+
+    @GetMapping("/admin")
+    public String getAdmin(){
+        return "Hallo Admin";
+    }
 }
