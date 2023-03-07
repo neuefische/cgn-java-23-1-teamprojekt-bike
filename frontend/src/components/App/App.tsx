@@ -12,6 +12,7 @@ import useBikesApi from '../../hooks/useBikesApi'
 import AddBike from '../AddBike/AddBike'
 import SignUp from '../SignUp/SignUp'
 import Login from '../Login/Login'
+import useAuth from '../../hooks/useAuth'
 
 // @ts-ignore
 axios.interceptors.request.use(
@@ -29,6 +30,8 @@ axios.interceptors.request.use(
 function App() {
    const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
 
+   const currentUser = useAuth(false)
+
    const addBikeInputRef = useRef() as React.MutableRefObject<HTMLInputElement>
 
    return (
@@ -38,7 +41,7 @@ function App() {
             <Routes>
                <Route path="/" element={<Login />} />
                <Route path="/signup" element={<SignUp />} />
-               <Route path="/gallery" element={!loading && <BikeGallery bikes={bikes} editBike={editBike} deleteBike={deleteBike} />} />
+               <Route path="/gallery" element={!loading && !!currentUser && <BikeGallery bikes={bikes} editBike={editBike} deleteBike={deleteBike} />} />
                <Route path="/details/:id" element={!loading && <BikeDetails bikes={bikes} />} />
             </Routes>
          </main>

@@ -29,6 +29,7 @@ public class SecurityConfig {
 				.sessionManagement(config ->
 						config.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 				.authorizeHttpRequests()
+				.requestMatchers(HttpMethod.GET, "/api/users/me").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 				.requestMatchers(HttpMethod.POST, "/api/**").authenticated()
 				.requestMatchers(HttpMethod.PUT, "/api/**").authenticated()

@@ -46,7 +46,12 @@ public class MongoUserController {
 
 	@GetMapping("/me")
 	public MongoUser getCurrentUser(Principal principal) {
-		MongoUser currentUser = mongoUserDetailsService.loadMongoUserByUsername(principal.getName());
+		MongoUser currentUser = mongoUserDetailsService
+				.loadMongoUserByUsername(
+						principal.getName())
+				.orElseThrow(() ->
+						new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found")
+				);
 		return new MongoUser(currentUser.id(), currentUser.username(), null, currentUser.role());
 	}
 

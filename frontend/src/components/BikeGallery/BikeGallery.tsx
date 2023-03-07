@@ -2,6 +2,8 @@ import React from 'react'
 import { Bike } from '../../models/Bike'
 import BikeCard from '../BikeCard/BikeCard'
 import './BikeGallery.css'
+import useAuth from '../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 type BikeGalleryProps = {
    bikes: Bike[]
@@ -10,12 +12,16 @@ type BikeGalleryProps = {
 }
 
 function BikeGallery(props: BikeGalleryProps) {
-   return (
+   const currentUser = useAuth(true)
+   const navigate = useNavigate()
+   return currentUser ? (
       <section className="gallery">
          {props.bikes.map((bike) => (
             <BikeCard key={bike.id} bike={bike} editBike={props.editBike} deleteBike={props.deleteBike} />
          ))}
       </section>
+   ) : (
+      <>{navigate('/login')}</>
    )
 }
 
