@@ -47,4 +47,5 @@ public class MongoUserController {
 	public String getAdmin() {
 		return "Hello, Admin!";
 	}
+
 }
