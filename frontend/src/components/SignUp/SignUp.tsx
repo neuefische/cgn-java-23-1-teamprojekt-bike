@@ -20,9 +20,7 @@ function SignUp() {
             username,
             password,
          })
-         .then((res) => {
-            console.log(res)
-            console.log(res?.data)
+         .then(() => {
             setUsername('')
             setPassword('')
          })

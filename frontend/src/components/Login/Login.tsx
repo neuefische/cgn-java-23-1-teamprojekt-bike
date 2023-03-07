@@ -28,7 +28,7 @@ function Login() {
             }
          )
          .then(() => {
-            navigate('/gallery')
+            navigate('/')
          })
          .catch((error) => {
             console.log(error)

@@ -14,14 +14,13 @@ type BikeGalleryProps = {
 function BikeGallery(props: BikeGalleryProps) {
    const currentUser = useAuth(true)
    const navigate = useNavigate()
-   return currentUser ? (
+   !currentUser && navigate('/login')
+   return (
       <section className="gallery">
          {props.bikes.map((bike) => (
             <BikeCard key={bike.id} bike={bike} editBike={props.editBike} deleteBike={props.deleteBike} />
          ))}
       </section>
-   ) : (
-      <>{navigate('/login')}</>
    )
 }
 
