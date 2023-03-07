@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.security.test.context.support.WithMockUser;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -81,6 +82,7 @@ class BikeControllerTest {
 
 		@Test
 		@DirtiesContext
+		@WithMockUser()
 		@DisplayName("...should return a bike if there is a bike with the given id in the database")
 		void addBike_returnsABike() throws Exception {
 			//WHEN + THEN
@@ -90,7 +92,8 @@ class BikeControllerTest {
 									        {
 									        "title": "Mega bike 9000"
 									        }
-									"""))
+									""")
+							.with(csrf()))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							        {
@@ -108,6 +111,7 @@ class BikeControllerTest {
 
 		@Test
 		@DirtiesContext
+		@WithMockUser()
 		@DisplayName("...should return a bike if there is a bike with the given id in the database")
 		void updateBike_returnsABikeIfThereIsABikeWithTheGivenId() throws Exception {
 			//GIVEN
@@ -121,7 +125,7 @@ class BikeControllerTest {
 									        "id": "Some test ID",
 									        "title": "Mega bike 9000 ver.2"
 									        }
-									"""))
+									""").with(csrf()))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							        {
@@ -133,7 +137,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should throw an exception if there is no bike with the given id in the database")
-		@WithMockUser(username="user", password="123")
+		@WithMockUser(username = "user", password = "123")
 		void updateBike_throwsExceptionIfThereIsNoBikeWithTheGivenId() throws Exception {
 			//WHEN + THEN
 			mockMvc.perform(put("/api/bikes/")
@@ -143,19 +147,20 @@ class BikeControllerTest {
 							        "id": "Some invalid ID",
 							        "title": "Mega bike 9000 ver.2"
 							        }
-							""")).andExpect(status().isNotFound());
+							""").with(csrf())).andExpect(status().isNotFound());
 		}
 
-   }
+	}
+
 	@Nested
 	@DisplayName("DELETE /api/bikes/{id}")
 	class testDeleteBike {
 		@Test
 		@DirtiesContext
 		@DisplayName("...deletes a bike if the bike withe given id does exist")
-		void validDelete() throws Exception {
+		void deleteBike_deletesABikeIfTheBikeWithTheGivenIdDoesExist() throws Exception {
 			bikeRepository.save(testBike);
-			mockMvc.perform(delete("/api/bikes/" + testBike.id()))
+			mockMvc.perform(delete("/api/bikes/" + testBike.id()).with(csrf()))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							        {  
@@ -167,10 +172,41 @@ class BikeControllerTest {
 
 		@Test
 		@DirtiesContext
-      @DisplayName("...throws an exception if the bike with the given id does not exist")
-		void NonValidDelete() throws Exception {
-			mockMvc.perform(delete("/api/bikes/41"))
+		@WithMockUser()
+		@DisplayName("...throws an exception if the bike with the given id does not exist")
+		void deleteBike_throwsExceptionIfTheBikeWithTheGivenIdDoesNotExist() throws Exception {
+			mockMvc.perform(delete("/api/bikes/41").with(csrf()))
 					.andExpect(status().isNotFound());
+		}
+
+	}
+
+	@Nested
+	@DisplayName("GET /api/users/admin")
+	class testGetAdmin {
+
+		@Test
+		@DisplayName("...should return 'Unauthorized' (401) if the user is not authenticated")
+		void getAdmin_returns401IfTheUserIsNotAuthenticated() throws Exception {
+			mockMvc.perform(get("/api/users/admin").with(csrf()))
+					.andExpect(status().isUnauthorized());
+		}
+
+		@Test
+		@WithMockUser(roles = {"BASIC"})
+		@DisplayName("...should return 'Forbidden' (403) if the user is not an admin")
+		void getAdmin_returns403IfTheUserIsNotAnAdmin() throws Exception {
+			mockMvc.perform(get("/api/users/admin").with(csrf()))
+					.andExpect(status().isForbidden());
+		}
+
+		@Test
+		@WithMockUser(roles = {"ADMIN"})
+		@DisplayName("...should return the greeting for the admin user if the user is an admin")
+		void getAdmin_returnsGreetingForAdminUser() throws Exception {
+			mockMvc.perform(get("/api/users/admin").with(csrf()))
+					.andExpect(status().isOk())
+					.andExpect(content().string("Hello, Admin!"));
 		}
 
 	}

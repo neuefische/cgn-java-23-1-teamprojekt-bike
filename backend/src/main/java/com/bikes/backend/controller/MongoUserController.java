@@ -14,36 +14,37 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class MongoUserController {
-    private final MongoUserRepository mongoUserRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final IdService idService;
-    @PostMapping
-    public MongoUser create (@RequestBody MongoUser user) {
-        if (user.username() == null || user.username().length()==0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
-        }
-        if (user.password() == null || user.password().length()==0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
-        }
-        if (mongoUserRepository.existsByUsername(user.username())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
-        }
+	private final MongoUserRepository mongoUserRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final IdService idService;
 
-        MongoUser newUser = new MongoUser(idService.generateId(), user.username(), passwordEncoder.encode(user.password()), "BASIC" );
-        MongoUser userOut = mongoUserRepository.save(newUser);
-        return new MongoUser(userOut.id(), userOut.username(),null, userOut.role());
-    }
+	@PostMapping
+	public MongoUser create(@RequestBody MongoUser user) {
+		if (user.username() == null || user.username().length() == 0) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
+		}
+		if (user.password() == null || user.password().length() == 0) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
+		}
+		if (mongoUserRepository.existsByUsername(user.username())) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+		}
 
-    @GetMapping("/me")
-    public String getMe2() {
-        return SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getName();
-    }
+		MongoUser newUser = new MongoUser(idService.generateId(), user.username(), passwordEncoder.encode(user.password()), "BASIC");
+		MongoUser userOut = mongoUserRepository.save(newUser);
+		return new MongoUser(userOut.id(), userOut.username(), null, userOut.role());
+	}
 
-    @GetMapping("/admin")
-    public String getAdmin(){
-        return "Hallo Admin";
-    }
+	@GetMapping("/me")
+	public String getMe2() {
+		return SecurityContextHolder
+				.getContext()
+				.getAuthentication()
+				.getName();
+	}
+
+	@GetMapping("/admin")
+	public String getAdmin() {
+		return "Hello, Admin!";
+	}
 }

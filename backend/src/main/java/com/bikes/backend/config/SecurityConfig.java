@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -16,22 +18,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+        requestHandler.setCsrfRequestAttributeName(null);
+
         return http
-                .csrf().disable()
-                .httpBasic().and()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
-                .requestMatchers(HttpMethod.PUT,"/api/**").authenticated()
-                .requestMatchers("/api/users/admin").hasRole("ADMIN")
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .and().build();
+              .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).csrfTokenRequestHandler(requestHandler))
+              .httpBasic().and()
+              .authorizeHttpRequests()
+              .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+              .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
+              .requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
+              .requestMatchers("/api/users/admin").hasRole("ADMIN")
+              .anyRequest().permitAll()
+              .and()
+              .formLogin()
+              .and().build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 }
