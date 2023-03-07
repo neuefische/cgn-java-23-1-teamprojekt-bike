@@ -13,18 +13,23 @@ import java.util.List;
 
 @Service
 public class MongoUserDetailsService implements UserDetailsService {
-    private final MongoUserRepository repository;
+	private final MongoUserRepository repository;
 
-    public MongoUserDetailsService(MongoUserRepository repository) {
-        this.repository = repository;
-    }
+	public MongoUserDetailsService(MongoUserRepository repository) {
+		this.repository = repository;
+	}
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MongoUser mongoUser = repository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		MongoUser mongoUser = repository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return new User(mongoUser.username(), mongoUser.password(),
-                List.of(new SimpleGrantedAuthority("ROLE_" + mongoUser.role())));
-    }
+		return new User(mongoUser.username(), mongoUser.password(),
+				List.of(new SimpleGrantedAuthority("ROLE_" + mongoUser.role())));
+	}
+
+	public MongoUser loadMongoUserByUsername(String username) throws UsernameNotFoundException {
+		return repository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	}
 }

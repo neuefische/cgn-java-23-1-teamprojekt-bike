@@ -1,25 +1,29 @@
 package com.bikes.backend.controller;
 
 import com.bikes.backend.model.MongoUser;
+import com.bikes.backend.model.MongoUserDTO;
 import com.bikes.backend.repository.MongoUserRepository;
 import com.bikes.backend.service.IdService;
+import com.bikes.backend.service.MongoUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class MongoUserController {
 	private final MongoUserRepository mongoUserRepository;
+	private final MongoUserDetailsService mongoUserDetailsService;
 	private final PasswordEncoder passwordEncoder;
 	private final IdService idService;
 
-	@PostMapping
-	public MongoUser create(@RequestBody MongoUser user) {
+	@PostMapping()
+	public MongoUser create(@RequestBody MongoUserDTO user) {
 		if (user.username() == null || user.username().length() == 0) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
 		}
@@ -35,12 +39,15 @@ public class MongoUserController {
 		return new MongoUser(userOut.id(), userOut.username(), null, userOut.role());
 	}
 
+	@PostMapping("/login")
+	public MongoUser login(Principal principal) {
+		return getCurrentUser(principal);
+	}
+
 	@GetMapping("/me")
-	public String getMe2() {
-		return SecurityContextHolder
-				.getContext()
-				.getAuthentication()
-				.getName();
+	public MongoUser getCurrentUser(Principal principal) {
+		MongoUser currentUser = mongoUserDetailsService.loadMongoUserByUsername(principal.getName());
+		return new MongoUser(currentUser.id(), currentUser.username(), null, currentUser.role());
 	}
 
 	@GetMapping("/admin")
