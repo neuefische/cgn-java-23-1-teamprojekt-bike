@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Bike } from '../models/Bike'
-import Cookies from "js-cookie";
 
 const apiUrlSlug = '/api/bikes/'
 
@@ -16,11 +15,9 @@ export default function bikeApiService() {
 
    async function post(newBikeTitle: string) {
       return await axios
-          .get("/api/csrf/")
-          .then( () => axios
-         .post(apiUrlSlug, { title: newBikeTitle }, {headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")}})
+         .post(apiUrlSlug, { title: newBikeTitle })
          .then((response) => response.data)
-         .catch((error) => console.error(error)))
+         .catch((error) => console.error(error))
    }
 
    async function put(bikeToUpdate: Bike) {
@@ -32,9 +29,9 @@ export default function bikeApiService() {
 
    async function deleteBike(id: string) {
       return await axios
-         .delete(apiUrlSlug+id)
-         .then(response => response.data)
-         .catch(error => console.error(error))
+         .delete(apiUrlSlug + id)
+         .then((response) => response.data)
+         .catch((error) => console.error(error))
    }
 
    return { get, post, put, deleteBike }

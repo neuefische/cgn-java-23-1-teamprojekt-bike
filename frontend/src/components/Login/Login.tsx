@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
-import { Cookies } from 'js-cookie'
 
 function Login() {
    const [username, setUsername] = useState('')
@@ -16,26 +15,18 @@ function Login() {
 
    function submitHandler(event: FormEvent<HTMLFormElement>) {
       event.preventDefault()
-      axios.get('/api/csrf').then(() =>
-         axios
-            .post(
-               '/api/users',
-               {
-                  username,
-                  password,
-               },
-               {
-                  headers: { 'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN') },
-               }
-            )
-            .then(() => {
-               setUsername('')
-               setPassword('')
-            })
-            .catch((error) => {
-               console.log(error)
-            })
-      )
+      axios
+         .post('/api/users', {
+            username,
+            password,
+         })
+         .then(() => {
+            setUsername('')
+            setPassword('')
+         })
+         .catch((error) => {
+            console.log(error)
+         })
    }
 
    return (
