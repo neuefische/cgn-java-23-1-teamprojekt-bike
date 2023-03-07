@@ -8,6 +8,7 @@ import Header from '../Header/Header'
 
 import useBikesApi from '../../hooks/useBikesApi'
 import AddBike from '../AddBike/AddBike'
+import Login from "../Login/Login";
 
 function App() {
    const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
@@ -18,8 +19,10 @@ function App() {
       <div id="app">
          <Header addBikeInputRef={addBikeInputRef} />
          <main className="main">
+
             <Routes>
-               <Route path="/" element={!loading && <BikeGallery bikes={bikes} editBike={editBike} deleteBike={deleteBike} />} />
+               <Route path="/" element={<Login/>}/>
+               <Route path="/gallery" element={!loading && <BikeGallery bikes={bikes} editBike={editBike} deleteBike={deleteBike} />} />
                <Route path="/details/:id" element={!loading && <BikeDetails bikes={bikes} />} />
             </Routes>
          </main>
