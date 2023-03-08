@@ -6,13 +6,8 @@ import './App.css'
 
 import BikeGallery from '../BikeGallery/BikeGallery'
 import BikeDetails from '../BikeDetails/BikeDetails'
-import Header from '../Header/Header'
-
-import useBikesApi from '../../hooks/useBikesApi'
-import AddBike from '../AddBike/AddBike'
 import SignUp from '../SignUp/SignUp'
 import Login from '../Login/Login'
-import useAuth from '../../hooks/useAuth'
 
 // @ts-ignore
 axios.interceptors.request.use(
@@ -35,12 +30,11 @@ function App() {
       <div id="app">
 
             <Routes>
-               <Route path="/login" element={<Login />} />
-               <Route path="/signup" element={<SignUp />} />
                <Route path="/" element={<BikeGallery addBikeInputRef={addBikeInputRef}/>} />
-               <Route path="/details/:id" element={<BikeDetails} />} />
+               <Route path="/login" element={<Login  addBikeInputRef={addBikeInputRef}/>} />
+               <Route path="/signup" element={<SignUp  addBikeInputRef={addBikeInputRef}/>} />
+               <Route path="/details/:id" element={<BikeDetails addBikeInputRef={addBikeInputRef}/>} />
             </Routes>
-
       </div>
    )
 }

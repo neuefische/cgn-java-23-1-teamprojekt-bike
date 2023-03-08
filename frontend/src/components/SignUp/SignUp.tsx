@@ -1,7 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
+import Layout from "../Layout/Layout";
 
-function SignUp() {
+type Props = {
+   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+}
+function SignUp(props: Props) {
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
 
@@ -30,11 +34,13 @@ function SignUp() {
    }
 
    return (
-      <form onSubmit={submitHandler}>
-         <input type={'text'} value={username} onChange={handleUsernameChange} />
-         <input type={'password'} value={password} onChange={handlePasswordChange} />
-         <button type={'submit'}>Create User</button>
-      </form>
+       <Layout addBikeInputRef={props.addBikeInputRef}>
+         <form onSubmit={submitHandler}>
+            <input type={'text'} value={username} onChange={handleUsernameChange} />
+            <input type={'password'} value={password} onChange={handlePasswordChange} />
+            <button type={'submit'}>Create User</button>
+         </form>
+       </Layout>
    )
 }
 

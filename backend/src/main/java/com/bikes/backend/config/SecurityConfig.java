@@ -27,7 +27,9 @@ public class SecurityConfig {
 
 		return http
 				.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).csrfTokenRequestHandler(requestHandler))
-				.httpBasic().and()
+				.httpBasic()
+				.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase()))
+				.and()
 				.sessionManagement(config ->
 						config.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 				.authorizeHttpRequests()

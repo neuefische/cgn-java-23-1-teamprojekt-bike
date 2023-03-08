@@ -22,7 +22,7 @@ function useAuth(redirectToSignIn?: boolean) {
          .catch((e) => {
             if (redirectToSignIn && e.response.status === 401) {
                window.sessionStorage.setItem('signInRedirect', pathname || '/')
-               navigate('/sign-in')
+               navigate('/login')
             }
          })
    }, [pathname, navigate, redirectToSignIn])
