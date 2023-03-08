@@ -30,8 +30,7 @@ class MongoUserControllerTest {
 	@Autowired
 	MongoUserRepository mongoUserRepository;
 	MongoUser basicUser = new MongoUser("Some test ID", "Test user", "Test password", "BASIC");
-	String invalidId = "Some invalid ID";
-
+	
 	@Nested
 	@DisplayName("POST /api/users/")
 	class testCreateUser {
