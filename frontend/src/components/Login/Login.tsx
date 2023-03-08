@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Layout from '../Layout/Layout'
 import useAuth from '../../hooks/useAuth'
+import './Login.css'
 
 type Props = {
    addBikeInputRef: React.MutableRefObject<HTMLInputElement>
@@ -46,13 +47,23 @@ function Login(props: Props) {
 
    return (
       <Layout addBikeInputRef={props.addBikeInputRef}>
-         <form onSubmit={submitHandler}>
-            <input type={'text'} value={username} onChange={handleUsernameChange} />
-            <input type={'password'} value={password} onChange={handlePasswordChange} autoFocus={!!location.state?.username} />
-            <button type={'submit'}>Log in</button>
-            <p>
-               <Link to={'/signup'}>New to Bike Master 9000? Sign up here!</Link>
-            </p>
+         <form className="login" onSubmit={submitHandler}>
+            <h1 className="login__title">Log in</h1>
+            <label className="login__label">
+               <span className="login__label--title">Username:</span>
+               <input className="login__input" type={'text'} value={username} onChange={handleUsernameChange} />
+            </label>
+
+            <label className="login__label">
+               <span className="login__label--title">Password:</span>
+               <input className="login__input" type={'password'} value={password} onChange={handlePasswordChange} autoFocus={!!location.state?.username} />
+            </label>
+            <button className="login__submit" type={'submit'}>
+               Log in
+            </button>
+            <Link className="login__link" to={'/signup'}>
+               New to Bike Master 9000? Sign up here!
+            </Link>
          </form>
       </Layout>
    )

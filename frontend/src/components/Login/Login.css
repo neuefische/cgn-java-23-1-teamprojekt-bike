@@ -1,0 +1,85 @@
+.login,
+.signup {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-top: 1rem;
+	padding-bottom: 3rem;
+	min-width: 300px;
+	max-width: 500px;
+	gap: 0.5rem;
+	color: #20283d;
+}
+
+.login__title,
+.signup__title {
+	font-size: 2rem;
+	font-weight: bold;
+	margin-block: 0;
+	margin-bottom: 1.5rem;
+}
+
+.login__label,
+.signup__label {
+	display: flex;
+	flex-direction: column;
+	font-size: 1rem;
+	font-weight: bold;
+	width: 100%;
+}
+
+.login__label--title,
+.signup__label--title {
+	font-size: 0.8rem;
+	margin-left: 0.25rem;
+	margin-bottom: 0.25rem;
+	text-align: start;
+	font-weight: bold;
+}
+
+.login__input,
+.signup__input {
+	padding: 0.5rem;
+	border: #20283d solid 2px;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	font-weight: bold;
+	background: white;
+}
+
+.login__input:focus,
+.signup__input:focus {
+	outline: #20283d solid 2px;
+	outline-offset: 2px;
+	border: #a68c14 solid 2px;
+}
+
+.login__submit,
+.signup__submit {
+	cursor: pointer;
+	width: 100%;
+	padding: 0.5rem 1rem;
+	border: #20283d solid 2px;
+	border-radius: 0.5rem;
+	margin-top: 2rem;
+	background: white;
+	color: #20283d;
+	font-size: 1rem;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.login__submit:hover,
+.signup__submit:hover {
+	background: #20283d;
+	color: #d2cdb2;
+}
+
+.login__link,
+.signup__link {
+	color: #20283d;
+	font-weight: bold;
+	font-size: 0.8rem;
+	margin-inline: 0.25rem;
+}

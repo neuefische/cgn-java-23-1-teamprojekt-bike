@@ -25,7 +25,7 @@ function Header(props: HeaderProps) {
             <div className="header__container--third">
                <img className="header__logo" src={title} alt="Mega bikes 9000" />
             </div>
-            <nav className="header__container--third navigation">
+            <nav className={'header__container--third navigation' + (!isTabletOrMobile ? ' vertical' : '')}>
                {!!user && (
                   <>
                      <Link to={'/'}>Home</Link>
