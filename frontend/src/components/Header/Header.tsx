@@ -26,7 +26,7 @@ function Header(props: HeaderProps) {
             </div>
             <nav className="header__container--third navigation">
                <Link to={'/'}>Home</Link>
-               <div onClick={handleScrollIntoAddBikeView}>Add new bike</div>
+               {!!user && <div onClick={handleScrollIntoAddBikeView}>Add new bike</div>}
             </nav>
          </div>
       </header>

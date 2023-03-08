@@ -28,28 +28,19 @@ axios.interceptors.request.use(
 )
 
 function App() {
-   const user = useAuth(false)
-   const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
+    const addBikeInputRef = useRef() as React.MutableRefObject<HTMLInputElement>
 
-   const addBikeInputRef = useRef() as React.MutableRefObject<HTMLInputElement>
 
    return (
       <div id="app">
-         <Header addBikeInputRef={addBikeInputRef} />
-         <main className="main">
+
             <Routes>
                <Route path="/login" element={<Login />} />
                <Route path="/signup" element={<SignUp />} />
-               <Route path="/" element={!loading && <BikeGallery bikes={bikes} editBike={editBike} deleteBike={deleteBike} />} />
-               <Route path="/details/:id" element={!loading && <BikeDetails bikes={bikes} />} />
+               <Route path="/" element={<BikeGallery addBikeInputRef={addBikeInputRef}/>} />
+               <Route path="/details/:id" element={<BikeDetails} />} />
             </Routes>
-         </main>
-         {!!user && (
-            <aside className="add-form">
-               <AddBike addBike={addBike} addBikeInputRef={addBikeInputRef} />
-            </aside>
-         )}
-         <footer className="footer">Imprint - 2023</footer>
+
       </div>
    )
 }
