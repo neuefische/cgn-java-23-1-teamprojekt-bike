@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
 import Layout from "../Layout/Layout";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
    addBikeInputRef: React.MutableRefObject<HTMLInputElement>
@@ -8,6 +9,7 @@ type Props = {
 function SignUp(props: Props) {
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
+   const navigate = useNavigate()
 
    function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
       setUsername(event.target.value)
@@ -25,6 +27,7 @@ function SignUp(props: Props) {
             password,
          })
          .then(() => {
+            navigate("/login", {state: {username}})
             setUsername('')
             setPassword('')
          })

@@ -10,8 +10,8 @@ export type User = {
 
 function useAuth(redirectToSignIn?: boolean) {
    const [user, setUser] = useState<User | null>(null)
-   const navigate = useNavigate()
    const { pathname } = useLocation()
+   const navigate = useNavigate()
 
    useEffect(() => {
       axios

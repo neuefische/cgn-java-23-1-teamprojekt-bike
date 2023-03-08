@@ -1,14 +1,18 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import Layout from "../Layout/Layout";
+import useAuth from "../../hooks/useAuth";
 type Props = {
    addBikeInputRef: React.MutableRefObject<HTMLInputElement>
 }
 function Login(props: Props) {
-   const [username, setUsername] = useState('')
-   const [password, setPassword] = useState('')
+    const location = useLocation()
+    const [username, setUsername] = useState(location.state?.username || "")
+    const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const currentUser = useAuth(false)
+    !!currentUser && navigate("/")
     function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
         setUsername(event.target.value)
     }
@@ -37,18 +41,18 @@ function Login(props: Props) {
             })
     }
 
-    // return !user ? (
-    return <Layout addBikeInputRef={props.addBikeInputRef}>
+    return (
+        <Layout addBikeInputRef={props.addBikeInputRef}>
         <form onSubmit={submitHandler}>
             <input type={'text'} value={username} onChange={handleUsernameChange} />
-            <input type={'password'} value={password} onChange={handlePasswordChange} />
+            <input type={'password'} value={password} onChange={handlePasswordChange} autoFocus={!!location.state?.username}/>
             <button type={'submit'}>Log in</button>
             <p>
                 <Link to={'/signup'}>New to Bike Master 9000? Sign up here!</Link>
             </p>
         </form>
     </Layout>
-    // ): <Navigate to={window.sessionStorage.getItem("signInRedirect") || "/"}/>
+    )
 }
 
 
