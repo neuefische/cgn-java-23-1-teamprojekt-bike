@@ -47,6 +47,7 @@ public class MongoUserController {
 
 	@PostMapping("/logout")
 	public void logout() {
+		// logout is handled by Spring Security
 	}
 
 	@GetMapping("/me")
