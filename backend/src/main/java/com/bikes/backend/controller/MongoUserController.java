@@ -43,6 +43,9 @@ public class MongoUserController {
 	public MongoUser login(Principal principal) {
 		return getCurrentUser(principal);
 	}
+	@PostMapping("/logout")
+	public void logout() {
+	}
 
 	@GetMapping("/me")
 	public MongoUser getCurrentUser(Principal principal) {

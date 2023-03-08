@@ -4,6 +4,7 @@ import logo from '../../assets/logo.png'
 import title from '../../assets/title.png'
 import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
+import useAuth from "../../hooks/useAuth";
 
 type HeaderProps = {
    addBikeInputRef: React.MutableRefObject<HTMLInputElement>
