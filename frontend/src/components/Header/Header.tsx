@@ -4,7 +4,8 @@ import logo from '../../assets/logo.png'
 import title from '../../assets/title.png'
 import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
-import useAuth from "../../hooks/useAuth";
+import useAuth from '../../hooks/useAuth'
+import LogOutButton from '../LogOutButton/LogOutButton'
 
 type HeaderProps = {
    addBikeInputRef: React.MutableRefObject<HTMLInputElement>
@@ -25,8 +26,13 @@ function Header(props: HeaderProps) {
                <img className="header__logo" src={title} alt="Mega bikes 9000" />
             </div>
             <nav className="header__container--third navigation">
-               <Link to={'/'}>Home</Link>
-               {!!user && <div onClick={handleScrollIntoAddBikeView}>Add new bike</div>}
+               {!!user && (
+                  <>
+                     <Link to={'/'}>Home</Link>
+                     <div onClick={handleScrollIntoAddBikeView}>Add new bike</div>
+                     <LogOutButton>Log out</LogOutButton>
+                  </>
+               )}
             </nav>
          </div>
       </header>
