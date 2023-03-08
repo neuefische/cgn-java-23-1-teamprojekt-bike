@@ -23,6 +23,7 @@ public class MongoUserController {
 	private final IdService idService;
 
 	@PostMapping()
+	@ResponseStatus(code = HttpStatus.CREATED, reason = "New user has been successfully created")
 	public MongoUser create(@RequestBody MongoUserDTO user) {
 		if (user.username() == null || user.username().length() == 0) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
@@ -43,6 +44,7 @@ public class MongoUserController {
 	public MongoUser login(Principal principal) {
 		return getCurrentUser(principal);
 	}
+
 	@PostMapping("/logout")
 	public void logout() {
 	}

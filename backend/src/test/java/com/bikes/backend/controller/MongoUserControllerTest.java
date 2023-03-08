@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -31,27 +32,61 @@ class MongoUserControllerTest {
 	MongoUser basicUser = new MongoUser("Some test ID", "Test user", "Test password", "BASIC");
 	String invalidId = "Some invalid ID";
 
-//	@Test
-//	void getMe2() {
-//	}
-
 	@Nested
 	@DisplayName("POST /api/users/")
 	class testCreateUser {
 		@Test
+		@DirtiesContext
 		@DisplayName("...should return a 201 if the user is successfully created")
 		void create_returns201IfUserIsSuccessfullyCreated() throws Exception {
 			//GIVEN
 			//WHEN
-			mockMvc.perform(post("/api/users/")
+			mockMvc.perform(post("/api/users")
 							.contentType(MediaType.APPLICATION_JSON)
-							.contentType("""
+							.content("""
 									{
 										"username": "Test user",
 										"password": "Test password"
 									}
 									""").with(csrf()))
 					.andExpect(status().isCreated());
+			//THEN
+		}
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...should return a 409 if the user already exists")
+		void create_returns409IfUserAlreadyExists() throws Exception {
+			//GIVEN
+			mongoUserRepository.save(basicUser);
+			//WHEN
+			mockMvc.perform(post("/api/users")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("""
+									{
+										"username": "Test user",
+										"password": "Test password"
+									}
+									""").with(csrf()))
+					.andExpect(status().isConflict());
+			//THEN
+		}
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...should return a 400 if password (or username) is missing")
+		void create_returns400IfUsernameOrPasswordIsMissing() throws Exception {
+			//GIVEN
+			//WHEN
+			mockMvc.perform(post("/api/users")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("""
+									{
+										"username": "Test user",
+										"password": ""
+									}
+									""").with(csrf()))
+					.andExpect(status().isBadRequest());
 			//THEN
 		}
 
