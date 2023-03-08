@@ -33,12 +33,10 @@ public class SecurityConfig {
 				.sessionManagement(config ->
 						config.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 				.authorizeHttpRequests()
-				.requestMatchers(HttpMethod.POST, "/api/users").permitAll() // controller tested
-				.requestMatchers(HttpMethod.POST, "/api/**").authenticated()
-				.requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
-				.requestMatchers(HttpMethod.GET, "/api/bikes/").authenticated()
+				.requestMatchers(HttpMethod.POST, "/api/users").permitAll() // Everyone may sign up - controller tested
+				.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll() // Everyone may log in
 				.requestMatchers("/api/users/admin").hasRole("ADMIN") // controller tested
-				.anyRequest().permitAll()
+				.anyRequest().authenticated()
 				.and()
 				.logout(logout -> logout
 						.logoutUrl("/api/users/logout")
