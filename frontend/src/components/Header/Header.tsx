@@ -11,7 +11,7 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
-
+   const user = useAuth(false)
    const handleScrollIntoAddBikeView = () => props.addBikeInputRef.current.scrollIntoView({ behavior: 'smooth' })
 
    return (

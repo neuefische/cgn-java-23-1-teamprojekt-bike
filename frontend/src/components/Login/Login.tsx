@@ -40,6 +40,9 @@ function Login() {
          <input type={'text'} value={username} onChange={handleUsernameChange} />
          <input type={'password'} value={password} onChange={handlePasswordChange} />
          <button type={'submit'}>Log in</button>
+         <p>
+            <Link to={'/signup'}>New to Bike Master 9000? Sign up here!</Link>
+         </p>
       </form>
    )
 }

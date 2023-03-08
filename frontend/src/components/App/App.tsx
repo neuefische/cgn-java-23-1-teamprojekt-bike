@@ -12,6 +12,7 @@ import useBikesApi from '../../hooks/useBikesApi'
 import AddBike from '../AddBike/AddBike'
 import SignUp from '../SignUp/SignUp'
 import Login from '../Login/Login'
+import useAuth from '../../hooks/useAuth'
 
 // @ts-ignore
 axios.interceptors.request.use(
@@ -27,6 +28,7 @@ axios.interceptors.request.use(
 )
 
 function App() {
+   const user = useAuth(false)
    const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
 
    const addBikeInputRef = useRef() as React.MutableRefObject<HTMLInputElement>
@@ -42,9 +44,11 @@ function App() {
                <Route path="/details/:id" element={!loading && <BikeDetails bikes={bikes} />} />
             </Routes>
          </main>
-         <aside className="add-form">
-            <AddBike addBike={addBike} addBikeInputRef={addBikeInputRef} />
-         </aside>
+         {!!user && (
+            <aside className="add-form">
+               <AddBike addBike={addBike} addBikeInputRef={addBikeInputRef} />
+            </aside>
+         )}
          <footer className="footer">Imprint - 2023</footer>
       </div>
    )
