@@ -25,9 +25,9 @@ class BikeServiceTest {
 
 	String testId = "Some test ID";
 	String invalidId = "Some invalid ID";
-	Bike testBike = new Bike(testId, "Mega bike 9000");
+	Bike testBike = new Bike(testId, "Mega bike 9000", null);
 	BikeDTO testBikeDTO = new BikeDTO("Mega bike 9000");
-	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000");
+	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000", null);
 
 	@BeforeEach
 	@DisplayName("set up test environment")
@@ -133,8 +133,8 @@ class BikeServiceTest {
 		void updateBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesExist() {
 			//GIVEN
 			bikeRepository.save(testBike);
-			BikeWithIdDTO updatedBike = new BikeWithIdDTO(testBike.id(), "Updated bike title");
-			Bike expected = new Bike(testBike.id(), "Updated bike title");
+			BikeWithIdDTO updatedBike = new BikeWithIdDTO(testBike.id(), "Updated bike title", null);
+			Bike expected = new Bike(testBike.id(), "Updated bike title", null);
 			//WHEN
 			Bike actual = bikeService.updateBike(updatedBike);
 			//THEN

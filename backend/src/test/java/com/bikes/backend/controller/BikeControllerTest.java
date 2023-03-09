@@ -25,7 +25,7 @@ class BikeControllerTest {
 	MockMvc mockMvc;
 	@Autowired
 	BikeRepository bikeRepository;
-	Bike testBike = new Bike("Some test ID", "Mega bike 9000");
+	Bike testBike = new Bike("Some test ID", "Mega bike 9000", null);
 	String invalidId = "Some invalid ID";
 
 	@Nested

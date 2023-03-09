@@ -26,7 +26,7 @@ class BikeRepositoryTest {
 
 	@BeforeEach
 	public void setUp() {
-		testBike = new Bike("Some test ID", "Mega bike 9000");
+		testBike = new Bike("Some test ID", "Mega bike 9000", null);
 	}
 
 	@DisplayName("findAll()")
@@ -113,7 +113,7 @@ class BikeRepositoryTest {
 		@DirtiesContext
 		void save_updatesBikeInDatabase() {
 			//GIVEN
-			Bike expectedBike = new Bike(testBike.id(), "Mega bike 9000 ver.2");
+			Bike expectedBike = new Bike(testBike.id(), "Mega bike 9000 ver.2", null);
 			repository.save(testBike);
 			//WHEN
 			repository.save(expectedBike);
