@@ -5,11 +5,8 @@ import axios from 'axios'
 function LogOutButton(props: { children: ReactNode }) {
    const user = useAuth(false)
 
-   // const location = useLocation()
-
    function handleLogOut() {
       axios.post('/api/users/logout').then(() => {
-         // window.sessionStorage.setItem('signInRedirect', location.pathname || '/') // TODO: This is a subject of discussion!
          window.location.href = '/login'
       })
    }
