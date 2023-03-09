@@ -14,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -153,4 +154,33 @@ class MongoUserControllerTest {
 
 
 	}
+
+	@Nested
+	@DisplayName("POST /api/users/login")
+	class testLogin {
+		@Test
+		@DirtiesContext
+		@DisplayName("...should return user object without password (200) if the user with respective password exists")
+		void login_returnsUserWithoutPasswordIfUserWithRespectivePasswordExists() throws Exception {
+			//GIVEN
+			mongoUserRepository.save(basicUser);
+			//WHEN
+			mockMvc.perform(post("/api/users/login")
+							.with(httpBasic("Test user", "Test password"))
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("{}")
+							.with(csrf()))
+					.andExpect(status().isOk())
+					.andExpect(content().json("""
+							{
+								"username": "Test user",
+								"role": "BASIC"
+							}
+							"""))
+					.andExpect(jsonPath("$.id").isNotEmpty())
+					.andExpect(jsonPath("$.password").isEmpty());
+			//THEN
+		}
+	}
+
 }
