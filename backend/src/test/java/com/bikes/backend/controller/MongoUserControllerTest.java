@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +30,7 @@ class MongoUserControllerTest {
 	@Autowired
 	MongoUserRepository mongoUserRepository;
 	MongoUser basicUser = new MongoUser("Some test ID", "Test user", "Test password", "BASIC");
+	Argon2PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 
 	@Nested
 	@DisplayName("POST /api/users/")
@@ -158,15 +160,32 @@ class MongoUserControllerTest {
 	@Nested
 	@DisplayName("POST /api/users/login")
 	class testLogin {
+
+		@Test
+		@DirtiesContext
+		@DisplayName("...should return 'Unauthorized' (401) if the user with respective password does not exist")
+		void login_returns401IfUserWithRespectivePasswordDoesNotExist() throws Exception {
+			//GIVEN
+			//WHEN
+			mockMvc.perform(post("/api/users/login")
+							.with(httpBasic(basicUser.username(), basicUser.password()))
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("{}")
+							.with(csrf()))
+					.andExpect(status().isUnauthorized());
+			//THEN
+		}
+
 		@Test
 		@DirtiesContext
 		@DisplayName("...should return user object without password (200) if the user with respective password exists")
 		void login_returnsUserWithoutPasswordIfUserWithRespectivePasswordExists() throws Exception {
 			//GIVEN
-			mongoUserRepository.save(basicUser);
+			MongoUser expected = new MongoUser(basicUser.id(), basicUser.username(), encoder.encode(basicUser.password()), basicUser.role());
+			mongoUserRepository.save(expected);
 			//WHEN
-			mockMvc.perform(post("/api/users/login/")
-							.with(httpBasic("Test user", "Test password"))
+			mockMvc.perform(post("/api/users/login")
+							.with(httpBasic(basicUser.username(), basicUser.password()))
 							.contentType(MediaType.APPLICATION_JSON)
 							.content("{}")
 							.with(csrf()))
@@ -181,6 +200,7 @@ class MongoUserControllerTest {
 					.andExpect(jsonPath("$.password").isEmpty());
 			//THEN
 		}
+
 	}
 
 }
