@@ -1,7 +1,5 @@
 package com.bikes.backend.controller;
 
-import com.bikes.backend.model.MongoUser;
-import com.bikes.backend.repository.MongoUserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

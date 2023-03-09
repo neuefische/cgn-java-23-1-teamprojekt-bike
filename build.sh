@@ -6,4 +6,4 @@ mv build ../backend/src/main/resources/static
 cd ../backend || exit
 ./mvnw clean package
 cd ..
-docker build -t mega-bike-master-9000 .
+#docker build -t mega-bike-master-9000 .

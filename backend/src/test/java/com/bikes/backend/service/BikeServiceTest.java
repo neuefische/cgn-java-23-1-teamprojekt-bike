@@ -1,9 +1,5 @@
 package com.bikes.backend.service;
 
-import com.bikes.backend.model.Bike;
-import com.bikes.backend.model.BikeDTO;
-import com.bikes.backend.model.BikeWithIdDTO;
-import com.bikes.backend.repository.BikeRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

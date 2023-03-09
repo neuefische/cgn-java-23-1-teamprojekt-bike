@@ -1,7 +1,5 @@
 package com.bikes.backend.controller;
 
-import com.bikes.backend.model.Bike;
-import com.bikes.backend.repository.BikeRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
