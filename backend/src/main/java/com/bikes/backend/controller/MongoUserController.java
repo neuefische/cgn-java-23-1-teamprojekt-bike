@@ -24,7 +24,7 @@ public class MongoUserController {
 	private final IdService idService;
 
 	@PostMapping("/")
-	@ResponseStatus(code = HttpStatus.CREATED, reason = "New user has been successfully created")
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public MongoUser create(@RequestBody MongoUserDTO user) {
 		if (user.username() == null || user.username().length() == 0) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
