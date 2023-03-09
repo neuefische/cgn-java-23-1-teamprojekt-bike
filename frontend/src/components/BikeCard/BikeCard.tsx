@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { Bike } from '../../models/Bike'
 import { Link } from 'react-router-dom'
 import './BikeCard.css'
+import axios from 'axios'
 
 type BikeCardProps = {
    bike: Bike
@@ -13,6 +14,8 @@ function BikeCard(props: BikeCardProps) {
    const [editMode, setEditMode] = useState(false)
    const [updatedTitle, setUpdatedTitle] = useState(props.bike.title)
 
+   const [file, setFile] = React.useState<File | null>(null)
+
    function handleEditButton() {
       setEditMode(!editMode)
    }
@@ -22,7 +25,25 @@ function BikeCard(props: BikeCardProps) {
    }
 
    function handleSaveChanges() {
-      props.editBike({ ...props.bike, title: updatedTitle })
+      if (file) {
+         let url = ''
+         const payload = new FormData()
+         payload.set('file', file)
+         axios
+            .post('/api/bikes/images', payload)
+            .then((res) => {
+               url = res.data
+            })
+            .catch((err) => {
+               console.error(err)
+            })
+            .finally(() => {
+               props.editBike({ ...props.bike, title: updatedTitle, imageUrl: url })
+            })
+      } else {
+         props.editBike({ ...props.bike, title: updatedTitle })
+         setEditMode(false)
+      }
    }
 
    function handleCancelEdit() {
@@ -34,11 +55,18 @@ function BikeCard(props: BikeCardProps) {
       props.deleteBike(props.bike.id)
    }
 
+   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files.length > 0) {
+         setFile(event.target.files[0])
+      }
+   }
+
    return (
       <>
          {!editMode ? (
             <div className="card" id={props.bike.id}>
                <h2 className="card__title">{props.bike.title}</h2>
+               {props.bike.imageUrl && <img src={props.bike.imageUrl} alt={props.bike.title} className="card__image" />}
                <div className="card__controls">
                   <Link className="card__button" to={'details/' + props.bike.id}>
                      Go to details
@@ -63,9 +91,14 @@ function BikeCard(props: BikeCardProps) {
                   </div>
                </label>
                <div className="card__controls">
+                  <label className="card__button" htmlFor="imageUpload">
+                     Upload image
+                  </label>
+                  <input id="imageUpload" className="hidden" type="file" onChange={handleFileChange} accept={'image/jpeg, image/png'} />
+
                   <div className="card__controls--horizontal">
                      <button className="card__button inline-half" onClick={handleSaveChanges}>
-                        Save Changes
+                        Save changes
                      </button>
                      <button className="card__button inline-half" onClick={handleCancelEdit}>
                         Cancel

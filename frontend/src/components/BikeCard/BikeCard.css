@@ -1,7 +1,7 @@
 .card {
 	display: flex;
 	flex-direction: column;
-	width: 300px;
+	width: 310px;
 	max-width: 100%;
 	height: 420px;
 	border-radius: 1rem;
@@ -16,6 +16,14 @@
 	white-space: break-spaces;
 	font-weight: bold;
 	margin: 0.75rem;
+}
+
+.card__image {
+	height: 100%;
+	object-fit: cover;
+	border-radius: 1rem;
+	margin: 0.75rem 0.75rem;
+	border: #a68c14 solid 2px;
 }
 
 .card__edit-label {
@@ -74,4 +82,8 @@
 .card__button.inline-half {
 	width: 50%;
 	justify-content: center;
+}
+
+.hidden {
+	display: none;
 }

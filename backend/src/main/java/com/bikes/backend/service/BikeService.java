@@ -27,7 +27,7 @@ public class BikeService {
 	}
 
 	public Bike addBike(BikeDTO incomingBike) {
-		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
+		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title(), null);
 		return bikeRepository.save(bikeToAdd);
 	}
 
@@ -35,7 +35,7 @@ public class BikeService {
 		if (!bikeRepository.existsById(incomingBike.id())) {
 			throw new NoSuchBikeException();
 		}
-		Bike result = new Bike(incomingBike.id(), incomingBike.title());
+		Bike result = new Bike(incomingBike.id(), incomingBike.title(), incomingBike.imageUrl());
 		return bikeRepository.save(result);
 	}
 
