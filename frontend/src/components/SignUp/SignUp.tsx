@@ -24,7 +24,7 @@ function SignUp(props: Props) {
    function submitHandler(event: FormEvent<HTMLFormElement>) {
       event.preventDefault()
       axios
-         .post('/api/users', {
+         .post('/api/users/', {
             username,
             password,
          })

@@ -33,10 +33,16 @@ public class SecurityConfig {
 				.sessionManagement(config ->
 						config.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 				.authorizeHttpRequests()
-				.requestMatchers(HttpMethod.POST, "/api/users").permitAll() // Everyone may sign up - controller tested
-				.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll() // Everyone may log in
+//				.requestMatchers(HttpMethod.GET, "/api/csrf/").permitAll() // Everyone may get an CSRF TOKEN - controller tested
+//				.requestMatchers(HttpMethod.POST, "/api/users/").permitAll() // Everyone may sign up - controller tested
+//				.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll() // Everyone may log in
+				.requestMatchers(HttpMethod.POST, "/api/users/me").authenticated()
+				.requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+				.requestMatchers(HttpMethod.POST, "/api/**").authenticated()
+				.requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
+				.requestMatchers(HttpMethod.GET, "/api/bikes/").authenticated()
 				.requestMatchers("/api/users/admin").hasRole("ADMIN") // controller tested
-				.anyRequest().authenticated()
+				.anyRequest().permitAll()
 				.and()
 				.logout(logout -> logout
 						.logoutUrl("/api/users/logout")

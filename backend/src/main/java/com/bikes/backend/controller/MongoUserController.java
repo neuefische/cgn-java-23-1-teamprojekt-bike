@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -22,7 +23,7 @@ public class MongoUserController {
 	private final PasswordEncoder passwordEncoder;
 	private final IdService idService;
 
-	@PostMapping()
+	@PostMapping("/")
 	@ResponseStatus(code = HttpStatus.CREATED, reason = "New user has been successfully created")
 	public MongoUser create(@RequestBody MongoUserDTO user) {
 		if (user.username() == null || user.username().length() == 0) {
@@ -52,12 +53,10 @@ public class MongoUserController {
 
 	@GetMapping("/me")
 	public MongoUser getCurrentUser(Principal principal) {
-		MongoUser currentUser = mongoUserDetailsService
-				.loadMongoUserByUsername(
-						principal.getName())
-				.orElseThrow(() ->
-						new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found")
-				);
+		MongoUser currentUser = Optional.ofNullable(principal)
+				.map(Principal::getName)
+				.flatMap(mongoUserDetailsService::loadMongoUserByUsername)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
 		return new MongoUser(currentUser.id(), currentUser.username(), null, currentUser.role());
 	}
 

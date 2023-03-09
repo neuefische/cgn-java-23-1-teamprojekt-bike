@@ -39,7 +39,7 @@ class MongoUserControllerTest {
 		void create_returns201IfUserIsSuccessfullyCreated() throws Exception {
 			//GIVEN
 			//WHEN
-			mockMvc.perform(post("/api/users")
+			mockMvc.perform(post("/api/users/")
 							.contentType(MediaType.APPLICATION_JSON)
 							.content("""
 									{
@@ -58,7 +58,7 @@ class MongoUserControllerTest {
 			//GIVEN
 			mongoUserRepository.save(basicUser);
 			//WHEN
-			mockMvc.perform(post("/api/users")
+			mockMvc.perform(post("/api/users/")
 							.contentType(MediaType.APPLICATION_JSON)
 							.content("""
 									{
@@ -76,7 +76,7 @@ class MongoUserControllerTest {
 		void create_returns400IfUsernameOrPasswordIsMissing() throws Exception {
 			//GIVEN
 			//WHEN
-			mockMvc.perform(post("/api/users")
+			mockMvc.perform(post("/api/users/")
 							.contentType(MediaType.APPLICATION_JSON)
 							.content("""
 									{
@@ -165,7 +165,7 @@ class MongoUserControllerTest {
 			//GIVEN
 			mongoUserRepository.save(basicUser);
 			//WHEN
-			mockMvc.perform(post("/api/users/login")
+			mockMvc.perform(post("/api/users/login/")
 							.with(httpBasic("Test user", "Test password"))
 							.contentType(MediaType.APPLICATION_JSON)
 							.content("{}")
