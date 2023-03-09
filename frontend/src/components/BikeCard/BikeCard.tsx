@@ -95,7 +95,6 @@ function BikeCard(props: BikeCardProps) {
                      Upload image
                   </label>
                   <input id="imageUpload" className="hidden" type="file" onChange={handleFileChange} accept={'image/jpeg, image/png'} />
-
                   <div className="card__controls--horizontal">
                      <button className="card__button inline-half" onClick={handleSaveChanges}>
                         Save changes
