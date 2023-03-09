@@ -49,6 +49,7 @@
 }
 
 .navigation a, .navigation div {
+	cursor: pointer;
 	background: white;
 	border: #a68c14 solid 2px;
 	border-radius: 0.5rem;
