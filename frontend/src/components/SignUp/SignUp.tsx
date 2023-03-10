@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import '../Login/Login.css'
 
 type Props = {
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
+   galleryRef: React.MutableRefObject<HTMLDivElement>
 }
 
 function SignUp(props: Props) {
@@ -39,7 +40,7 @@ function SignUp(props: Props) {
    }
 
    return (
-      <Layout addBikeInputRef={props.addBikeInputRef}>
+      <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          <form className="signup" onSubmit={submitHandler}>
             <h1 className="signup__title">Sign up</h1>
 

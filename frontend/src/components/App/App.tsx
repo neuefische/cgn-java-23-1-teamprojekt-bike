@@ -23,18 +23,17 @@ axios.interceptors.request.use(
 )
 
 function App() {
-    const addBikeInputRef = useRef() as React.MutableRefObject<HTMLInputElement>
-
+   const addBikeRef = useRef() as React.MutableRefObject<HTMLFormElement>
+   const galleryRef = useRef() as React.MutableRefObject<HTMLDivElement>
 
    return (
       <div id="app">
-
-            <Routes>
-               <Route path="/" element={<BikeGallery addBikeInputRef={addBikeInputRef}/>} />
-               <Route path="/login" element={<Login  addBikeInputRef={addBikeInputRef}/>} />
-               <Route path="/signup" element={<SignUp  addBikeInputRef={addBikeInputRef}/>} />
-               <Route path="/details/:id" element={<BikeDetails addBikeInputRef={addBikeInputRef}/>} />
-            </Routes>
+         <Routes>
+            <Route path="/" element={<BikeGallery addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
+            <Route path="/login" element={<Login addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
+            <Route path="/signup" element={<SignUp addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
+            <Route path="/details/:id" element={<BikeDetails addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
+         </Routes>
       </div>
    )
 }

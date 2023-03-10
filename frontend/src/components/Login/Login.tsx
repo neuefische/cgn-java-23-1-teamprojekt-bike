@@ -6,7 +6,8 @@ import useAuth from '../../hooks/useAuth'
 import './Login.css'
 
 type Props = {
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
+   galleryRef: React.MutableRefObject<HTMLDivElement>
 }
 
 function Login(props: Props) {
@@ -46,7 +47,7 @@ function Login(props: Props) {
    }
 
    return (
-      <Layout addBikeInputRef={props.addBikeInputRef}>
+      <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          <form className="login" onSubmit={submitHandler}>
             <h1 className="login__title">Log in</h1>
             <label className="login__label">

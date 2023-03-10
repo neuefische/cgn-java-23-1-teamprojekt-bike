@@ -3,7 +3,7 @@ import './AddBike.css'
 
 type AddBikeProps = {
    addBike: (newBikeTitle: string) => void
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
 }
 
 function AddBike(props: AddBikeProps) {
@@ -20,8 +20,8 @@ function AddBike(props: AddBikeProps) {
    }
 
    return (
-      <form onSubmit={(event) => handleSubmit(event)}>
-         <input className="add-form__input" type="text" value={inputTitle} onChange={handleTitleChange} ref={props.addBikeInputRef} />
+      <form onSubmit={(event) => handleSubmit(event)} ref={props.addBikeRef}>
+         <input className="add-form__input" type="text" value={inputTitle} onChange={handleTitleChange} />
          <button className="add-form__button" disabled={inputTitle.trim().length === 0}>
             Add new Bike
          </button>

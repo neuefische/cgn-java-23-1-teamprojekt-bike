@@ -9,7 +9,8 @@ import Layout from '../Layout/Layout'
 import { useMediaQuery } from 'react-responsive'
 
 type BikeGalleryProps = {
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
+   galleryRef: React.MutableRefObject<HTMLDivElement>
 }
 
 function BikeGallery(props: BikeGalleryProps) {
@@ -20,19 +21,16 @@ function BikeGallery(props: BikeGalleryProps) {
 
    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
    return (
-      <Layout addBikeInputRef={props.addBikeInputRef}>
-         {' '}
+      <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          {!loading ? (
-            <>
-               <section className={'gallery' + (!!isTabletOrMobile ? ' mobile-view' : '')}>
-                  {bikes?.map((bike) => (
-                     <BikeCard key={bike.id} bike={bike} editBike={editBike} deleteBike={deleteBike} />
-                  ))}
-               </section>
+            <section className={'gallery' + (!!isTabletOrMobile ? ' mobile-view' : '')} ref={props.galleryRef}>
+               {bikes?.map((bike) => (
+                  <BikeCard key={bike.id} bike={bike} editBike={editBike} deleteBike={deleteBike} />
+               ))}
                <aside className="add-form">
-                  <AddBike addBikeInputRef={props.addBikeInputRef} addBike={addBike} />
+                  <AddBike addBikeRef={props.addBikeRef} addBike={addBike} />
                </aside>
-            </>
+            </section>
          ) : (
             <div>Loading...</div>
          )}

@@ -6,7 +6,8 @@ import Layout from '../Layout/Layout'
 import useBikesApi from '../../hooks/useBikesApi'
 
 type BikeDetailsProps = {
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
+   galleryRef: React.MutableRefObject<HTMLDivElement>
 }
 
 function BikeDetails(props: BikeDetailsProps) {
@@ -15,7 +16,7 @@ function BikeDetails(props: BikeDetailsProps) {
    const bike = (!!id && (bikes.find((bike) => bike.id === id) as Bike)) || null
 
    return (
-      <Layout addBikeInputRef={props.addBikeInputRef}>
+      <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          {!loading ? (
             <div className="bike-details">
                <h1 className="bike-details--title">{bike?.title}</h1>

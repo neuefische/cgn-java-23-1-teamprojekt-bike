@@ -4,13 +4,14 @@ import './Layout.css'
 
 type Props = {
    children: ReactNode
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
+   galleryRef: React.MutableRefObject<HTMLDivElement>
 }
 
 function Layout(props: Props) {
    return (
       <>
-         <Header addBikeInputRef={props.addBikeInputRef} />
+         <Header addBikeRef={props.addBikeRef} galleryRef={props.galleryRef} />
          <main className="main">{props.children}</main>
          <footer className="footer">Imprint - 2023</footer>
       </>
