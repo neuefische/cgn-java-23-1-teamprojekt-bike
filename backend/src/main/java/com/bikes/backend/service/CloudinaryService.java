@@ -23,7 +23,7 @@ public class CloudinaryService {
 	}
 
 	public String uploadPhoto(MultipartFile photo) throws IOException {
-		Map result = cloudinary.uploader().upload(photo.getBytes(), ObjectUtils.emptyMap());
-		return result.get("url").toString();
+		Map<String, String> result = cloudinary.uploader().upload(photo.getBytes(), ObjectUtils.emptyMap());
+		return result.get("url");
 	}
 }
