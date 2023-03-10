@@ -1,10 +1,12 @@
 package com.bikes.backend.controller;
+
 import com.bikes.backend.model.MongoUserDTO;
 import com.bikes.backend.model.MongoUserResponseDTO;
 import com.bikes.backend.service.MongoUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 
 @RestController
@@ -15,7 +17,7 @@ public class MongoUserController {
 
 	@PostMapping("/")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public MongoUserResponseDTO create(@RequestBody MongoUserDTO user) throws Exception {
+	public MongoUserResponseDTO create(@RequestBody MongoUserDTO user) {
 		return mongoUserDetailsService.createUser(user);
 	}
 
