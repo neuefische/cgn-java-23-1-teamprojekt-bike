@@ -103,7 +103,7 @@ class MongoUserDetailsServiceTest {
 			//GIVEN
 			UsernameNotFoundException expected = new UsernameNotFoundException("User not found");
 			//WHEN
-			UsernameNotFoundException actual = assertThrows(UsernameNotFoundException.class, () -> mongoUserDetailsService.loadUserByUsername(mongoUser.username()));
+			UsernameNotFoundException actual = assertThrows(expected.getClass(), () -> mongoUserDetailsService.loadUserByUsername(mongoUser.username()));
 			//THEN
 			assertEquals(expected.getClass(), actual.getClass());
 			assertEquals(expected.getMessage(), actual.getMessage());
