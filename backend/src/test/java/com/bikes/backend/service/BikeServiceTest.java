@@ -25,9 +25,9 @@ class BikeServiceTest {
 
 	String testId = "Some test ID";
 	String invalidId = "Some invalid ID";
-	Bike testBike = new Bike(testId, "Mega bike 9000", null);
+	Bike testBike = new Bike(testId, "Mega bike 9000", "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png");
 	BikeDTO testBikeDTO = new BikeDTO("Mega bike 9000");
-	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000", null);
+	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000", "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png");
 
 	@BeforeEach
 	@DisplayName("set up test environment")
