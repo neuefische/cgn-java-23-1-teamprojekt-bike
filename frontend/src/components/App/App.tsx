@@ -9,7 +9,7 @@ import BikeDetails from '../BikeDetails/BikeDetails'
 import SignUp from '../SignUp/SignUp'
 import Login from '../Login/Login'
 
-// @ts-ignore
+
 axios.interceptors.request.use(
    function (config) {
       return fetch('/api/csrf/').then(() => {

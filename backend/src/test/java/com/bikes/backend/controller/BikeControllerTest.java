@@ -100,7 +100,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not logged in")
-		void addBike_returns403IfTheUserIsNotLoggedIn() throws Exception {
+		void addBike_returns401IfTheUserIsNotLoggedIn() throws Exception {
 			mockMvc.perform(post("/api/bikes/")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("""
@@ -142,7 +142,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not logged in")
-		void updateBike_returns403IfTheUserIsNotLoggedIn() throws Exception {
+		void updateBike_returns401IfTheUserIsNotLoggedIn() throws Exception {
 			mockMvc.perform(put("/api/bikes/")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("""
@@ -202,7 +202,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not logged in")
-		void deleteBike_returns403IfTheUserIsNotLoggedIn() throws Exception {
+		void deleteBike_returns401IfTheUserIsNotLoggedIn() throws Exception {
 			mockMvc.perform(delete("/api/bikes/41").with(csrf()))
 					.andExpect(status().isUnauthorized());
 		}
@@ -216,7 +216,7 @@ class BikeControllerTest {
 			mockMvc.perform(delete("/api/bikes/" + testBike.id()).with(csrf()))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
-							        {  
+							        {
 							           "title": "Mega bike 9000",
 							           "id": "Some test ID"
 							        }

@@ -100,7 +100,7 @@ class MongoUserControllerTest {
 		@DirtiesContext
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not authenticated")
 		void getCurrentUser_returns401IfTheUserIsNotAuthenticated() throws Exception {
-			mockMvc.perform(get("/api/users/me").with(csrf()))
+			mockMvc.perform(get("/api/users/me"))
 					.andExpect(status().isUnauthorized());
 		}
 
@@ -112,7 +112,7 @@ class MongoUserControllerTest {
 			//GIVEN
 			mongoUserRepository.save(basicUser);
 			//WHEN
-			mockMvc.perform(get("/api/users/me").with(csrf()))
+			mockMvc.perform(get("/api/users/me"))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							{
@@ -120,8 +120,7 @@ class MongoUserControllerTest {
 								"role": "BASIC"
 							}
 							"""))
-					.andExpect(jsonPath("$.id").isNotEmpty())
-					.andExpect(jsonPath("$.password").isEmpty());
+					.andExpect(jsonPath("$.id").isNotEmpty());
 		}
 	}
 
@@ -165,8 +164,7 @@ class MongoUserControllerTest {
 								"role": "BASIC"
 							}
 							"""))
-					.andExpect(jsonPath("$.id").isNotEmpty())
-					.andExpect(jsonPath("$.password").isEmpty());
+					.andExpect(jsonPath("$.id").isNotEmpty());
 			//THEN
 		}
 

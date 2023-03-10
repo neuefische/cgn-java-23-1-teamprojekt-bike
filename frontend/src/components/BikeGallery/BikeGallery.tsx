@@ -2,8 +2,6 @@ import React from 'react'
 import BikeCard from '../BikeCard/BikeCard'
 import './BikeGallery.css'
 import './scroll.css'
-import useAuth from '../../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
 import AddBike from '../AddBike/AddBike'
 import useBikesApi from '../../hooks/useBikesApi'
 import Layout from '../Layout/Layout'
@@ -15,16 +13,13 @@ type BikeGalleryProps = {
 }
 
 function BikeGallery(props: BikeGalleryProps) {
-   const currentUser = useAuth(false)
    const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
-   const navigate = useNavigate()
-   !currentUser && navigate('/login')
 
    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
    return (
       <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          {!loading ? (
-            <section className={'gallery' + (!!isTabletOrMobile ? ' mobile-view' : '')} ref={props.galleryRef}>
+            <section className={'gallery' + (isTabletOrMobile ? ' mobile-view' : '')} ref={props.galleryRef}>
                {bikes?.map((bike) => (
                   <BikeCard key={bike.id} bike={bike} editBike={editBike} deleteBike={deleteBike} />
                ))}
