@@ -1,8 +1,13 @@
 #app {
+	position: absolute;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	width: 100%;
 	text-align: center;
 	justify-content: center;
 	background: #d2cdb2;
+	top: 0;
+	bottom: 0;
+	left: 0;
 }

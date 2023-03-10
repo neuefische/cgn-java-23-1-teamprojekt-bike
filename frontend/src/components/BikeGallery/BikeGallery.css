@@ -1,8 +1,14 @@
 .gallery {
 	display: flex;
-	flex-direction: row;
 	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 20px;
+
+	flex-grow: 1;
+	overflow: auto;
+	min-height: 0;
+}
+
+.gallery.mobile-view {
 	justify-content: space-evenly;
-	min-height: fit-content;
-	max-height: 100%;
 }
