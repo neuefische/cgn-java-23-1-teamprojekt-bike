@@ -47,20 +47,15 @@ public class MongoUserDetailsService implements UserDetailsService {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
 		}
 
-
-		MongoUser newUser = new MongoUser(idService.generateId(), user.username(),
-				passwordEncoder.encode(user.password()), "BASIC");
-
-		MongoUser userOut = repository.save(newUser);
-
-		return new MongoUserResponseDTO(userOut.id(), userOut.username(), userOut.role());
-
+		MongoUser newUser = new MongoUser(idService.generateId(), user.username(), passwordEncoder.encode(user.password()), "BASIC");
+		MongoUser savedUser = repository.save(newUser);
+		return new MongoUserResponseDTO(savedUser.id(), savedUser.username(), savedUser.role());
 	}
 
 	public MongoUserResponseDTO getCurrentUser(Principal principal) {
 		MongoUser user = repository.findByUsername(principal.getName())
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
 
-		return new MongoUserResponseDTO(user.id(),user.username(), user.role());
+		return new MongoUserResponseDTO(user.id(), user.username(), user.role());
 	}
 }
