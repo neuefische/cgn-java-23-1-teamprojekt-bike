@@ -1,0 +1,17 @@
+.gallery {
+	scrollbar-color: #a68c14 #d2cdb2;
+	scrollbar-gutter: stable;
+}
+
+.gallery::-webkit-scrollbar {
+	width: 10px;
+}
+
+.gallery::-webkit-scrollbar-thumb { /* Foreground */
+	background: #d2cdb2;
+}
+
+.gallery::-webkit-scrollbar-track { /* Background */
+	background: #d2cdb2;
+	border: none;
+}

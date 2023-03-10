@@ -1,6 +1,7 @@
 import React from 'react'
 import BikeCard from '../BikeCard/BikeCard'
 import './BikeGallery.css'
+import './scroll.css'
 import useAuth from '../../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import AddBike from '../AddBike/AddBike'
