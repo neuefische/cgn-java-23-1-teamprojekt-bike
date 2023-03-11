@@ -7,5 +7,4 @@ import java.util.NoSuchElementException;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Bike not found.")
 public class NoSuchBikeException extends NoSuchElementException {
-
 }

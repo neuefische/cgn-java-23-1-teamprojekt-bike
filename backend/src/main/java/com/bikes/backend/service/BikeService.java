@@ -14,7 +14,6 @@ import java.util.Optional;
 @Service
 public class BikeService {
 	private final BikeRepository bikeRepository;
-
 	private final IdService idService;
 
 	public List<Bike> getAllBikes() {
@@ -38,7 +37,6 @@ public class BikeService {
 		Bike result = new Bike(incomingBike.id(), incomingBike.title(), incomingBike.imageUrl());
 		return bikeRepository.save(result);
 	}
-
 
 	public Bike deleteBike(String id) {
 		Optional<Bike> bikeToDelete = bikeRepository.findById(id);
