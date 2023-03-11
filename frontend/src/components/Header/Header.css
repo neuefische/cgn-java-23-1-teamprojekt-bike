@@ -60,3 +60,7 @@
 	font-weight: bold;
 	white-space: pre-line;
 }
+
+.navigation.vertical a, .navigation.vertical div {
+	width: 100%;
+}

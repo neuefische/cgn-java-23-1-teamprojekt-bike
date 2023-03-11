@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Layout from '../Layout/Layout'
 import useAuth from '../../hooks/useAuth'
 import './Login.css'
+import './scroll.css'
 
 type Props = {
    addBikeRef: React.MutableRefObject<HTMLFormElement>
@@ -48,24 +49,26 @@ function Login(props: Props) {
 
    return (
       <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
-         <form className="login" onSubmit={submitHandler}>
-            <h1 className="login__title">Log in</h1>
-            <label className="login__label">
-               <span className="login__label--title">Username:</span>
-               <input className="login__input" type={'text'} value={username} onChange={handleUsernameChange} />
-            </label>
+         <div className="login--wrapper">
+            <form className="login" onSubmit={submitHandler}>
+               <h1 className="login__title">Log in</h1>
+               <label className="login__label">
+                  <span className="login__label--title">Username:</span>
+                  <input className="login__input" type={'text'} value={username} onChange={handleUsernameChange} />
+               </label>
 
-            <label className="login__label">
-               <span className="login__label--title">Password:</span>
-               <input className="login__input" type={'password'} value={password} onChange={handlePasswordChange} autoFocus={!!location.state?.username} />
-            </label>
-            <button className="login__submit" type={'submit'}>
-               Log in
-            </button>
-            <Link className="login__link" to={'/signup'}>
-               New to Bike Master 9000? Sign up here!
-            </Link>
-         </form>
+               <label className="login__label">
+                  <span className="login__label--title">Password:</span>
+                  <input className="login__input" type={'password'} value={password} onChange={handlePasswordChange} autoFocus={!!location.state?.username} />
+               </label>
+               <button className="login__submit" type={'submit'}>
+                  Log in
+               </button>
+               <Link className="login__link" to={'/signup'}>
+                  New to Bike Master 9000? Sign up here!
+               </Link>
+            </form>
+         </div>
       </Layout>
    )
 }

@@ -41,27 +41,29 @@ function SignUp(props: Props) {
 
    return (
       <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
-         <form className="signup" onSubmit={submitHandler}>
-            <h1 className="signup__title">Sign up</h1>
+         <div className="signup--wrapper">
+            <form className="signup" onSubmit={submitHandler}>
+               <h1 className="signup__title">Sign up</h1>
 
-            <label className="signup__label">
-               <span className="signup__label--title">Username:</span>
-               <input className="signup__input" type={'text'} value={username} onChange={handleUsernameChange} />
-            </label>
+               <label className="signup__label">
+                  <span className="signup__label--title">Username:</span>
+                  <input className="signup__input" type={'text'} value={username} onChange={handleUsernameChange} />
+               </label>
 
-            <label className="signup__label">
-               <span className="signup__label--title">Password:</span>
-               <input className="signup__input" type={'password'} value={password} onChange={handlePasswordChange} />
-            </label>
+               <label className="signup__label">
+                  <span className="signup__label--title">Password:</span>
+                  <input className="signup__input" type={'password'} value={password} onChange={handlePasswordChange} />
+               </label>
 
-            <button className="signup__submit" type={'submit'}>
-               Create User
-            </button>
+               <button className="signup__submit" type={'submit'}>
+                  Create User
+               </button>
 
-            <Link className="signup__link" to={'/login'}>
-               Already have an account? Log in here!
-            </Link>
-         </form>
+               <Link className="signup__link" to={'/login'}>
+                  Already have an account? Log in here!
+               </Link>
+            </form>
+         </div>
       </Layout>
    )
 }
