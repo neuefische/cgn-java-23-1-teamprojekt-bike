@@ -13,7 +13,7 @@ type HeaderProps = {
 }
 
 function Header(props: HeaderProps) {
-   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
+   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 860px)' })
    const user = useAuth(false)
    const { pathname } = useLocation()
    const isNotTheGallery = pathname !== '/'

@@ -18,13 +18,15 @@ function BikeDetails(props: BikeDetailsProps) {
    return (
       <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          {!loading ? (
-            <div className="bike-details">
-               <h1 className="bike-details--title">{bike?.title}</h1>
-               {bike?.imageUrl && (
-                  <div className="bike-details--unit">
-                     <img className="bike-details--image" src={bike.imageUrl} alt={bike?.title} />
-                  </div>
-               )}
+            <div className="bike-details--wrapper">
+               <div className="bike-details">
+                  <h1 className="bike-details--title">{bike?.title}</h1>
+                  {bike?.imageUrl && (
+                     <div className="bike-details--unit">
+                        <img className="bike-details--image" src={bike.imageUrl} alt={bike?.title} />
+                     </div>
+                  )}
+               </div>
             </div>
          ) : (
             <div>Loading...</div>

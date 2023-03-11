@@ -1,23 +1,21 @@
-.gallery, .login--wrapper, .signup--wrapper {
+.gallery,
+.bike-details--wrapper {
 	scrollbar-color: #a68c14 #d2cdb2;
 	scrollbar-gutter: stable;
 }
 
 .gallery::-webkit-scrollbar,
-.login--wrapper::-webkit-scrollbar,
-.signup--wrapper::-webkit-scrollbar {
+.bike-details--wrapper::-webkit-scrollbar {
 	width: 10px;
 }
 
 .gallery::-webkit-scrollbar-thumb,
-.login--wrapper::-webkit-scrollbar-thumb,
-.signup--wrapper::-webkit-scrollbar-thumb {
+.bike-details--wrapper::-webkit-scrollbar-thumb {
 	background: #d2cdb2;
 }
 
 .gallery::-webkit-scrollbar-track,
-.login--wrapper::-webkit-scrollbar-track,
-.signup--wrapper::-webkit-scrollbar-track {
+.bike-details--wrapper::-webkit-scrollbar-track {
 	background: #d2cdb2;
 	border: none;
 }

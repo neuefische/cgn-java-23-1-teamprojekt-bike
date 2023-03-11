@@ -1,5 +1,14 @@
+.bike-details--wrapper {
+	display: flex;
+	overflow: auto;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+	padding-bottom: 3rem;
+}
+
 .bike-details {
-	align-self: center;
+	margin: auto;
 	width: 360px;
 	height: 500px;
 	border-radius: 1rem;
