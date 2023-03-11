@@ -6,11 +6,3 @@
 	justify-content: center;
 	background: #d2cdb2;
 }
-
-#app main.main {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: 1.5rem 2rem;
-	margin: 0 0 auto 0;
-}

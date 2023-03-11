@@ -16,7 +16,6 @@ public class BikeController {
 
 	private final BikeService bikeService;
 
-
 	@GetMapping("/")
 	public List<Bike> getAllBikes() {
 		return bikeService.getAllBikes();

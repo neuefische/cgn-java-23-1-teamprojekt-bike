@@ -43,6 +43,11 @@
 	gap: 20px;
 }
 
+.navigation.vertical {
+	flex-direction: column;
+	gap: 10px;
+}
+
 .navigation a, .navigation div {
 	background: white;
 	border: #a68c14 solid 2px;
