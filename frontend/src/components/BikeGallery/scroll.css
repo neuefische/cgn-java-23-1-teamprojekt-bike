@@ -6,7 +6,7 @@
 .gallery::-webkit-scrollbar,
 .login--wrapper::-webkit-scrollbar,
 .signup--wrapper::-webkit-scrollbar {
-	width: 10px;;
+	width: 10px;
 }
 
 .gallery::-webkit-scrollbar-thumb,
