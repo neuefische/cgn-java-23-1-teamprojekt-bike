@@ -8,7 +8,7 @@ import BikeGallery from '../BikeGallery/BikeGallery'
 import BikeDetails from '../BikeDetails/BikeDetails'
 import SignUp from '../SignUp/SignUp'
 import Login from '../Login/Login'
-
+import Credits from '../Credits/Credits'
 
 axios.interceptors.request.use(
    function (config) {
@@ -33,6 +33,7 @@ function App() {
             <Route path="/login" element={<Login addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
             <Route path="/signup" element={<SignUp addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
             <Route path="/details/:id" element={<BikeDetails addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
+            <Route path="/credits" element={<Credits addBikeRef={addBikeRef} galleryRef={galleryRef} />} />
          </Routes>
       </div>
    )
