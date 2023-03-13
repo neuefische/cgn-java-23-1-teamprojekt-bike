@@ -14,3 +14,16 @@
 	font-weight: bold;
 }
 
+.footer p {
+	margin-block: 0;
+}
+
+.footer a {
+	color: #d2cdb2;
+	text-decoration: none;
+}
+
+.footer a:hover {
+	text-decoration: underline;
+}
+

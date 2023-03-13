@@ -1,0 +1,34 @@
+.credits--wrapper {
+	display: flex;
+	overflow: auto;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+	padding-bottom: 3rem;
+	color: #a68c14;
+	font-size: 1rem;
+	font-weight: 600
+}
+
+.credits {
+	margin: auto;
+	width: 660px;
+	height: 500px;
+	border-radius: 1rem;
+	border: #d2cdb2 solid 2px;
+}
+
+.credits.mobile {
+	width: 300px;
+}
+
+
+a {
+	color: #a68c14;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

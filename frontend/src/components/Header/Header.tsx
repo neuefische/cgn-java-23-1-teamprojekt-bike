@@ -17,6 +17,7 @@ function Header(props: HeaderProps) {
    const user = useAuth(false)
    const { pathname } = useLocation()
    const isNotTheGallery = pathname !== '/'
+   const isCreditsForUnloggedUser = pathname === '/credits' && !user
    const navigate = useNavigate()
    const handleScrollIntoAddBikeView = () => props.addBikeRef.current.scrollIntoView({ behavior: 'smooth' })
    const handleScrollIntoGalleryView = () => props.galleryRef.current.scrollTo({ top: 0, behavior: 'smooth' })
@@ -34,10 +35,11 @@ function Header(props: HeaderProps) {
                {!!user && (
                   <>
                      <div onClick={isNotTheGallery ? () => navigate('/') : handleScrollIntoGalleryView}>Gallery</div>
-                     <div onClick={handleScrollIntoAddBikeView}>Add new bike</div>
+                     {!isNotTheGallery ? <div onClick={handleScrollIntoAddBikeView}>Add new bike</div> : null}
                      <LogOutButton>Log out</LogOutButton>
                   </>
                )}
+               {isCreditsForUnloggedUser ? <div onClick={() => navigate('/login')}>Log in</div> : null}
             </nav>
          </div>
       </header>

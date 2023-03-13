@@ -15,7 +15,9 @@ function Layout(props: Props) {
          <Header addBikeRef={props.addBikeRef} galleryRef={props.galleryRef} />
          <main className="main">{props.children}</main>
          <footer className="footer">
-            <Link to={'/credits'}>Credits</Link> - 2023
+            <p>
+               <Link to={'/credits'}>Credits</Link> - 2023
+            </p>
          </footer>
       </>
    )

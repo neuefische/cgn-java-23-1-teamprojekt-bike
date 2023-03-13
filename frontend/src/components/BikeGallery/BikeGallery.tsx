@@ -20,8 +20,8 @@ function BikeGallery(props: BikeGalleryProps) {
    !currentUser && navigate('/login')
 
    const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
-
    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
+
    return (
       <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
          {!loading ? (
