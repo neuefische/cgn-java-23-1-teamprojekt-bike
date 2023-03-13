@@ -11,7 +11,7 @@ function LogOutButton(props: { children: ReactNode }) {
       })
    }
 
-   return user ? <div onClick={handleLogOut}>{props.children}</div> : null
+   return user ? <div onClick={handleLogOut}>{props.children}</div> : ''
 }
 
 export default LogOutButton

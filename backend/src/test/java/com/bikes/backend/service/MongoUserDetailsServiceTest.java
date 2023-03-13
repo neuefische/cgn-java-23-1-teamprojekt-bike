@@ -1,8 +1,8 @@
 package com.bikes.backend.service;
 
 import com.bikes.backend.model.MongoUser;
-import com.bikes.backend.model.MongoUserDTO;
-import com.bikes.backend.model.MongoUserResponseDTO;
+import com.bikes.backend.model.MongoUserRequest;
+import com.bikes.backend.model.MongoUserResponse;
 import com.bikes.backend.repository.MongoUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,8 +40,8 @@ class MongoUserDetailsServiceTest {
 	PasswordEncoder passwordEncoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 	Principal principal = mock(Principal.class);
 	MongoUser mongoUser = new MongoUser("1", "name", "11", "BASIC");
-	MongoUserDTO mongoUserDTO = new MongoUserDTO(mongoUser.username(), mongoUser.password());
-	MongoUserResponseDTO mongoUserResponseDTO = new MongoUserResponseDTO(mongoUser.id(), mongoUser.username(), mongoUser.role());
+	MongoUserRequest mongoUserRequest = new MongoUserRequest(mongoUser.username(), mongoUser.password());
+	MongoUserResponse mongoUserResponse = new MongoUserResponse(mongoUser.id(), mongoUser.username(), mongoUser.role());
 
 	@BeforeEach
 	void setUp() {
@@ -59,9 +59,9 @@ class MongoUserDetailsServiceTest {
 		void getCurrentUser_shouldReturnMongoUserResponseDTO() {
 			//GIVEN
 			mongoUserRepository.save(mongoUser);
-			MongoUserResponseDTO expected = mongoUserResponseDTO;
+			MongoUserResponse expected = mongoUserResponse;
 			//WHEN
-			MongoUserResponseDTO actual = mongoUserDetailsService.getCurrentUser(principal);
+			MongoUserResponse actual = mongoUserDetailsService.getCurrentUser(principal);
 			//THEN
 			assertEquals(expected, actual);
 		}
@@ -120,9 +120,9 @@ class MongoUserDetailsServiceTest {
 		@DisplayName("...should return a MongoUserResponseDTO of the created user if username does not exist and provided username amd password are not empty")
 		void createUser_shouldReturnMongoUserResponseDTOIfUsernameDoesNotExistAndUsernameAndPasswordAreNotEmpty() {
 			//GIVEN
-			MongoUserResponseDTO expected = mongoUserResponseDTO;
+			MongoUserResponse expected = mongoUserResponse;
 			//WHEN
-			MongoUserResponseDTO actual = mongoUserDetailsService.createUser(mongoUserDTO);
+			MongoUserResponse actual = mongoUserDetailsService.createUser(mongoUserRequest);
 			//THEN
 			assertEquals(expected, actual);
 		}
@@ -134,7 +134,7 @@ class MongoUserDetailsServiceTest {
 			mongoUserRepository.save(mongoUser);
 			HttpStatus expected = HttpStatus.CONFLICT;
 			//WHEN
-			ResponseStatusException actual = assertThrows(ResponseStatusException.class, () -> mongoUserDetailsService.createUser(mongoUserDTO));
+			ResponseStatusException actual = assertThrows(ResponseStatusException.class, () -> mongoUserDetailsService.createUser(mongoUserRequest));
 			//THEN
 			assertEquals(expected, actual.getStatusCode());
 		}
@@ -143,10 +143,10 @@ class MongoUserDetailsServiceTest {
 		@DisplayName("...should throw a ResponseStatusException with status 400 when username is empty")
 		void createUser_shouldThrowResponseStatusException400IfUsernameIsEmpty() {
 			//GIVEN
-			MongoUserDTO mongoUserDTO = new MongoUserDTO("", mongoUser.password());
+			MongoUserRequest mongoUserRequest = new MongoUserRequest("", mongoUser.password());
 			HttpStatus expected = HttpStatus.BAD_REQUEST;
 			//WHEN
-			ResponseStatusException actual = assertThrows(ResponseStatusException.class, () -> mongoUserDetailsService.createUser(mongoUserDTO));
+			ResponseStatusException actual = assertThrows(ResponseStatusException.class, () -> mongoUserDetailsService.createUser(mongoUserRequest));
 			//THEN
 			assertEquals(expected, actual.getStatusCode());
 		}
@@ -155,12 +155,13 @@ class MongoUserDetailsServiceTest {
 		@DisplayName("...should throw a ResponseStatusException with status 400 when password is empty")
 		void createUser_shouldThrowResponseStatusException400IfPasswordIsEmpty() {
 			//GIVEN
-			MongoUserDTO mongoUserDTO = new MongoUserDTO(mongoUser.username(), "");
+			MongoUserRequest mongoUserRequest = new MongoUserRequest(mongoUser.username(), "");
 			HttpStatus expected = HttpStatus.BAD_REQUEST;
 			//WHEN
-			ResponseStatusException actual = assertThrows(ResponseStatusException.class, () -> mongoUserDetailsService.createUser(mongoUserDTO));
+			ResponseStatusException actual = assertThrows(ResponseStatusException.class, () -> mongoUserDetailsService.createUser(mongoUserRequest));
 			//THEN
 			assertEquals(expected, actual.getStatusCode());
 		}
 	}
+
 }

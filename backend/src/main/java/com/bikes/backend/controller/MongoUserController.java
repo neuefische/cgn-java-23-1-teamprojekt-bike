@@ -1,7 +1,7 @@
 package com.bikes.backend.controller;
 
-import com.bikes.backend.model.MongoUserDTO;
-import com.bikes.backend.model.MongoUserResponseDTO;
+import com.bikes.backend.model.MongoUserRequest;
+import com.bikes.backend.model.MongoUserResponse;
 import com.bikes.backend.service.MongoUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,14 +15,14 @@ import java.security.Principal;
 public class MongoUserController {
 	private final MongoUserDetailsService mongoUserDetailsService;
 
-	@PostMapping("/")
+	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public MongoUserResponseDTO create(@RequestBody MongoUserDTO user) {
+	public MongoUserResponse create(@RequestBody MongoUserRequest user) {
 		return mongoUserDetailsService.createUser(user);
 	}
 
 	@PostMapping("/login")
-	public MongoUserResponseDTO login(Principal principal) {
+	public MongoUserResponse login(Principal principal) {
 		return getCurrentUser(principal);
 	}
 
@@ -32,7 +32,7 @@ public class MongoUserController {
 	}
 
 	@GetMapping("/me")
-	public MongoUserResponseDTO getCurrentUser(Principal principal) {
+	public MongoUserResponse getCurrentUser(Principal principal) {
 		return mongoUserDetailsService.getCurrentUser(principal);
 	}
 

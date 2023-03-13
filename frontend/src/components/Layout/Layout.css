@@ -8,3 +8,9 @@
 	flex-grow: 1;
 }
 
+.suspense {
+	color: #fff;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+

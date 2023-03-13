@@ -34,7 +34,7 @@ function BikeDetails(props: BikeDetailsProps) {
                </div>
             </div>
          ) : (
-            <div>Loading...</div>
+            <div className="suspense">Loading...</div>
          )}
       </Layout>
    )

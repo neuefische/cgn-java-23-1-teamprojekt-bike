@@ -16,9 +16,10 @@ type BikeGalleryProps = {
 
 function BikeGallery(props: BikeGalleryProps) {
    const currentUser = useAuth(false)
-   const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
    const navigate = useNavigate()
    !currentUser && navigate('/login')
+
+   const { bikes, addBike, editBike, deleteBike, loading } = useBikesApi()
 
    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
    return (
@@ -33,7 +34,7 @@ function BikeGallery(props: BikeGalleryProps) {
                </aside>
             </section>
          ) : (
-            <div>Loading...</div>
+            <div className="suspense">Loading...</div>
          )}
       </Layout>
    )

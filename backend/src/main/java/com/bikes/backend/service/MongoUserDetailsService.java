@@ -1,8 +1,8 @@
 package com.bikes.backend.service;
 
 import com.bikes.backend.model.MongoUser;
-import com.bikes.backend.model.MongoUserDTO;
-import com.bikes.backend.model.MongoUserResponseDTO;
+import com.bikes.backend.model.MongoUserRequest;
+import com.bikes.backend.model.MongoUserResponse;
 import com.bikes.backend.repository.MongoUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class MongoUserDetailsService implements UserDetailsService {
 	}
 
 
-	public MongoUserResponseDTO createUser(MongoUserDTO user) {
+	public MongoUserResponse createUser(MongoUserRequest user) {
 		if (user.username() == null || user.username().length() == 0) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
 		}
@@ -49,13 +49,13 @@ public class MongoUserDetailsService implements UserDetailsService {
 
 		MongoUser newUser = new MongoUser(idService.generateId(), user.username(), passwordEncoder.encode(user.password()), "BASIC");
 		MongoUser savedUser = repository.save(newUser);
-		return new MongoUserResponseDTO(savedUser.id(), savedUser.username(), savedUser.role());
+		return new MongoUserResponse(savedUser.id(), savedUser.username(), savedUser.role());
 	}
 
-	public MongoUserResponseDTO getCurrentUser(Principal principal) {
+	public MongoUserResponse getCurrentUser(Principal principal) {
 		MongoUser user = repository.findByUsername(principal.getName())
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
 
-		return new MongoUserResponseDTO(user.id(), user.username(), user.role());
+		return new MongoUserResponse(user.id(), user.username(), user.role());
 	}
 }

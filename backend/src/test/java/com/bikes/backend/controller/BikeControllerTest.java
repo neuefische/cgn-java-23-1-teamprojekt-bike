@@ -193,7 +193,6 @@ class BikeControllerTest {
 							        }
 							""").with(csrf())).andExpect(status().isNotFound());
 		}
-
 	}
 
 	@Nested

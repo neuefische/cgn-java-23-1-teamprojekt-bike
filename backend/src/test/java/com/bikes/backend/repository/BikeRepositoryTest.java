@@ -18,15 +18,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest
 class BikeRepositoryTest {
+	final String DEFAULT_BIKE_IMAGE = "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png";
 	Bike testBike;
 	@Autowired
 	BikeRepository repository;
-
 	String invalidId = "Some invalid ID";
 
 	@BeforeEach
 	public void setUp() {
-		testBike = new Bike("Some test ID", "Mega bike 9000", null);
+		testBike = new Bike("Some test ID", "Mega bike 9000", DEFAULT_BIKE_IMAGE);
 	}
 
 	@DisplayName("findAll()")

@@ -17,17 +17,17 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class BikeServiceTest {
 
+	final String DEFAULT_BIKE_IMAGE = "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png";
 	@Autowired
 	BikeRepository bikeRepository;
 	IdService mockedIdService = mock(IdService.class);
 	@Autowired
 	BikeService bikeService;
-
 	String testId = "Some test ID";
 	String invalidId = "Some invalid ID";
-	Bike testBike = new Bike(testId, "Mega bike 9000", "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png");
+	Bike testBike = new Bike(testId, "Mega bike 9000", DEFAULT_BIKE_IMAGE);
 	BikeDTO testBikeDTO = new BikeDTO("Mega bike 9000");
-	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000", "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png");
+	BikeWithIdDTO testBikeWithIdDTO = new BikeWithIdDTO(testId, "Mega bike 9000", DEFAULT_BIKE_IMAGE);
 
 	@BeforeEach
 	@DisplayName("set up test environment")
@@ -133,8 +133,8 @@ class BikeServiceTest {
 		void updateBike_addsABikeToTheDatabaseIfTheBikeWithTheGivenIdDoesExist() {
 			//GIVEN
 			bikeRepository.save(testBike);
-			BikeWithIdDTO updatedBike = new BikeWithIdDTO(testBike.id(), "Updated bike title", null);
-			Bike expected = new Bike(testBike.id(), "Updated bike title", null);
+			BikeWithIdDTO updatedBike = new BikeWithIdDTO(testBike.id(), "Updated bike title", DEFAULT_BIKE_IMAGE);
+			Bike expected = new Bike(testBike.id(), "Updated bike title", DEFAULT_BIKE_IMAGE);
 			//WHEN
 			Bike actual = bikeService.updateBike(updatedBike);
 			//THEN
