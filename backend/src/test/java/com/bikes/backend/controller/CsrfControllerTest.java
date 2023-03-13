@@ -22,7 +22,7 @@ class CsrfControllerTest {
 	@WithMockUser
 	@DisplayName("...should return a string with the value 'CSRF Ok' and contain the 'XSRF-TOKEN' cookie")
 	void getCsrf_returnsStringWithCsrfOkAndXsrfTokenInHeaders() throws Exception {
-		mockMvc.perform(get("/api/csrf/"))
+		mockMvc.perform(get("/api/csrf"))
 				.andExpect(status().isOk())
 				.andExpect(content().string("CSRF Ok"))
 				.andExpect(cookie().exists("XSRF-TOKEN"));

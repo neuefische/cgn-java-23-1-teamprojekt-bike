@@ -15,7 +15,7 @@ import java.security.Principal;
 public class MongoUserController {
 	private final MongoUserDetailsService mongoUserDetailsService;
 
-	@PostMapping
+	@PostMapping("/")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public MongoUserResponse create(@RequestBody MongoUserRequest user) {
 		return mongoUserDetailsService.createUser(user);
