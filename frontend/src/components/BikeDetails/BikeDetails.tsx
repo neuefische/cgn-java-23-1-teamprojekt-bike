@@ -5,6 +5,7 @@ import './BikeDetails.css'
 import Layout from '../Layout/Layout'
 import useBikesApi from '../../hooks/useBikesApi'
 import useAuth from '../../hooks/useAuth'
+import { Helmet } from 'react-helmet'
 
 type BikeDetailsProps = {
    addBikeRef: React.MutableRefObject<HTMLFormElement>
@@ -22,6 +23,9 @@ function BikeDetails(props: BikeDetailsProps) {
 
    return (
       <Layout addBikeRef={props.addBikeRef} galleryRef={props.galleryRef}>
+         <Helmet>
+            <title>Bike Master 9000{bike?.title ? ` - ${bike?.title}` : ''}</title>
+         </Helmet>
          {!loading ? (
             <div className="bike-details--wrapper">
                <div className="bike-details">
