@@ -1,9 +1,10 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Bike } from '../../models/Bike'
 import './BikeDetails.css'
 import Layout from '../Layout/Layout'
 import useBikesApi from '../../hooks/useBikesApi'
+import useAuth from '../../hooks/useAuth'
 
 type BikeDetailsProps = {
    addBikeRef: React.MutableRefObject<HTMLFormElement>
@@ -11,6 +12,10 @@ type BikeDetailsProps = {
 }
 
 function BikeDetails(props: BikeDetailsProps) {
+   const user = useAuth(true)
+   const navigate = useNavigate()
+   !user && navigate('/login')
+
    const { id } = useParams<{ id: string }>()
    const { bikes, loading } = useBikesApi()
    const bike = (!!id && (bikes.find((bike) => bike.id === id) as Bike)) || null

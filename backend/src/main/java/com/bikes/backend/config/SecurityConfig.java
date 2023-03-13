@@ -36,7 +36,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/api/csrf/").permitAll() // Everyone may get an CSRF TOKEN - controller tested
 				.requestMatchers(HttpMethod.POST, "/api/users/").permitAll() // Everyone may sign up - controller tested
 				.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll() // Everyone may log in
-				.anyRequest().authenticated()
+				.requestMatchers("/api/**").authenticated()
+				.anyRequest().permitAll()
 				.and()
 				.logout(logout -> logout
 						.logoutUrl("/api/users/logout")
