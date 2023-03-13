@@ -25,7 +25,7 @@ class BikeControllerTest {
 	MockMvc mockMvc;
 	@Autowired
 	BikeRepository bikeRepository;
-	Bike testBike = new Bike("Some test ID", "Mega bike 9000");
+	Bike testBike = new Bike("Some test ID", "Mega bike 9000", null);
 	String invalidId = "Some invalid ID";
 
 	@Nested
@@ -100,7 +100,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not logged in")
-		void addBike_returns403IfTheUserIsNotLoggedIn() throws Exception {
+		void addBike_returns401IfTheUserIsNotLoggedIn() throws Exception {
 			mockMvc.perform(post("/api/bikes/")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("""
@@ -114,7 +114,7 @@ class BikeControllerTest {
 		@Test
 		@DirtiesContext
 		@WithMockUser()
-		@DisplayName("...should return a bike if there is a bike with the given id in the database")
+		@DisplayName("...should add a bike to the database and return it if the user is logged in")
 		void addBike_returnsABike() throws Exception {
 			//WHEN + THEN
 			mockMvc.perform(post("/api/bikes/")
@@ -142,7 +142,7 @@ class BikeControllerTest {
 
 		@Test
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not logged in")
-		void updateBike_returns403IfTheUserIsNotLoggedIn() throws Exception {
+		void updateBike_returns401IfTheUserIsNotLoggedIn() throws Exception {
 			mockMvc.perform(put("/api/bikes/")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content("""
@@ -193,7 +193,6 @@ class BikeControllerTest {
 							        }
 							""").with(csrf())).andExpect(status().isNotFound());
 		}
-
 	}
 
 	@Nested
@@ -201,8 +200,8 @@ class BikeControllerTest {
 	class testDeleteBike {
 
 		@Test
-		@DisplayName("...returns 'Unauthorized' (401) if the user is not logged in")
-		void deleteBike_returns403IfTheUserIsNotLoggedIn() throws Exception {
+		@DisplayName("...should return 'Unauthorized' (401) if the user is not logged in")
+		void deleteBike_returns401IfTheUserIsNotLoggedIn() throws Exception {
 			mockMvc.perform(delete("/api/bikes/41").with(csrf()))
 					.andExpect(status().isUnauthorized());
 		}
@@ -210,13 +209,13 @@ class BikeControllerTest {
 		@Test
 		@DirtiesContext
 		@WithMockUser
-		@DisplayName("...deletes a bike if the bike withe given id does exist and the user is logged in")
+		@DisplayName("...should delete the bike with the given id if it does exist in the database and the user is logged in")
 		void deleteBike_deletesABikeIfTheBikeWithTheGivenIdDoesExist() throws Exception {
 			bikeRepository.save(testBike);
 			mockMvc.perform(delete("/api/bikes/" + testBike.id()).with(csrf()))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
-							        {  
+							        {
 							           "title": "Mega bike 9000",
 							           "id": "Some test ID"
 							        }
@@ -226,7 +225,7 @@ class BikeControllerTest {
 		@Test
 		@DirtiesContext
 		@WithMockUser()
-		@DisplayName("...throws an exception if the bike with the given id does not exist but the user is logged in")
+		@DisplayName("...should throw an exception if the bike with the given id does not exist but the user is logged in")
 		void deleteBike_throwsExceptionIfTheBikeWithTheGivenIdDoesNotExist() throws Exception {
 			mockMvc.perform(delete("/api/bikes/41").with(csrf()))
 					.andExpect(status().isNotFound());

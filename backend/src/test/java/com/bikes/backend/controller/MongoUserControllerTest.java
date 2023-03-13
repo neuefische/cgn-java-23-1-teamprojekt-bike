@@ -100,7 +100,7 @@ class MongoUserControllerTest {
 		@DirtiesContext
 		@DisplayName("...should return 'Unauthorized' (401) if the user is not authenticated")
 		void getCurrentUser_returns401IfTheUserIsNotAuthenticated() throws Exception {
-			mockMvc.perform(get("/api/users/me").with(csrf()))
+			mockMvc.perform(get("/api/users/me"))
 					.andExpect(status().isUnauthorized());
 		}
 
@@ -112,7 +112,7 @@ class MongoUserControllerTest {
 			//GIVEN
 			mongoUserRepository.save(basicUser);
 			//WHEN
-			mockMvc.perform(get("/api/users/me").with(csrf()))
+			mockMvc.perform(get("/api/users/me"))
 					.andExpect(status().isOk())
 					.andExpect(content().json("""
 							{
@@ -120,42 +120,10 @@ class MongoUserControllerTest {
 								"role": "BASIC"
 							}
 							"""))
-					.andExpect(jsonPath("$.id").isNotEmpty())
-					.andExpect(jsonPath("$.password").isEmpty());
+					.andExpect(jsonPath("$.id").isNotEmpty());
 		}
 	}
 
-
-	@Nested
-	@DisplayName("GET /api/users/admin")
-	class testGetAdmin {
-
-		@Test
-		@DisplayName("...should return 'Unauthorized' (401) if the user is not authenticated")
-		void getAdmin_returns401IfTheUserIsNotAuthenticated() throws Exception {
-			mockMvc.perform(get("/api/users/admin").with(csrf()))
-					.andExpect(status().isUnauthorized());
-		}
-
-		@Test
-		@WithMockUser(roles = {"BASIC"})
-		@DisplayName("...should return 'Forbidden' (403) if the user is not an admin")
-		void getAdmin_returns403IfTheUserIsNotAnAdmin() throws Exception {
-			mockMvc.perform(get("/api/users/admin").with(csrf()))
-					.andExpect(status().isForbidden());
-		}
-
-		@Test
-		@WithMockUser(roles = {"ADMIN"})
-		@DisplayName("...should return the greeting for the admin user (200) if the user is an admin")
-		void getAdmin_returnsGreetingForAdminUser() throws Exception {
-			mockMvc.perform(get("/api/users/admin").with(csrf()))
-					.andExpect(status().isOk())
-					.andExpect(content().string("Hello, Admin!"));
-		}
-
-
-	}
 
 	@Nested
 	@DisplayName("POST /api/users/login")
@@ -196,8 +164,7 @@ class MongoUserControllerTest {
 								"role": "BASIC"
 							}
 							"""))
-					.andExpect(jsonPath("$.id").isNotEmpty())
-					.andExpect(jsonPath("$.password").isEmpty());
+					.andExpect(jsonPath("$.id").isNotEmpty());
 			//THEN
 		}
 

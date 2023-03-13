@@ -1,11 +1,20 @@
+.login--wrapper,
+.signup--wrapper {
+	display: flex;
+	overflow: auto;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+	padding-top: 1rem;
+	padding-bottom: 3rem;
+}
+
 .login,
 .signup {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
-	padding-top: 1rem;
-	padding-bottom: 3rem;
+	padding-inline: 1.5rem;
 	min-width: 300px;
 	max-width: 500px;
 	gap: 0.5rem;

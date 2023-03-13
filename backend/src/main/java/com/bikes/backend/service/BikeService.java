@@ -13,9 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class BikeService {
-
 	private final BikeRepository bikeRepository;
-
 	private final IdService idService;
 
 	public List<Bike> getAllBikes() {
@@ -27,7 +25,8 @@ public class BikeService {
 	}
 
 	public Bike addBike(BikeDTO incomingBike) {
-		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title());
+		final String DEFAULT_BIKE_IMAGE = "https://res.cloudinary.com/diikwvy8u/image/upload/v1678453345/8-WnQm41fywTkFZPX_nywzmq.png";
+		Bike bikeToAdd = new Bike(idService.generateId(), incomingBike.title(), DEFAULT_BIKE_IMAGE);
 		return bikeRepository.save(bikeToAdd);
 	}
 
@@ -35,10 +34,9 @@ public class BikeService {
 		if (!bikeRepository.existsById(incomingBike.id())) {
 			throw new NoSuchBikeException();
 		}
-		Bike result = new Bike(incomingBike.id(), incomingBike.title());
+		Bike result = new Bike(incomingBike.id(), incomingBike.title(), incomingBike.imageUrl());
 		return bikeRepository.save(result);
 	}
-
 
 	public Bike deleteBike(String id) {
 		Optional<Bike> bikeToDelete = bikeRepository.findById(id);

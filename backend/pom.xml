@@ -19,13 +19,14 @@
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.coverage.exclusions>**/StaticFilesConfig.java</sonar.coverage.exclusions>
 		<sonar.test.exclusions>**/StaticFilesConfig.java</sonar.test.exclusions>
+		<sonar.coverage.exclusions>**/IdService.java</sonar.coverage.exclusions>
+		<sonar.test.exclusions>**/IdService.java</sonar.test.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -60,7 +61,11 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>1.70</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.31.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

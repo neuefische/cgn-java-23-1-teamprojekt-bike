@@ -1,0 +1,21 @@
+.gallery,
+.bike-details--wrapper {
+	scrollbar-color: #a68c14 #d2cdb2;
+	scrollbar-gutter: stable;
+}
+
+.gallery::-webkit-scrollbar,
+.bike-details--wrapper::-webkit-scrollbar {
+	width: 10px;
+}
+
+.gallery::-webkit-scrollbar-thumb,
+.bike-details--wrapper::-webkit-scrollbar-thumb {
+	background: #d2cdb2;
+}
+
+.gallery::-webkit-scrollbar-track,
+.bike-details--wrapper::-webkit-scrollbar-track {
+	background: #d2cdb2;
+	border: none;
+}

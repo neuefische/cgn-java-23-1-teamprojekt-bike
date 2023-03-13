@@ -1,0 +1,20 @@
+.login--wrapper, .signup--wrapper {
+	scrollbar-color: #20283d #d2cdb2;
+	scrollbar-gutter: stable;
+}
+
+.login--wrapper::-webkit-scrollbar,
+.signup--wrapper::-webkit-scrollbar {
+	width: 10px;
+}
+
+.login--wrapper::-webkit-scrollbar-thumb,
+.signup--wrapper::-webkit-scrollbar-thumb {
+	background: #d2cdb2;
+}
+
+.login--wrapper::-webkit-scrollbar-track,
+.signup--wrapper::-webkit-scrollbar-track {
+	background: #d2cdb2;
+	border: none;
+}

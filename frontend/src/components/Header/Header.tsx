@@ -3,18 +3,23 @@ import './Header.css'
 import logo from '../../assets/logo.png'
 import title from '../../assets/title.png'
 import { useMediaQuery } from 'react-responsive'
-import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import LogOutButton from '../LogOutButton/LogOutButton'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 type HeaderProps = {
-   addBikeInputRef: React.MutableRefObject<HTMLInputElement>
+   addBikeRef: React.MutableRefObject<HTMLFormElement>
+   galleryRef: React.MutableRefObject<HTMLDivElement>
 }
 
 function Header(props: HeaderProps) {
-   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 900px)' })
+   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 860px)' })
    const user = useAuth(false)
-   const handleScrollIntoAddBikeView = () => props.addBikeInputRef.current.scrollIntoView({ behavior: 'smooth' })
+   const { pathname } = useLocation()
+   const isNotTheGallery = pathname !== '/'
+   const navigate = useNavigate()
+   const handleScrollIntoAddBikeView = () => props.addBikeRef.current.scrollIntoView({ behavior: 'smooth' })
+   const handleScrollIntoGalleryView = () => props.galleryRef.current.scrollTo({ top: 0, behavior: 'smooth' })
 
    return (
       <header className="header">
@@ -28,7 +33,7 @@ function Header(props: HeaderProps) {
             <nav className={'header__container--third navigation' + (!isTabletOrMobile ? ' vertical' : '')}>
                {!!user && (
                   <>
-                     <Link to={'/'}>Home</Link>
+                     <div onClick={isNotTheGallery ? () => navigate('/') : handleScrollIntoGalleryView}>Gallery</div>
                      <div onClick={handleScrollIntoAddBikeView}>Add new bike</div>
                      <LogOutButton>Log out</LogOutButton>
                   </>
