@@ -27,3 +27,33 @@
 	text-decoration: underline;
 }
 
+.footer--powered {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.footer--logos {
+	max-height: 80px;
+	width: 100%;
+	margin-top: 0.75rem;
+	display: flex;
+	height: 100%;
+	overflow: auto;
+	justify-content: center;
+}
+
+.footer--logo {
+	width: auto;
+}
+
+.footer--logo.react {
+	margin-block: 20px;
+	margin-right: 12px;
+}
+
+.footer--logo.cloudinary {
+	margin-block: 3px;
+}

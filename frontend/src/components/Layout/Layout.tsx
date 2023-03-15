@@ -3,6 +3,9 @@ import Header from '../Header/Header'
 import './Layout.css'
 import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import springBootImg from '../../assets/spring-boot.png'
+import reactImg from '../../assets/react-transparent.png'
+import cloudinaryImg from '../../assets/cloudinary.png'
 
 type Props = {
    children: ReactNode
@@ -26,10 +29,12 @@ function Layout(props: Props) {
                   <Link to={'/credits'}>Credits</Link> - 2023
                </p>
             ) : (
-               <div>
+               <div className="footer--powered">
                   Powered by
-                  <div className="footer--logo">
-                     <div className="footer--logo--neuefische">{/*<img src={} />*/}</div>
+                  <div className="footer--logos">
+                     <img className="footer--logo" src={springBootImg} alt="Spring Boot" />
+                     <img className="footer--logo react" src={reactImg} alt="React" />
+                     <img className="footer--logo cloudinary" src={cloudinaryImg} alt="Cloudinary" />
                   </div>
                </div>
             )}
